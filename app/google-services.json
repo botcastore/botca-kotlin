@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "347851227068",
+    "project_id": "botca-store-project",
+    "storage_bucket": "botca-store-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:347851227068:android:6ea0f6ce43e81976d875b9",
+        "android_client_info": {
+          "package_name": "com.kevinhomorales.botcakotlin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "347851227068-vuib27715plptmvmodq9gtiumr89ds32.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kevinhomorales.botcakotlin",
+            "certificate_hash": "358e4265ac2241ff5f6ca5a67158e76c568a1ab6"
+          }
+        },
+        {
+          "client_id": "347851227068-cn57tgjojorotvb1gmdn5mh6ebafcsh4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDaXYhPWwt1uhPXzkH8AA56eqM6_h-_h2E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "347851227068-cn57tgjojorotvb1gmdn5mh6ebafcsh4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "347851227068-b7235gtc9ik581f22tvu1e46p1easdda.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.kevinhomorales.botcaswift"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

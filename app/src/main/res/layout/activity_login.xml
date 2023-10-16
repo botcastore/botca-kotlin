@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".login.view.LoginActivity">
+
+    <TextView
+        android:layout_width="140dp"
+        android:layout_height="80dp"
+        android:text="@string/welcome_to_botca"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textColor="@color/blackColor"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <Button
+        android:id="@+id/google_button_id"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:textStyle="normal"
+        android:backgroundTint="@color/redColor"
+        android:layout_marginLeft="16dp"
+        android:textAllCaps="false"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/sign_in_with_google"
+        app:layout_constraintBottom_toTopOf="@+id/terms_privacy_text_id"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/terms_privacy_text_id"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:textSize="12sp"
+        android:textStyle="normal"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:text="@string/terms_and_privacy"
+        android:textColor="@color/blackColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
