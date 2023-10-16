@@ -27,7 +27,7 @@ class MenuActivity : AppCompatActivity() {
 
         binding = ActivityMenuBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        setUpView()
         setSupportActionBar(binding.appBarMain.toolbar)
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
@@ -41,6 +41,13 @@ class MenuActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+    }
+
+    private fun setUpView() {
+//        if (intent.extras != null) {
+//            viewModel.productsList = intent.extras!!.get(Constants.productsListKey) as MutableList<Product>
+//            title = getString(R.string.products_list_title) + " " + viewModel.productsList.size
+//        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

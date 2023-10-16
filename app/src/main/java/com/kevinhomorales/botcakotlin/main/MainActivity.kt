@@ -9,6 +9,7 @@ import android.os.Vibrator
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.kevinhomorales.botcakotlin.R
 import com.kevinhomorales.botcakotlin.databinding.LoadingBinding
 import com.kevinhomorales.botcakotlin.utils.Constants
 import retrofit2.Retrofit
@@ -18,20 +19,20 @@ open class MainActivity: AppCompatActivity() {
     private lateinit var dialog: Dialog
     private lateinit var binding: LoadingBinding
 
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-////        if (isOnline(this)) {
-////            createAlertWarning("Sin internet, por favor revisa tu conexión")
-////        }
-//        statusBarCustomer()
-//    }
-
-//    private fun statusBarCustomer()  {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-//            window.statusBarColor = ContextCompat.getColor(this, R.color.holo_red_dark)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+//        if (isOnline(this)) {
+//            createAlertWarning("Sin internet, por favor revisa tu conexión")
 //        }
-//    }
+        statusBarCustomer()
+    }
+
+    private fun statusBarCustomer()  {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            window.statusBarColor = ContextCompat.getColor(this, R.color.blackColor)
+        }
+    }
 
     fun tapHaptic() {
         val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
@@ -43,7 +44,7 @@ open class MainActivity: AppCompatActivity() {
     }
 
     fun showLoading(text: String) {
-        dialog = Dialog(this, R.style.Theme_Translucent_NoTitleBar)
+        dialog = Dialog(this, R.style.Theme_Botcakotlin_NoActionBar)
         binding = LoadingBinding.inflate(layoutInflater)
         binding.textLoading.text = text
         binding

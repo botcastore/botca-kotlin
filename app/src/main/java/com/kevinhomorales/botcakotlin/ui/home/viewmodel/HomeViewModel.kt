@@ -1,4 +1,4 @@
-package com.kevinhomorales.botcakotlin.ui.home
+package com.kevinhomorales.botcakotlin.ui.home.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

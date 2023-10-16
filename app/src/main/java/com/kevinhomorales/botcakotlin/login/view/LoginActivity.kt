@@ -12,8 +12,11 @@ import com.kevinhomorales.botcakotlin.databinding.ActivityLoginBinding
 import com.kevinhomorales.botcakotlin.login.services.response.LoginResponse
 import com.kevinhomorales.botcakotlin.login.viewmodel.LoginViewModel
 import com.kevinhomorales.botcakotlin.main.MainActivity
+import com.kevinhomorales.botcakotlin.menu.MenuActivity
+import com.kevinhomorales.botcakotlin.ui.home.services.response.CategoriesResponse
 import com.kevinhomorales.botcakotlin.utils.Alerts
 import com.kevinhomorales.botcakotlin.utils.Constants
+import java.io.Serializable
 
 class LoginActivity : MainActivity() {
     lateinit var binding: ActivityLoginBinding
@@ -27,6 +30,7 @@ class LoginActivity : MainActivity() {
 
     private fun setUpView() {
         viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
+        viewModel.view = this
         setUpActions()
     }
 
@@ -50,9 +54,7 @@ class LoginActivity : MainActivity() {
                     val credential = GoogleAuthProvider.getCredential(account.idToken, null)
                     FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener { result ->
                         if (result.isSuccessful) {
-                            viewModel.postLogin(result, this) { loginResponse ->
-                                openHome(loginResponse)
-                            }
+                            viewModel.postLogin(account, result, this)
                         } else {
                             Alerts.warning(getString(R.string.error_title), getString(R.string.error_message),this)
                             hideLoading()
@@ -66,7 +68,9 @@ class LoginActivity : MainActivity() {
         }
     }
 
-    private fun openHome(loginResponse: LoginResponse) {
-
+    fun openHome(categoriesResponse: CategoriesResponse) {
+        val intent = Intent(this, MenuActivity::class.java)
+        intent.putExtra(Constants.categoriesListKey, categoriesResponse as Serializable)
+        startActivity(intent)
     }
 }
