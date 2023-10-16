@@ -17,7 +17,11 @@ class Constants {
         val invoceKey = "INVOICE_KEY"
         val usersKey = "USERS_KEY"
 
-        //        val ENVIRONMENT = "dev"
-        val ENVIRONMENT = "prod"
+        // SERVER - ERROR
+        val sessionExpired = "jwt expired"
+
+        val domain = "https://botca.onrender.com" // DEV
+//        val domain = "https://botca.com" // PROD
+        val enviroment = "${domain}/api/"
     }
 }

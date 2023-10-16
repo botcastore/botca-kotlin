@@ -9,6 +9,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.kevinhomorales.botcakotlin.R
 import com.kevinhomorales.botcakotlin.databinding.ActivityLoginBinding
+import com.kevinhomorales.botcakotlin.login.services.response.LoginResponse
 import com.kevinhomorales.botcakotlin.login.viewmodel.LoginViewModel
 import com.kevinhomorales.botcakotlin.main.MainActivity
 import com.kevinhomorales.botcakotlin.utils.Alerts
@@ -34,6 +35,10 @@ class LoginActivity : MainActivity() {
             tapHaptic()
             viewModel.googleSignIn(this)
         }
+        binding.termsPrivacyTextId.setOnClickListener {
+            tapHaptic()
+            viewModel.openTermsAndPrivacyView()
+        }
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -45,7 +50,9 @@ class LoginActivity : MainActivity() {
                     val credential = GoogleAuthProvider.getCredential(account.idToken, null)
                     FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener { result ->
                         if (result.isSuccessful) {
-                            viewModel.postLogin(result)
+                            viewModel.postLogin(result, this) { loginResponse ->
+                                openHome(loginResponse)
+                            }
                         } else {
                             Alerts.warning(getString(R.string.error_title), getString(R.string.error_message),this)
                             hideLoading()
@@ -57,5 +64,9 @@ class LoginActivity : MainActivity() {
                 hideLoading()
             }
         }
+    }
+
+    private fun openHome(loginResponse: LoginResponse) {
+
     }
 }

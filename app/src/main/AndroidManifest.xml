@@ -23,6 +23,9 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".main.MainActivity"
+            android:exported="false"/>
+        <activity
             android:name=".profile.view.ProfileActivity"
             android:exported="false"/>
         <activity

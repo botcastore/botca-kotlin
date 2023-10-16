@@ -1,17 +1,37 @@
 package com.kevinhomorales.botcakotlin.main
 
-import android.R
 import android.app.Dialog
 import android.content.Context
 import android.os.Build
+import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.kevinhomorales.botcakotlin.databinding.LoadingBinding
+import com.kevinhomorales.botcakotlin.utils.Constants
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 open class MainActivity: AppCompatActivity() {
     private lateinit var dialog: Dialog
     private lateinit var binding: LoadingBinding
+
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+////        if (isOnline(this)) {
+////            createAlertWarning("Sin internet, por favor revisa tu conexión")
+////        }
+//        statusBarCustomer()
+//    }
+
+//    private fun statusBarCustomer()  {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+//            window.statusBarColor = ContextCompat.getColor(this, R.color.holo_red_dark)
+//        }
+//    }
 
     fun tapHaptic() {
         val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
@@ -34,5 +54,12 @@ open class MainActivity: AppCompatActivity() {
 
     fun hideLoading() {
         dialog.dismiss()
+    }
+
+    fun getRetrofit(): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(Constants.enviroment)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
     }
 }
