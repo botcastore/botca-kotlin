@@ -11,7 +11,7 @@ class Constants {
         val businessListKey = "BUSINESS_LIST_KEY"
         val businessKey = "BUSINESS_KEY"
         val rolesKey = "ROLES_KEY"
-        val categoriesListKey = "CATEGORIES_LIST_KEY"
+        val categoriesResponseKey = "CATEGORIES_RESPONSE_KEY"
         val invocesKey = "INVOICES_KEY"
         val invoceKey = "INVOICE_KEY"
         val usersKey = "USERS_KEY"

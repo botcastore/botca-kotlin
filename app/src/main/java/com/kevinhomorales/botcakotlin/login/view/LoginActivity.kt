@@ -9,7 +9,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.kevinhomorales.botcakotlin.R
 import com.kevinhomorales.botcakotlin.databinding.ActivityLoginBinding
-import com.kevinhomorales.botcakotlin.login.services.response.LoginResponse
 import com.kevinhomorales.botcakotlin.login.viewmodel.LoginViewModel
 import com.kevinhomorales.botcakotlin.main.MainActivity
 import com.kevinhomorales.botcakotlin.menu.MenuActivity
@@ -19,8 +18,8 @@ import com.kevinhomorales.botcakotlin.utils.Constants
 import java.io.Serializable
 
 class LoginActivity : MainActivity() {
-    lateinit var binding: ActivityLoginBinding
-    lateinit var viewModel: LoginViewModel
+    private lateinit var binding: ActivityLoginBinding
+    private lateinit var viewModel: LoginViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -31,6 +30,7 @@ class LoginActivity : MainActivity() {
     private fun setUpView() {
         viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
         viewModel.view = this
+        viewModel.checkIsLogged(this)
         setUpActions()
     }
 
@@ -68,9 +68,12 @@ class LoginActivity : MainActivity() {
         }
     }
 
-    fun openHome(categoriesResponse: CategoriesResponse) {
+    fun openHome(categoriesResponse: CategoriesResponse?) {
         val intent = Intent(this, MenuActivity::class.java)
-        intent.putExtra(Constants.categoriesListKey, categoriesResponse as Serializable)
+        if (categoriesResponse != null) {
+            intent.putExtra(Constants.categoriesResponseKey, categoriesResponse as Serializable)
+            hideLoading()
+        }
         startActivity(intent)
     }
 }

@@ -15,6 +15,7 @@ import com.kevinhomorales.botcakotlin.login.services.response.LoginResponse
 import com.kevinhomorales.botcakotlin.login.view.LoginActivity
 import com.kevinhomorales.botcakotlin.main.MainActivity
 import com.kevinhomorales.botcakotlin.ui.home.services.request.CategoriesRequest
+import com.kevinhomorales.botcakotlin.ui.home.services.response.CategoriesResponse
 import com.kevinhomorales.botcakotlin.utils.Alerts
 import com.kevinhomorales.botcakotlin.utils.Constants
 import com.kevinhomorales.botcakotlin.utils.GooglePictureQuality
@@ -32,7 +33,7 @@ class LoginViewModel: ViewModel() {
     fun checkIsLogged(mainActivity: MainActivity) {
         val loginResponse = UserManager.shared.getUser(mainActivity)
         if (!(loginResponse.me.token.isEmpty())) {
-//            view.openHome(null)
+            view.openHome(null)
         }
     }
 
@@ -93,7 +94,7 @@ class LoginViewModel: ViewModel() {
             mainActivity.runOnUiThread {
                 if(call.isSuccessful) {
                     UserManager.shared.saveUser(loginResponse, mainActivity)
-                    view.openHome(categoriesResponse!!)
+                    view.openHome(categoriesResponse)
                 } else {
                     val error = call.errorBody()
                     val jsonObject = JSONObject(error!!.string())
