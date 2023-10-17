@@ -8,6 +8,7 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import com.kevinhomorales.botcakotlin.R
 import com.kevinhomorales.botcakotlin.databinding.LoadingBinding
@@ -25,6 +26,7 @@ open class MainActivity: AppCompatActivity() {
 //            createAlertWarning("Sin internet, por favor revisa tu conexión")
 //        }
         statusBarCustomer()
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
     }
 
     private fun statusBarCustomer()  {

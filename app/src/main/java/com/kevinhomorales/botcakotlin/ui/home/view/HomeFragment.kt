@@ -37,6 +37,7 @@ class HomeFragment : Fragment(), OnCategoryClickListener {
         val mainActivity = requireActivity() as MainActivity
         viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         viewModel.view = this
+        mainActivity.setTitle("your title");
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         categoryAdapter = CategoryAdapter(requireActivity(), this)
         binding.categoriesId.setLayoutManager(GridLayoutManager(requireContext(), 2))
