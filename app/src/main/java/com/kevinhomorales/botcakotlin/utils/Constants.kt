@@ -19,8 +19,8 @@ class Constants {
         // SERVER - ERROR
         val sessionExpired = "jwt expired"
 
-        val domain = "https://botca.onrender.com" // DEV
-//        val domain = "https://botca.com" // PROD
+//        val domain = "https://dev-botca-store.onrender.com" // DEV
+        val domain = "https://botca-store.onrender.com" // PROD
         val enviroment = "${domain}/api/"
     }
 }

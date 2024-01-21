@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -14,25 +15,31 @@
         android:theme="@style/Theme.Botcakotlin"
         tools:targetApi="31">
         <activity
-            android:name=".login.view.LoginActivity"
+            android:name=".customer.home.view.HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".customer.register.view.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".customer.login.view.LoginActivity"
             android:exported="true"
             android:theme="@style/Theme.Botcakotlin.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".main.MainActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
-            android:name=".profile.view.ProfileActivity"
-            android:exported="false"/>
+            android:name=".customer.profile.view.ProfileActivity"
+            android:exported="false" />
         <activity
             android:name=".menu.MenuActivity"
             android:exported="true"
-            android:theme="@style/Theme.Botcakotlin.NoActionBar">
-        </activity>
+            android:theme="@style/Theme.Botcakotlin.NoActionBar" />
     </application>
 
 </manifest>

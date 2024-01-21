@@ -5,9 +5,9 @@ import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
-import com.kevinhomorales.botcakotlin.login.services.response.LoginResponse
-import com.kevinhomorales.botcakotlin.login.services.response.Me
-import com.kevinhomorales.botcakotlin.login.services.response.User
+import com.kevinhomorales.botcakotlin.NetworkManager.response.LoginResponse
+import com.kevinhomorales.botcakotlin.NetworkManager.response.Me
+import com.kevinhomorales.botcakotlin.NetworkManager.response.UserResponse
 
 class UserManager {
     companion object {
@@ -31,7 +31,7 @@ class UserManager {
         val json: String? = mPrefs.getString(LOGIN_RESPONSE_KEY, "")
         var obj: LoginResponse
         if (gson.fromJson(json, LoginResponse::class.java) == null) {
-            obj = LoginResponse(Me(User(Constants.clearString,Constants.clearString,Constants.clearString,Constants.clearString,false,Constants.clearString,Constants.clearString,Constants.clearString,Constants.clearString,Constants.clearString,Constants.clearString,Constants.clearString, Constants.clearString),Constants.clearString,Constants.clearString))
+            obj = LoginResponse(Me(UserResponse(Constants.clearString,Constants.clearString,Constants.clearString,Constants.clearString,false,Constants.clearString,Constants.clearString,Constants.clearString,Constants.clearString,Constants.clearString,Constants.clearString,Constants.clearString, Constants.clearString, Constants.clearString),Constants.clearString,Constants.clearString))
         } else {
             obj = gson.fromJson(json, LoginResponse::class.java)
         }
