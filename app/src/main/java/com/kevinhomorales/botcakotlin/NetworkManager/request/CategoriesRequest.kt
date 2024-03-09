@@ -7,7 +7,7 @@ import retrofit2.http.Headers
 import retrofit2.http.Url
 
 interface CategoriesRequest {
-    @Headers("Content-Type: application/json", "Accept: application/json")
+    @Headers("Content-Type: application/json", "Accept: application/json", "Origin: botca-kotlin-mobile")
     @GET
     suspend fun getCategories(@Url endpoint: String): Response<CategoriesResponse>
 }

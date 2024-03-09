@@ -13,7 +13,7 @@ android {
         applicationId = "com.kevinhomorales.botcakotlin"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
+        versionCode = 100
         versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -60,6 +60,10 @@ dependencies {
     implementation ("com.google.firebase:firebase-messaging:23.2.1")
     implementation ("com.google.firebase:firebase-config:21.4.1")
     // FIREBASE
+
+    // PDF
+    implementation("com.github.barteksc:android-pdf-viewer:2.8.2")
+    // PDF
 
     // GLIDE
     implementation ("com.github.bumptech.glide:glide:4.13.2")

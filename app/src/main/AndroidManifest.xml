@@ -15,6 +15,36 @@
         android:theme="@style/Theme.Botcakotlin"
         tools:targetApi="31">
         <activity
+            android:name=".customer.product.infosize.view.InfoSizeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".customer.address.addaddress.view.AddAddressActivity"
+            android:exported="false" />
+        <activity
+            android:name=".customer.payments.addcard.view.AddCardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".customer.wishlist.view.WishlistActivity"
+            android:exported="false" />
+        <activity
+            android:name=".customer.payments.cards.view.CardsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".customer.profile.info.view.InfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".customer.address.view.AddressActivity"
+            android:exported="false" />
+        <activity
+            android:name=".customer.cart.view.CartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".customer.product.view.ProductActivity"
+            android:exported="false" />
+        <activity
+            android:name=".customer.products.view.ProductsActivity"
+            android:exported="false" />
+        <activity
             android:name=".customer.home.view.HomeActivity"
             android:exported="false" />
         <activity
@@ -36,10 +66,6 @@
         <activity
             android:name=".customer.profile.view.ProfileActivity"
             android:exported="false" />
-        <activity
-            android:name=".menu.MenuActivity"
-            android:exported="true"
-            android:theme="@style/Theme.Botcakotlin.NoActionBar" />
     </application>
 
 </manifest>

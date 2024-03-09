@@ -7,24 +7,24 @@
     tools:context=".customer.login.view.LoginActivity">
 
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@mipmap/loginbackground"
         android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
+        android:src="@drawable/category_hint"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:layout_width="140dp"
-        android:layout_height="80dp"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
         android:text="@string/welcome_to_botca"
-        android:textSize="30sp"
+        android:textSize="47sp"
         android:textStyle="bold"
         android:textColor="@color/blackColor"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="30dp"
         android:layout_marginLeft="30dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -34,23 +34,53 @@
         android:id="@+id/google_button_id"
         android:layout_width="match_parent"
         android:layout_height="54dp"
-        android:textStyle="normal"
-        android:backgroundTint="@color/redColor"
         android:layout_marginLeft="16dp"
-        android:textAllCaps="false"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/whiteColor"
         android:text="@string/sign_in_with_google"
+        android:textAllCaps="false"
+        android:textColor="@color/blackColor"
+        android:drawableLeft="@drawable/googleicon"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toTopOf="@+id/guest_id"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/guest_id"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/blackColor"
+        android:text="@string/guest"
+        android:textAllCaps="false"
+        android:textColor="@color/whiteColor"
+        android:textStyle="normal"
         app:layout_constraintBottom_toTopOf="@+id/terms_privacy_text_id"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/blackColor"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/guest_id"
+        app:layout_constraintEnd_toEndOf="@+id/google_button_id"
+        app:layout_constraintStart_toStartOf="@+id/google_button_id"
+        app:layout_constraintTop_toBottomOf="@+id/google_button_id" />
 
     <TextView
         android:id="@+id/terms_privacy_text_id"
         android:layout_width="match_parent"
         android:layout_height="20dp"
         android:textSize="12sp"
-        android:textStyle="normal"
+        android:textStyle="bold"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"

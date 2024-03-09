@@ -9,6 +9,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.kevinhomorales.botcakotlin.NetworkManager.response.Category
+import com.kevinhomorales.botcakotlin.R
 import com.kevinhomorales.botcakotlin.databinding.RowCategoryBinding
 
 class CategoryAdapter(private val context: Context, var itemClickListener: OnCategoryClickListener): RecyclerView.Adapter<CategoryAdapter.ProductsViewHolder>() {
@@ -38,14 +39,15 @@ class CategoryAdapter(private val context: Context, var itemClickListener: OnCat
     }
 
     inner class ProductsViewHolder(private val itemBinding: RowCategoryBinding): RecyclerView.ViewHolder(itemBinding.root) {
-        fun bindView(category: Category) {
-            itemBinding.categoryNameId.text = category.name
+        fun bindView(model: Category) {
             Glide.with(context)
-                .load(category.imageURL)
+                .load(model.imageURL)
+                .centerCrop()
                 .transition(DrawableTransitionOptions.withCrossFade(2))
-                .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL).centerCrop())
+                .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
+                .placeholder(R.drawable.category_hint)
                 .into(itemBinding.categoryImageViewId)
-            itemView.setOnClickListener { itemClickListener.categoryClick(category) }
+            itemView.setOnClickListener { itemClickListener.categoryClick(model) }
         }
     }
 }
