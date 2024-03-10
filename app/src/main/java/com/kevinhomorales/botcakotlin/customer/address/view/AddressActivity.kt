@@ -21,6 +21,7 @@ import com.kevinhomorales.botcakotlin.customer.payments.addcard.view.AddCardActi
 import com.kevinhomorales.botcakotlin.customer.profile.viewmodel.ProfileViewModel
 import com.kevinhomorales.botcakotlin.databinding.ActivityAddressBinding
 import com.kevinhomorales.botcakotlin.main.MainActivity
+import com.kevinhomorales.botcakotlin.utils.Alerts
 import com.kevinhomorales.botcakotlin.utils.Constants
 
 class AddressActivity : MainActivity(), OnAddressClickListener {
@@ -43,6 +44,9 @@ class AddressActivity : MainActivity(), OnAddressClickListener {
         if (intent.extras != null) {
             viewModel.addressResponse = intent.extras!!.get(Constants.addressResponseKey) as AddressResponse
         }
+        if (viewModel.addressResponse.address.isEmpty()) {
+            Alerts.warning(getString(R.string.alert_title),getString(R.string.please_add_address),this)
+        }
         addressAdapter = AddressAdapter(this, this)
         binding.recyclerAddressId.layoutManager = LinearLayoutManager(this)
         binding.recyclerAddressId.adapter = addressAdapter
@@ -58,6 +62,7 @@ class AddressActivity : MainActivity(), OnAddressClickListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.add_address_id -> {
+                tapHaptic()
                 openAddAddress()
                 true
             }

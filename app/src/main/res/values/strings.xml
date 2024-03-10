@@ -26,7 +26,7 @@
 
     <!--    LOGIN VIEW-->
     <string name="loading_login">LOADING INFORMATION</string>
-    <string name="sign_in_with_google">Sign In with Google</string>
+    <string name="sign_in_with_google">Continue with Google</string>
     <string name="guest">Guest</string>
     <string name="terms_and_privacy">Terms and Privacy</string>
     <string name="welcome_to_botca">Welcome to Botca</string>
@@ -64,6 +64,7 @@
     <!--    ADDRESS VIEW-->
     <string name="addresses_title_view">Addresses</string>
     <string name="loading_addresses">LOADING ADDRESSES</string>
+    <string name="please_add_address">Please Add Address</string>
 
     <!--    ADD ADDRESS VIEW-->
     <string name="add_addresses_title_view">Add Address</string>
@@ -80,6 +81,7 @@
     <string name="loading_cards">LOADING CARDS</string>
     <string name="last_numbers">Last Numbers:</string>
     <string name="exp_date">Exp Date:</string>
+    <string name="please_add_cards">Please Add Card</string>
 
     <!--    ADD CARD VIEW-->
     <string name="add_card_title_view">Add Card</string>
@@ -95,6 +97,14 @@
     <string name="id">ID</string>
     <string name="postal_code">Postal Code</string>
 
+    <!--    COUPON VIEW-->
+    <string name="coupon_title_view">Coupon</string>
+    <string name="shop_now_title_button">Shop Now!</string>
+    <string name="discount_title">DISCOUNT COUPON</string>
+    <string name="discount_value">15 %</string>
+    <string name="discount_off">OFF</string>
+    <string name="discount_subtitle">Enjoy your 15 OFF on your first purchase! Celebrating that you are now part of our team</string>
+
     <!--    WISHLIST VIEW-->
     <string name="wishlist_title_view">Favorites</string>
     <string name="loading_favorites">LOADING FAVORITES</string>
@@ -103,10 +113,14 @@
     <string name="sizes">Sizes</string>
     <string name="description">Description</string>
     <string name="size_guide">Sizes</string>
+    <string name="loading_cart">LOADING CART</string>
 
     <!--    PRODUCT-->
     <string name="colors">Colors</string>
     <string name="count">Cuenta</string>
     <string name="add_cart_button">Add to Cart</string>
+
+    <!--    CARD-->
+    <string name="cart_title_view">Cart</string>
 
 </resources>

@@ -31,7 +31,7 @@ class ProfileViewModel: ViewModel() {
         return "v${mainActivity.getDeviceInfo().versionName} Build ${mainActivity.getDeviceInfo().versionCode}"
     }
 
-    fun getAddresses(mainActivity: MainActivity, model: AddressModel) {
+    fun getAddresses(mainActivity: MainActivity) {
         mainActivity.showLoading(mainActivity.getString(R.string.loading_addresses))
         var token = UserManager.shared.getUser(mainActivity).me.token
         if (token == null) {
@@ -58,7 +58,7 @@ class ProfileViewModel: ViewModel() {
         }
     }
 
-    fun getCards(mainActivity: MainActivity, model: CardsModel) {
+    fun getCards(mainActivity: MainActivity) {
         mainActivity.showLoading(mainActivity.getString(R.string.loading_cards))
         var token = UserManager.shared.getUser(mainActivity).me.token
         if (token == null) {
@@ -85,7 +85,7 @@ class ProfileViewModel: ViewModel() {
         }
     }
 
-    fun getFavorites(mainActivity: MainActivity, model: FavoritesModel) {
+    fun getFavorites(mainActivity: MainActivity) {
         mainActivity.showLoading(mainActivity.getString(R.string.loading_favorites))
         var token = UserManager.shared.getUser(mainActivity).me.token
         if (token == null) {

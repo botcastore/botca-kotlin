@@ -67,13 +67,11 @@ class ProfileActivity : MainActivity() {
     private fun setUpActions() {
         binding.addressesId.setOnClickListener {
             tapHaptic()
-            val model = AddressModel()
-            viewModel.getAddresses(this, model)
+            viewModel.getAddresses(this)
         }
         binding.cardsId.setOnClickListener {
             tapHaptic()
-            val model = CardsModel()
-            viewModel.getCards(this, model)
+            viewModel.getCards(this)
         }
         binding.ordersId.setOnClickListener {
             tapHaptic()
@@ -92,10 +90,12 @@ class ProfileActivity : MainActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.favorite_id -> {
+                tapHaptic()
                 openFavoritesView()
                 true
             }
             R.id.info_id -> {
+                tapHaptic()
                 openInfoView()
                 true
             }
@@ -105,8 +105,7 @@ class ProfileActivity : MainActivity() {
 
     private fun openFavoritesView() {
         tapHaptic()
-        val model = FavoritesModel()
-        viewModel.getFavorites(this, model)
+        viewModel.getFavorites(this)
     }
 
     private fun signOut() {

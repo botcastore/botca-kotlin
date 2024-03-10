@@ -16,6 +16,7 @@ import com.kevinhomorales.botcakotlin.customer.payments.cards.view.adapter.OnCar
 import com.kevinhomorales.botcakotlin.customer.payments.cards.viewmodel.CardsViewModel
 import com.kevinhomorales.botcakotlin.databinding.ActivityCardsBinding
 import com.kevinhomorales.botcakotlin.main.MainActivity
+import com.kevinhomorales.botcakotlin.utils.Alerts
 import com.kevinhomorales.botcakotlin.utils.Constants
 import com.kevinhomorales.botcakotlin.utils.UserManager
 
@@ -38,6 +39,9 @@ class CardsActivity : MainActivity(), OnCardsClickListener {
         if (intent.extras != null) {
             viewModel.cardsReponse = intent.extras!!.get(Constants.cardsResponseKey) as CardsReponse
         }
+        if (viewModel.cardsReponse.cards.isEmpty()) {
+            Alerts.warning(getString(R.string.alert_title),getString(R.string.please_add_cards),this)
+        }
         cardsAdapter = CardsAdapter(this, this)
         binding.recyclerCardsId.layoutManager = LinearLayoutManager(this)
         binding.recyclerCardsId.adapter = cardsAdapter
@@ -53,6 +57,7 @@ class CardsActivity : MainActivity(), OnCardsClickListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.add_cards_id -> {
+                tapHaptic()
                 openAddCard()
                 true
             }

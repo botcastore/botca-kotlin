@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import com.kevinhomorales.botcakotlin.R
 import com.kevinhomorales.botcakotlin.customer.cart.viewmodel.CartViewModel
+import com.kevinhomorales.botcakotlin.customer.payments.addcard.viewmodel.AddCardViewModel
 import com.kevinhomorales.botcakotlin.customer.product.viewmodel.ProductViewModel
 import com.kevinhomorales.botcakotlin.databinding.ActivityCartBinding
 import com.kevinhomorales.botcakotlin.main.MainActivity
@@ -21,6 +22,13 @@ class CartActivity : MainActivity() {
     }
 
     private fun setUpView() {
+        title = getString(R.string.cart_title_view)
         viewModel = ViewModelProvider(this).get(CartViewModel::class.java)
+        viewModel.view = this
+        setUpActions()
+    }
+
+    private fun setUpActions() {
+
     }
 }

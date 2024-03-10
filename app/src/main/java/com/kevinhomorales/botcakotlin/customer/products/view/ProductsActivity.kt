@@ -1,21 +1,19 @@
 package com.kevinhomorales.botcakotlin.customer.products.view
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.view.Menu
 import android.view.MenuItem
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.kevinhomorales.botcakotlin.NetworkManager.response.CategoriesResponse
+import com.kevinhomorales.botcakotlin.NetworkManager.model.CartAvailableModel
+import com.kevinhomorales.botcakotlin.NetworkManager.response.CartAvailableResponse
 import com.kevinhomorales.botcakotlin.NetworkManager.response.Product
 import com.kevinhomorales.botcakotlin.NetworkManager.response.ProductsResponse
 import com.kevinhomorales.botcakotlin.R
-import com.kevinhomorales.botcakotlin.customer.address.addaddress.view.AddAddressActivity
-import com.kevinhomorales.botcakotlin.customer.home.view.adapter.CategoryAdapter
-import com.kevinhomorales.botcakotlin.customer.home.viewmodel.HomeViewModel
+import com.kevinhomorales.botcakotlin.customer.cart.view.CartActivity
 import com.kevinhomorales.botcakotlin.customer.product.view.ProductActivity
 import com.kevinhomorales.botcakotlin.customer.products.view.adapter.OnProductClickListener
 import com.kevinhomorales.botcakotlin.customer.products.view.adapter.ProductsAdapter
@@ -23,13 +21,13 @@ import com.kevinhomorales.botcakotlin.customer.products.viewmodel.ProductsViewMo
 import com.kevinhomorales.botcakotlin.databinding.ActivityProductsBinding
 import com.kevinhomorales.botcakotlin.main.MainActivity
 import com.kevinhomorales.botcakotlin.utils.Constants
-import java.io.File
 import java.io.Serializable
 
 class ProductsActivity : MainActivity(), OnProductClickListener {
     private lateinit var binding: ActivityProductsBinding
     private lateinit var viewModel: ProductsViewModel
     private lateinit var productsAdapter: ProductsAdapter
+    lateinit var menu: Menu
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProductsBinding.inflate(layoutInflater)
@@ -42,6 +40,7 @@ class ProductsActivity : MainActivity(), OnProductClickListener {
         if (intent.extras != null) {
             viewModel.productsResponse = intent.extras!!.get(Constants.productsResponseKey) as ProductsResponse
         }
+        viewModel.view = this
         title = viewModel.productsResponse.products.first().category.name
         binding.descriptionId.text = viewModel.productsResponse.products.first().category.description
         productsAdapter = ProductsAdapter(this, this)
@@ -51,6 +50,8 @@ class ProductsActivity : MainActivity(), OnProductClickListener {
         binding.productsRecyclerId.adapter = productsAdapter
         productsAdapter.setListData(viewModel.productsResponse.products)
         productsAdapter.notifyDataSetChanged()
+        val model = CartAvailableModel(Constants.clearString)
+        viewModel.checkCartAvailable(this, model)
     }
 
     override fun productClick(product: Product) {
@@ -62,29 +63,42 @@ class ProductsActivity : MainActivity(), OnProductClickListener {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.products_menu, menu)
+        this.menu = menu
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.filter_id -> {
+                tapHaptic()
                 openFilterView()
                 true
             }
             R.id.cart_id -> {
-                openCartView()
+                tapHaptic()
+                val model = CartAvailableModel(Constants.clearString)
+                viewModel.getCartAvailable(this, model)
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-    private fun openFilterView() {
+    fun openFilterView() {
 
     }
 
-    private fun openCartView() {
+    fun openCartView(cartAvailableResponse: CartAvailableResponse) {
+        val intent = Intent(this, CartActivity::class.java)
+        startActivity(intent)
+    }
 
+    fun updateCartIcon(isEmpty: Boolean) {
+        if (isEmpty) {
+            menu.getItem(1).setIcon(ContextCompat.getDrawable(this, R.drawable.cart_icon));
+            return
+        }
+        menu.getItem(1).setIcon(ContextCompat.getDrawable(this, R.drawable.cart_full_icon));
     }
 
 }

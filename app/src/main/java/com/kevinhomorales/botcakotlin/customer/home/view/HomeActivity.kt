@@ -8,12 +8,16 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kevinhomorales.botcakotlin.NetworkManager.model.ProductsModel
+import com.kevinhomorales.botcakotlin.NetworkManager.response.BannersResponse
 import com.kevinhomorales.botcakotlin.NetworkManager.response.CategoriesResponse
 import com.kevinhomorales.botcakotlin.NetworkManager.response.Category
+import com.kevinhomorales.botcakotlin.NetworkManager.response.CouponResponse
 import com.kevinhomorales.botcakotlin.NetworkManager.response.ProductsResponse
 import com.kevinhomorales.botcakotlin.R
+import com.kevinhomorales.botcakotlin.customer.coupon.view.CouponActivity
 import com.kevinhomorales.botcakotlin.customer.home.view.adapter.CategoryAdapter
 import com.kevinhomorales.botcakotlin.customer.home.view.adapter.OnCategoryClickListener
+import com.kevinhomorales.botcakotlin.customer.home.view.adapterbanner.BannerAdapter
 import com.kevinhomorales.botcakotlin.customer.home.viewmodel.HomeViewModel
 import com.kevinhomorales.botcakotlin.customer.login.view.LoginActivity
 import com.kevinhomorales.botcakotlin.customer.products.view.ProductsActivity
@@ -31,7 +35,7 @@ class HomeActivity : MainActivity(), OnCategoryClickListener {
     private lateinit var binding: ActivityHomeBinding
     private lateinit var viewModel: HomeViewModel
     private lateinit var categoryAdapter: CategoryAdapter
-
+    private lateinit var bannerAdapter: BannerAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
@@ -42,10 +46,14 @@ class HomeActivity : MainActivity(), OnCategoryClickListener {
         viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         viewModel.view = this
         categoryAdapter = CategoryAdapter(this, this)
+        bannerAdapter = BannerAdapter(this)
         binding.categoriesId.setHasFixedSize(true)
         binding.categoriesId.layoutManager = LinearLayoutManager(this)
         binding.categoriesId.setLayoutManager(GridLayoutManager(this, 2))
         binding.categoriesId.adapter = categoryAdapter
+        binding.bannerId.adapter = bannerAdapter
+        viewModel.getCoupons(this)
+        viewModel.getBanners(this)
         if (intent != null) {
             val loginResponse = UserManager.shared.getUser(this)
             if (!(loginResponse.me.token!!.isEmpty())) {
@@ -71,6 +79,12 @@ class HomeActivity : MainActivity(), OnCategoryClickListener {
         categoryAdapter.notifyDataSetChanged()
     }
 
+    fun updateTableBanners(bannersResponse: BannersResponse) {
+        val banner = bannersResponse.banners
+        bannerAdapter.setListData(banner)
+        bannerAdapter.notifyDataSetChanged()
+    }
+
     override fun categoryClick(category: Category) {
         val categoryID = "?categoryID=${category.categoryID}"
         val page = "&page=1&dataByPage=20"
@@ -86,6 +100,7 @@ class HomeActivity : MainActivity(), OnCategoryClickListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.profile_id -> {
+                tapHaptic()
                 if (viewModel.isGuest(this)) {
                     Alerts.twoOptions(getString(R.string.alert_title), getString(R.string.please_login), getString(R.string.accept), getString(R.string.cancel), this) { isOK ->
                         if (isOK) {
@@ -112,6 +127,12 @@ class HomeActivity : MainActivity(), OnCategoryClickListener {
         val intent = Intent(this, ProductsActivity::class.java)
         intent.putExtra(Constants.productsResponseKey, productsResponse as Serializable)
         hideLoading()
+        startActivity(intent)
+    }
+
+    fun openCouponsView(couponResponse: CouponResponse) {
+        val intent = Intent(this, CouponActivity::class.java)
+        intent.putExtra(Constants.couponResponseKey, couponResponse as Serializable)
         startActivity(intent)
     }
 

@@ -2,7 +2,9 @@ package com.kevinhomorales.botcakotlin.customer.home.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.kevinhomorales.botcakotlin.NetworkManager.model.ProductsModel
+import com.kevinhomorales.botcakotlin.NetworkManager.request.BannersRequest
 import com.kevinhomorales.botcakotlin.NetworkManager.request.CategoriesRequest
+import com.kevinhomorales.botcakotlin.NetworkManager.request.CouponMeRequest
 import com.kevinhomorales.botcakotlin.NetworkManager.request.ProductsRequest
 import com.kevinhomorales.botcakotlin.NetworkManager.response.CategoriesResponse
 import com.kevinhomorales.botcakotlin.R
@@ -78,4 +80,52 @@ class HomeViewModel: ViewModel() {
         return UserManager.shared.getUser(mainActivity).me.token == GUEST_TOKEN
     }
 
+    fun getCoupons(mainActivity: MainActivity) {
+        var token = UserManager.shared.getUser(mainActivity).me.token
+        if (token == null) {
+            token = GUEST_LOGIN
+        }
+        CoroutineScope(Dispatchers.IO).launch {
+            val call = mainActivity.getRetrofit().create(CouponMeRequest::class.java).getCoupons("coupons/me?status=AVAILABLE&slugCoupon=FIRST_BUY", token)
+            val response = call.body()
+            mainActivity.runOnUiThread {
+                if(call.isSuccessful) {
+                    val couponMeResponse = response!!
+                    if (!couponMeResponse.coupons.isEmpty()) {
+                        view.openCouponsView(couponMeResponse)
+                    }
+                } else {
+                    val error = call.errorBody()
+                    val jsonObject = JSONObject(error!!.string())
+                    val message = jsonObject.getString("status")
+                    if (message == Constants.sessionExpired) {
+                        Alerts.warning(message, mainActivity.getString(R.string.error_message), mainActivity)
+                        return@runOnUiThread
+                    }
+                    Alerts.warning(message, mainActivity.getString(R.string.error_message), mainActivity)
+                }
+            }
+        }
+    }
+
+    fun getBanners(mainActivity: MainActivity) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val call = mainActivity.getRetrofit().create(BannersRequest::class.java).getBanners("banners")
+            val response = call.body()
+            mainActivity.runOnUiThread {
+                if(call.isSuccessful) {
+                    view.updateTableBanners(response!!)
+                } else {
+                    val error = call.errorBody()
+                    val jsonObject = JSONObject(error!!.string())
+                    val message = jsonObject.getString("status")
+                    if (message == Constants.sessionExpired) {
+                        Alerts.warning(message, mainActivity.getString(R.string.error_message), mainActivity)
+                        return@runOnUiThread
+                    }
+                    Alerts.warning(message, mainActivity.getString(R.string.error_message), mainActivity)
+                }
+            }
+        }
+    }
 }
