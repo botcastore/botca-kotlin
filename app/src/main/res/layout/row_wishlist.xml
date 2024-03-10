@@ -28,6 +28,7 @@
             android:layout_gravity="center"
             android:layout_marginRight="8dp"
             android:adjustViewBounds="true"
+            android:scaleType="fitXY"
             android:src="@drawable/category_hint"/>
 
         <LinearLayout
@@ -84,6 +85,7 @@
                 android:layout_weight="1"
                 android:gravity="center|right"
                 android:text="Categoría #1"
+                android:textStyle="bold"
                 android:textColor="@color/blackColor"
                 android:textSize="17sp" />
         </LinearLayout>

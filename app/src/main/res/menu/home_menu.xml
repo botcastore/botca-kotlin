@@ -6,4 +6,10 @@
         android:icon="@drawable/profile_icon"
         android:title="@string/menu_profile"
         app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/about_us_id"
+        android:icon="@drawable/info_icon"
+        android:title="@string/menu_about_us"
+        app:showAsAction="ifRoom"/>
 </menu>

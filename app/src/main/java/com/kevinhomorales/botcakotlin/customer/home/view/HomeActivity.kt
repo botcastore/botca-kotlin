@@ -14,6 +14,7 @@ import com.kevinhomorales.botcakotlin.NetworkManager.response.Category
 import com.kevinhomorales.botcakotlin.NetworkManager.response.CouponResponse
 import com.kevinhomorales.botcakotlin.NetworkManager.response.ProductsResponse
 import com.kevinhomorales.botcakotlin.R
+import com.kevinhomorales.botcakotlin.customer.aboutus.view.AboutUsActivity
 import com.kevinhomorales.botcakotlin.customer.coupon.view.CouponActivity
 import com.kevinhomorales.botcakotlin.customer.home.view.adapter.CategoryAdapter
 import com.kevinhomorales.botcakotlin.customer.home.view.adapter.OnCategoryClickListener
@@ -112,6 +113,11 @@ class HomeActivity : MainActivity(), OnCategoryClickListener {
                 }
                 true
             }
+            R.id.about_us_id -> {
+                tapHaptic()
+                openAboutUsView()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -144,5 +150,10 @@ class HomeActivity : MainActivity(), OnCategoryClickListener {
     }
 
     override fun onBackPressed() {
+    }
+
+    private fun openAboutUsView() {
+        val intent = Intent(this, AboutUsActivity::class.java)
+        startActivity(intent)
     }
 }

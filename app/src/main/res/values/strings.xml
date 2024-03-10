@@ -15,6 +15,7 @@
     <string name="menu_cart">Cart</string>
     <string name="menu_address">Address</string>
     <string name="menu_cards">Cards</string>
+    <string name="menu_about_us">About Us</string>
 
     <!--    CONSTANTS-->
     <string name="error_title">Error!</string>
@@ -23,6 +24,9 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="accept">Aceptar</string>
+    <string name="email_botca">info@botca.store</string>
+    <string name="subject">Information</string>
+    <string name="body">Hi, my name is...</string>
 
     <!--    LOGIN VIEW-->
     <string name="loading_login">LOADING INFORMATION</string>
@@ -122,5 +126,18 @@
 
     <!--    CARD-->
     <string name="cart_title_view">Cart</string>
+
+    <!--    ABOUT US-->
+    <string name="about_us_title_view">About Us</string>
+    <string name="about_us_title">Welcome to Botca!</string>
+    <string name="about_us_subtitle">At BOTCA, we understand that fashion is more than just clothing; It is an expression of style, personality and confidence. Founded in the heart of Ecuador, we are an innovative platform that brings a unique shopping experience to your fingertips, fusing comfort with elegance for teenagers and women of all ages.</string>
+    <string name="about_us_op_one_title">Our mission</string>
+    <string name="about_us_op_one_subtitle">Our mission is to redefine the way you relate to fashion. We stand out by offering a careful selection of garments that encapsulate the essence of CLASSY CHIC style, fusing the comfort you need with the sophistication you deserve.</string>
+    <string name="about_us_op_two_title">That makes us different?</string>
+    <string name="about_us_op_two_subtitle">In a market saturated with options, BOTCA stands out for bringing a fresh and unique proposal. We are not just a clothing store, we are an experience.</string>
+    <string name="about_us_op_three_title">Join Our Community</string>
+    <string name="about_us_op_three_subtitle">We invite you to explore our exclusive selection and be part of our community of fashion lovers who are looking for a style that makes you feel very confident so that you can project yourself as a superwoman. At BOTCA, fashion is not just a trend, it is a way of life.</string>
+    <string name="about_us_footer">Thank you for choosing us to be your preferred fashion destination!</string>
+    <string name="contact_id">Contact</string>
 
 </resources>
