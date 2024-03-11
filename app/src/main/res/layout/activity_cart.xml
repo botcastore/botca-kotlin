@@ -7,6 +7,7 @@
     tools:context=".customer.cart.view.CartActivity">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/products_recycler_id"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
@@ -37,6 +38,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/coupons_text_id"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
@@ -70,6 +72,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@id/discount_text_id"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
@@ -102,6 +105,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/payment_method_text_id"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
@@ -123,7 +127,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView">
+        app:layout_constraintBottom_toTopOf="@+id/subtotal_text_id">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -135,6 +139,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/address_text_id"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
@@ -149,11 +154,11 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/subtotal_text_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="25dp"
         android:layout_marginBottom="8dp"
         android:gravity="right|center"
         android:text="@string/sub_total_cost_value"
@@ -171,7 +176,7 @@
         android:text="@string/delivery_cost_value"
         android:textColor="@color/blackColor"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="25dp"
         android:layout_marginBottom="8dp"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -185,7 +190,7 @@
         android:text="@string/total_value"
         android:textColor="@color/blackColor"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="25dp"
         android:layout_marginBottom="8dp"
         android:textSize="27sp"
         android:textStyle="bold"

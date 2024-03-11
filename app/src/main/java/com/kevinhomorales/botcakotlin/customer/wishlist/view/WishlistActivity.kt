@@ -23,6 +23,7 @@ import com.kevinhomorales.botcakotlin.customer.wishlist.viewmodel.WishlistViewMo
 import com.kevinhomorales.botcakotlin.databinding.ActivityWishlistBinding
 import com.kevinhomorales.botcakotlin.main.MainActivity
 import com.kevinhomorales.botcakotlin.utils.Constants
+import java.io.Serializable
 
 class WishlistActivity : MainActivity(), OnWishlistClickListener {
 
@@ -78,6 +79,7 @@ class WishlistActivity : MainActivity(), OnWishlistClickListener {
 
     fun openCartView(cartAvailableResponse: CartAvailableResponse) {
         val intent = Intent(this, CartActivity::class.java)
+        intent.putExtra(Constants.cartAvailableResponseKey, cartAvailableResponse as Serializable)
         startActivity(intent)
     }
 

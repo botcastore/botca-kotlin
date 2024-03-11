@@ -38,6 +38,7 @@ data class ProductData (
     val productID: String,
     val name: String,
     val price: String,
+    val finalPrice: String,
     val productSlug: String,
     val discount: Any? = null,
     val description: String
