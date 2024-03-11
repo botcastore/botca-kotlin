@@ -31,6 +31,11 @@ class ProductViewModel: ViewModel() {
             val response = call.body()
             mainActivity.runOnUiThread {
                 if(call.isSuccessful) {
+                    if (response!!.cart.products.isEmpty()) {
+                        Alerts.warning(mainActivity.getString(R.string.alert_title), mainActivity.getString(R.string.no_products_in_cart),mainActivity)
+                        mainActivity.hideLoading()
+                        return@runOnUiThread
+                    }
                     view.openCartView(response!!)
                 } else {
                     val error = call.errorBody()

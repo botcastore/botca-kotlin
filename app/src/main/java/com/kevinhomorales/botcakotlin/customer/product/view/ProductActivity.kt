@@ -20,6 +20,7 @@ import com.kevinhomorales.botcakotlin.customer.coupon.view.CouponActivity
 import com.kevinhomorales.botcakotlin.customer.product.viewmodel.ProductViewModel
 import com.kevinhomorales.botcakotlin.databinding.ActivityProductBinding
 import com.kevinhomorales.botcakotlin.main.MainActivity
+import com.kevinhomorales.botcakotlin.utils.Alerts
 import com.kevinhomorales.botcakotlin.utils.Constants
 import java.io.File
 import java.io.Serializable
@@ -107,15 +108,16 @@ class ProductActivity : MainActivity() {
 
     fun openCartView(cartAvailableResponse: CartAvailableResponse) {
         val intent = Intent(this, CartActivity::class.java)
+        intent.putExtra(Constants.cartAvailableResponseKey, cartAvailableResponse as Serializable)
         startActivity(intent)
     }
 
     fun updateCartIcon(isEmpty: Boolean) {
         if (isEmpty) {
-            menu.getItem(0).setIcon(ContextCompat.getDrawable(this, R.drawable.cart_icon));
+            menu.getItem(0).setIcon(ContextCompat.getDrawable(this, R.drawable.cart_icon))
             return
         }
-        menu.getItem(0).setIcon(ContextCompat.getDrawable(this, R.drawable.cart_full_icon));
+        menu.getItem(0).setIcon(ContextCompat.getDrawable(this, R.drawable.cart_full_icon))
     }
 
 }

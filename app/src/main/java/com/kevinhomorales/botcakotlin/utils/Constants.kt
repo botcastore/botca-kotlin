@@ -18,6 +18,7 @@ class Constants {
         val verifyMemberResponse = "VERIFY_MEMBER_RESPONSE_KEY"
         val productsResponseKey = "PRODUCTS_RESPONSE_KEY"
         val couponResponseKey = "COUPON_RESPONSE_KEY"
+        val cartAvailableResponseKey = "CART_AVAILABLE_KEY"
         val addressResponseKey = "ADDRESSES_RESPONSE_KEY"
         val cardsResponseKey = "CARDS_RESPONSE_KEY"
         val favoritesResponseKey = "FAVORITES_RESPONSE_KEY"

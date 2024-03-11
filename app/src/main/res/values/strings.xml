@@ -118,6 +118,7 @@
     <string name="description">Description</string>
     <string name="size_guide">Sizes</string>
     <string name="loading_cart">LOADING CART</string>
+    <string name="no_products_in_cart">Not Products in Cart</string>
 
     <!--    PRODUCT-->
     <string name="colors">Colors</string>
@@ -139,5 +140,19 @@
     <string name="about_us_op_three_subtitle">We invite you to explore our exclusive selection and be part of our community of fashion lovers who are looking for a style that makes you feel very confident so that you can project yourself as a superwoman. At BOTCA, fashion is not just a trend, it is a way of life.</string>
     <string name="about_us_footer">Thank you for choosing us to be your preferred fashion destination!</string>
     <string name="contact_id">Contact</string>
+
+    <!--    CART-->
+    <string name="cart_title_button">Check Out</string>
+    <string name="total_value">Total: $25.00</string>
+    <string name="delivery_cost_value">Delivery Cost: $5.00</string>
+    <string name="sub_total_cost_value">SubTotal: $20.00</string>
+    <string name="delivery_address_title">Delivery Address:</string>
+    <string name="delivery_address_value">Choose your address</string>
+    <string name="payment_method_title">Payment Method:</string>
+    <string name="payment_method_value">Choose your payment method</string>
+    <string name="discount_choose_title">Discount:</string>
+    <string name="discount_choose_value">Discount applied</string>
+    <string name="coupons_title">Coupons:</string>
+    <string name="coupons_value">Choose your dicount</string>
 
 </resources>

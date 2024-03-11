@@ -20,6 +20,7 @@ import com.kevinhomorales.botcakotlin.customer.products.view.adapter.ProductsAda
 import com.kevinhomorales.botcakotlin.customer.products.viewmodel.ProductsViewModel
 import com.kevinhomorales.botcakotlin.databinding.ActivityProductsBinding
 import com.kevinhomorales.botcakotlin.main.MainActivity
+import com.kevinhomorales.botcakotlin.utils.Alerts
 import com.kevinhomorales.botcakotlin.utils.Constants
 import java.io.Serializable
 
@@ -90,6 +91,7 @@ class ProductsActivity : MainActivity(), OnProductClickListener {
 
     fun openCartView(cartAvailableResponse: CartAvailableResponse) {
         val intent = Intent(this, CartActivity::class.java)
+        intent.putExtra(Constants.cartAvailableResponseKey, cartAvailableResponse as Serializable)
         startActivity(intent)
     }
 
