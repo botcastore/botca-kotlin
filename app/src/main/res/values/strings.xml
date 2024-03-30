@@ -140,7 +140,7 @@
     <string name="about_us_op_three_title">Join Our Community</string>
     <string name="about_us_op_three_subtitle">We invite you to explore our exclusive selection and be part of our community of fashion lovers who are looking for a style that makes you feel very confident so that you can project yourself as a superwoman. At BOTCA, fashion is not just a trend, it is a way of life.</string>
     <string name="about_us_footer">Thank you for choosing us to be your preferred fashion destination!</string>
-    <string name="contact_id">Contact</string>
+    <string name="contact_button">Contact</string>
 
     <!--    CART-->
     <string name="cart_title_button">Check Out</string>
