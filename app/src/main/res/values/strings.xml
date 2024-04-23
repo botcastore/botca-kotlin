@@ -160,6 +160,7 @@
     <string name="deleting_product">DELETE PRODUCT</string>
     <string name="delete_cart_question">Do you want to delete your cart?</string>
     <string name="delete_cart">Delete</string>
+    <string name="update_cart">UPDATE CART</string>
 
     <!--    PURSCHASE SUCCESS-->
     <string name="thanks_purchases">Thanks!</string>

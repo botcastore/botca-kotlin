@@ -1,11 +1,15 @@
 package com.kevinhomorales.botcakotlin.customer.cart.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.google.gson.JsonObject
 import com.kevinhomorales.botcakotlin.NetworkManager.model.ClearCartModel
 import com.kevinhomorales.botcakotlin.NetworkManager.model.RemoveProductFromCartModel
+import com.kevinhomorales.botcakotlin.NetworkManager.model.UpdateProductCartModel
+import com.kevinhomorales.botcakotlin.NetworkManager.model.VerifyMemberModel
 import com.kevinhomorales.botcakotlin.NetworkManager.request.AddressRequest
 import com.kevinhomorales.botcakotlin.NetworkManager.request.ClearCartRequest
 import com.kevinhomorales.botcakotlin.NetworkManager.request.RemoveProductFromCartRequest
+import com.kevinhomorales.botcakotlin.NetworkManager.request.UpdateProductCartRequest
 import com.kevinhomorales.botcakotlin.NetworkManager.response.Cart
 import com.kevinhomorales.botcakotlin.NetworkManager.response.CartAvailableResponse
 import com.kevinhomorales.botcakotlin.NetworkManager.response.UseCoupon
@@ -47,8 +51,39 @@ class CartViewModel: ViewModel() {
         return "${mainActivity.getString(R.string.delivery_cost_value)}${cartAvailableResponse.shipping}"
     }
 
-    fun updateProductInCart(cartProductID: String, quantity: Int) {
+    fun updateProductInCart(cartProductID: String, quantity: Int, mainActivity: MainActivity) {
+        mainActivity.showLoading(mainActivity.getString(R.string.update_cart))
+        var token = UserManager.shared.getUser(mainActivity).me.token
+        if (token == null) {
+            token = GUEST_LOGIN
+        }
+        val model = UpdateProductCartModel(cartProductID, quantity)
+        CoroutineScope(Dispatchers.IO).launch {
+            val call = mainActivity.getRetrofit().create(UpdateProductCartRequest::class.java).update("carts/${model.cartProductID}", token!!, jsonUpdateProductInCart(model))
+            val response = call.body()
+            mainActivity.runOnUiThread {
+                if(call.isSuccessful) {
+                    cartAvailableResponse = response!!
+                    view.reloadData()
+                } else {
+                    val error = call.errorBody()
+                    val jsonObject = JSONObject(error!!.string())
+                    val message = jsonObject.getString("status")
+                    if (message == Constants.sessionExpired) {
+                        Alerts.warning(message, mainActivity.getString(R.string.error_message), mainActivity)
+                        return@runOnUiThread
+                    }
+                    Alerts.warning(message, mainActivity.getString(R.string.error_message), mainActivity)
+                }
+                mainActivity.hideLoading()
+            }
+        }
+    }
 
+    private fun jsonUpdateProductInCart(updateProductCartModel: UpdateProductCartModel): JsonObject {
+        val model = JsonObject()
+        model.addProperty("quantity", updateProductCartModel.quantity)
+        return model
     }
 
     fun deleteProductInCart(cartProductID: String, mainActivity: MainActivity) {

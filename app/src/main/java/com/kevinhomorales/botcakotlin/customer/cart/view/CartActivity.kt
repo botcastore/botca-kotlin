@@ -15,6 +15,7 @@ import com.kevinhomorales.botcakotlin.NetworkManager.response.ProductCart
 import com.kevinhomorales.botcakotlin.R
 import com.kevinhomorales.botcakotlin.customer.address.view.AddressActivity
 import com.kevinhomorales.botcakotlin.customer.cart.view.adapter.CartAdapter
+import com.kevinhomorales.botcakotlin.customer.cart.view.adapter.OnAddRestClickListener
 import com.kevinhomorales.botcakotlin.customer.cart.view.adapter.OnCartClickListener
 import com.kevinhomorales.botcakotlin.customer.cart.viewmodel.CartViewModel
 import com.kevinhomorales.botcakotlin.customer.payments.cards.view.CardsActivity
@@ -27,7 +28,7 @@ import com.kevinhomorales.botcakotlin.utils.Constants
 import com.kevinhomorales.botcakotlin.utils.SwipeToDeleteCallBackCart
 import java.io.Serializable
 
-class CartActivity : MainActivity(), OnCartClickListener {
+class CartActivity : MainActivity(), OnCartClickListener, OnAddRestClickListener {
 
     lateinit var binding: ActivityCartBinding
     lateinit var viewModel: CartViewModel
@@ -46,8 +47,7 @@ class CartActivity : MainActivity(), OnCartClickListener {
         if (intent.extras != null) {
             viewModel.cartAvailableResponse = intent.extras!!.get(Constants.cartAvailableResponseKey) as CartAvailableResponse
         }
-
-        cartAdapter = CartAdapter(this, this)
+        cartAdapter = CartAdapter(this, this, this)
         binding.productsRecyclerId.layoutManager = LinearLayoutManager(this)
         binding.productsRecyclerId.adapter = cartAdapter
         cartAdapter.setListData(viewModel.cartAvailableResponse.cart.products)
@@ -137,12 +137,21 @@ class CartActivity : MainActivity(), OnCartClickListener {
     }
 
     fun reloadData() {
+        cartAdapter = CartAdapter(this, this, this)
+        binding.productsRecyclerId.layoutManager = LinearLayoutManager(this)
+        binding.productsRecyclerId.adapter = cartAdapter
         cartAdapter.setListData(viewModel.cartAvailableResponse.cart.products)
         cartAdapter.notifyDataSetChanged()
+        binding.totalTextId.setText(viewModel.getTotalAmount(this))
+        binding.deliveryCostTextId.setText(viewModel.getDeliveryCost(this))
+        binding.subtotalTextId.setText(viewModel.getSubTotalAmount(this))
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
     }
 
+    override fun getQuatity(cartProductID: String, quantity: Int) {
+        viewModel.updateProductInCart(cartProductID, quantity, this)
+    }
 }

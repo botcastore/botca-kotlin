@@ -12,7 +12,7 @@ import com.kevinhomorales.botcakotlin.NetworkManager.response.ProductCart
 import com.kevinhomorales.botcakotlin.R
 import com.kevinhomorales.botcakotlin.databinding.RowCartBinding
 
-class CartAdapter(private val context: Context, var itemClickListener: OnCartClickListener): RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
+class CartAdapter(private val context: Context, var itemClickListener: OnCartClickListener, var itemAddRestClickListener: OnAddRestClickListener): RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
     private lateinit var binding: RowCartBinding
     private var dataList = mutableListOf<ProductCart>()
 
@@ -55,7 +55,13 @@ class CartAdapter(private val context: Context, var itemClickListener: OnCartCli
             } else {
                 itemBinding.priceId.text = "$ ${model.product.finalPrice}"
             }
+            itemBinding.numberPickerId.minValue = 1
+            itemBinding.numberPickerId.maxValue = 99
+            itemBinding.numberPickerId.value = model.quantity
             itemView.setOnClickListener { itemClickListener.cartClick(model) }
+            itemBinding.numberPickerId.setOnValueChangedListener { _, _, newVal ->
+                itemAddRestClickListener.getQuatity(model.cartProductID, newVal)
+            }
         }
     }
 }
