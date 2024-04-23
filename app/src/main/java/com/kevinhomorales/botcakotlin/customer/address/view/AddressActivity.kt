@@ -17,7 +17,7 @@ import com.kevinhomorales.botcakotlin.customer.address.view.adapter.AddressAdapt
 import com.kevinhomorales.botcakotlin.customer.address.view.adapter.OnAddressClickListener
 import com.kevinhomorales.botcakotlin.customer.address.viewmodel.AddressViewModel
 import com.kevinhomorales.botcakotlin.customer.home.view.adapter.CategoryAdapter
-import com.kevinhomorales.botcakotlin.customer.payments.addcard.view.AddCardActivity
+import com.kevinhomorales.botcakotlin.customer.payments.cards.addcard.view.AddCardActivity
 import com.kevinhomorales.botcakotlin.customer.profile.viewmodel.ProfileViewModel
 import com.kevinhomorales.botcakotlin.databinding.ActivityAddressBinding
 import com.kevinhomorales.botcakotlin.main.MainActivity

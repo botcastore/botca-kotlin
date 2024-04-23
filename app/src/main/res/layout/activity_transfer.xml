@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".customer.payments.transfer.view.TransferActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:padding="16dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/transfer_info_image_id"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginBottom="16dp"
+                android:layout_gravity="center"
+                android:src="@drawable/transferinfo"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/transfer_image_explication"
+                android:textColor="@color/blackColor"
+                android:textSize="14sp"
+                android:textStyle="normal" />
+
+            <ImageView
+                android:id="@+id/invoice_image_id"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginBottom="16dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/invoiceimage"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/notes"
+                    android:textColor="@color/blackColor"
+                    android:textSize="14sp"
+                    android:textStyle="normal" />
+
+                <EditText
+                    android:id="@+id/full_name_edit_text_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:textColor="@color/blackColor"
+                    android:layout_marginTop="8dp"
+                    android:inputType="textPersonName"
+                    android:textSize="14sp"
+                    android:textStyle="normal" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/add_transfer_id"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:backgroundTint="@color/blackColor"
+                android:layout_marginTop="16dp"
+                android:text="@string/add_transfer_title_view"
+                android:textAllCaps="false"
+                android:textColor="@color/whiteColor"
+                android:textStyle="normal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+
+        </LinearLayout>
+
+
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

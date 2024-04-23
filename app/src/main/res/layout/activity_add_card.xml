@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".customer.payments.addcard.view.AddCardActivity">
+    tools:context=".customer.payments.cards.addcard.view.AddCardActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -96,7 +96,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="8dp"
-                    android:inputType="number"
                     android:textColor="@color/blackColor"
                     android:textSize="14sp"
                     android:textStyle="normal" />

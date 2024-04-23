@@ -10,7 +10,7 @@ import com.kevinhomorales.botcakotlin.NetworkManager.response.Card
 import com.kevinhomorales.botcakotlin.NetworkManager.response.CardsReponse
 import com.kevinhomorales.botcakotlin.R
 import com.kevinhomorales.botcakotlin.customer.login.view.LoginActivity
-import com.kevinhomorales.botcakotlin.customer.payments.addcard.view.AddCardActivity
+import com.kevinhomorales.botcakotlin.customer.payments.cards.addcard.view.AddCardActivity
 import com.kevinhomorales.botcakotlin.customer.payments.cards.view.adapter.CardsAdapter
 import com.kevinhomorales.botcakotlin.customer.payments.cards.view.adapter.OnCardsClickListener
 import com.kevinhomorales.botcakotlin.customer.payments.cards.viewmodel.CardsViewModel

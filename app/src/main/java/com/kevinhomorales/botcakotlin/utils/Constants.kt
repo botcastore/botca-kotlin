@@ -26,6 +26,8 @@ class Constants {
         val invocesKey = "INVOICES_KEY"
         val invoceKey = "INVOICE_KEY"
         val usersKey = "USERS_KEY"
+        val paymentsMethodsKey = "PAYMENTS_METHODS_KEY"
+        val transferToCheckOutKey = "TRANSFER_TO_CHECKOUT_KEY"
 
         // SERVER - ERROR
         val sessionExpired = "jwt expired"

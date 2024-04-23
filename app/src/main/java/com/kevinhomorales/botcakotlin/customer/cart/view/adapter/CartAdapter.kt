@@ -41,7 +41,7 @@ class CartAdapter(private val context: Context, var itemClickListener: OnCartCli
     inner class CartViewHolder(private val itemBinding: RowCartBinding): RecyclerView.ViewHolder(itemBinding.root) {
         fun bindView(model: ProductCart) {
             Glide.with(context)
-                .load(model.image.first())
+                .load(model.image)
                 .centerCrop()
                 .transition(DrawableTransitionOptions.withCrossFade(2))
                 .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))

@@ -157,5 +157,23 @@
     <string name="coupons_value">Choose your dicount</string>
     <string name="color">Color</string>
     <string name="size">Size</string>
+    <string name="deleting_product">DELETE PRODUCT</string>
+    <string name="delete_cart_question">Do you want to delete your cart?</string>
+    <string name="delete_cart">Delete</string>
+
+    <!--    PURSCHASE SUCCESS-->
+    <string name="thanks_purchases">Thanks!</string>
+
+    <!--    PAYMENTS METHODS-->
+    <string name="payments_methods_title">Payments Methods</string>
+    <string name="payments_methods_card">Card</string>
+    <string name="payments_methods_transfer">Transfer</string>
+
+    <!--    TRANSFER-->
+    <string name="transfer_title">Transfer</string>
+    <string name="add_transfer_title_view">Add Transfer</string>
+    <string name="notes">Notes</string>
+    <string name="transfer_image_explication">Transfer the money and upload the invoice. Push the image to upload the invoice</string>
+    <string name="please_choose_from_gallery">Please choose a image from gallery</string>
 
 </resources>

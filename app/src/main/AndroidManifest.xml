@@ -3,6 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -14,6 +20,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Botcakotlin"
         tools:targetApi="31">
+        <activity
+            android:name=".customer.payments.transfer.view.TransferActivity"
+            android:exported="false" />
+        <activity
+            android:name=".customer.payments.paymentsmethods.view.PaymentsMethodsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".customer.cart.purchasesuccess.view.PurchaseSuccessActivity"
+            android:exported="false" />
         <activity
             android:name=".customer.aboutus.view.AboutUsActivity"
             android:exported="false" />
@@ -27,7 +42,7 @@
             android:name=".customer.address.addaddress.view.AddAddressActivity"
             android:exported="false" />
         <activity
-            android:name=".customer.payments.addcard.view.AddCardActivity"
+            android:name=".customer.payments.cards.addcard.view.AddCardActivity"
             android:exported="false" />
         <activity
             android:name=".customer.wishlist.view.WishlistActivity"
