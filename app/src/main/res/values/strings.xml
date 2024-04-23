@@ -17,6 +17,7 @@
     <string name="menu_cards">Cards</string>
     <string name="menu_about_us">About Us</string>
     <string name="menu_cart_remove">Cart Remove</string>
+    <string name="menu_coupons">Coupons</string>
 
     <!--    CONSTANTS-->
     <string name="error_title">Error!</string>
@@ -49,6 +50,7 @@
     <string name="type_email">Type Email</string>
     <string name="phone">Phone</string>
     <string name="type_phone">Type Phone</string>
+    <string name="complete_data">Please Complete Data to Continue</string>
 
     <!--    HOME VIEW-->
     <string name="loading_categories">LOADING CATEGORIES</string>
@@ -73,6 +75,14 @@
 
     <!--    ADD ADDRESS VIEW-->
     <string name="add_addresses_title_view">Add Address</string>
+    <string name="country">País</string>
+    <string name="state">State</string>
+    <string name="city">City</string>
+    <string name="address">Address</string>
+    <string name="reference">Reference</string>
+    <string name="delivery_by">Delivery by</string>
+    <string name="id">ID</string>
+    <string name="postal_code">Postal Code</string>
 
     <!--    INFO VIEW-->
     <string name="info_title_view">Information</string>
@@ -93,14 +103,7 @@
     <string name="cvc">CVC</string>
     <string name="card_number">Número de la tarjeta</string>
     <string name="card_name">Nombre de la tarjeta</string>
-    <string name="country">País</string>
-    <string name="state">State</string>
-    <string name="city">City</string>
-    <string name="address">Address</string>
-    <string name="reference">Reference</string>
-    <string name="delivery_by">Delivery by</string>
-    <string name="id">ID</string>
-    <string name="postal_code">Postal Code</string>
+    <string name="uploading_card">UPLOAD CARD</string>
 
     <!--    COUPON VIEW-->
     <string name="coupon_title_view">Coupon</string>
@@ -161,6 +164,7 @@
     <string name="delete_cart_question">Do you want to delete your cart?</string>
     <string name="delete_cart">Delete</string>
     <string name="update_cart">UPDATE CART</string>
+    <string name="loading_coupons">LOADING COUPONS</string>
 
     <!--    PURSCHASE SUCCESS-->
     <string name="thanks_purchases">Thanks!</string>
@@ -176,5 +180,8 @@
     <string name="notes">Notes</string>
     <string name="transfer_image_explication">Transfer the money and upload the invoice. Push the image to upload the invoice</string>
     <string name="please_choose_from_gallery">Please choose a image from gallery</string>
+
+    <!--    COUPONS-->
+    <string name="coupons_title_view">Coupons</string>
 
 </resources>

@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kevinhomorales.botcakotlin.NetworkManager.response.AddressResponse
 import com.kevinhomorales.botcakotlin.NetworkManager.response.CardsReponse
 import com.kevinhomorales.botcakotlin.NetworkManager.response.CartAvailableResponse
+import com.kevinhomorales.botcakotlin.NetworkManager.response.CouponResponse
+import com.kevinhomorales.botcakotlin.NetworkManager.response.CouponsListResponse
+import com.kevinhomorales.botcakotlin.NetworkManager.response.CouponsResponse
 import com.kevinhomorales.botcakotlin.NetworkManager.response.ProductCart
 import com.kevinhomorales.botcakotlin.R
 import com.kevinhomorales.botcakotlin.customer.address.view.AddressActivity
@@ -18,6 +21,8 @@ import com.kevinhomorales.botcakotlin.customer.cart.view.adapter.CartAdapter
 import com.kevinhomorales.botcakotlin.customer.cart.view.adapter.OnAddRestClickListener
 import com.kevinhomorales.botcakotlin.customer.cart.view.adapter.OnCartClickListener
 import com.kevinhomorales.botcakotlin.customer.cart.viewmodel.CartViewModel
+import com.kevinhomorales.botcakotlin.customer.coupon.view.CouponActivity
+import com.kevinhomorales.botcakotlin.customer.coupons.view.CouponsActivity
 import com.kevinhomorales.botcakotlin.customer.payments.cards.view.CardsActivity
 import com.kevinhomorales.botcakotlin.customer.payments.paymentsmethods.view.PaymentsMethodsActivity
 import com.kevinhomorales.botcakotlin.customer.payments.transfer.model.TransferToCheckOut
@@ -90,6 +95,7 @@ class CartActivity : MainActivity(), OnCartClickListener, OnAddRestClickListener
         }
         binding.couponsLayoutId.setOnClickListener {
             tapHaptic()
+            viewModel.getCoupons(this)
         }
     }
 
@@ -124,9 +130,9 @@ class CartActivity : MainActivity(), OnCartClickListener, OnAddRestClickListener
         startActivity(intent)
     }
 
-    fun openCouponsView(cardsReponse: CardsReponse) {
-        val intent = Intent(this, CardsActivity::class.java)
-        intent.putExtra(Constants.cardsResponseKey, cardsReponse as Serializable)
+    fun openCouponsView(couponsListResponse: CouponsListResponse) {
+        val intent = Intent(this, CouponsActivity::class.java)
+        intent.putExtra(Constants.couponsListResponseKey, couponsListResponse as Serializable)
         hideLoading()
         startActivity(intent)
     }

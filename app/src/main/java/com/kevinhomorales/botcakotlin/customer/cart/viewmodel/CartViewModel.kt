@@ -8,6 +8,7 @@ import com.kevinhomorales.botcakotlin.NetworkManager.model.UpdateProductCartMode
 import com.kevinhomorales.botcakotlin.NetworkManager.model.VerifyMemberModel
 import com.kevinhomorales.botcakotlin.NetworkManager.request.AddressRequest
 import com.kevinhomorales.botcakotlin.NetworkManager.request.ClearCartRequest
+import com.kevinhomorales.botcakotlin.NetworkManager.request.CouponsListRequest
 import com.kevinhomorales.botcakotlin.NetworkManager.request.RemoveProductFromCartRequest
 import com.kevinhomorales.botcakotlin.NetworkManager.request.UpdateProductCartRequest
 import com.kevinhomorales.botcakotlin.NetworkManager.response.Cart
@@ -170,8 +171,31 @@ class CartViewModel: ViewModel() {
         }
     }
 
-    fun getCoupons() {
-
+    fun getCoupons(mainActivity: MainActivity) {
+        mainActivity.showLoading(mainActivity.getString(R.string.loading_coupons))
+        var token = UserManager.shared.getUser(mainActivity).me.token
+        if (token == null) {
+            token = GUEST_LOGIN
+        }
+        CoroutineScope(Dispatchers.IO).launch {
+            val call = mainActivity.getRetrofit().create(CouponsListRequest::class.java).getCoupons("coupons/me?status=AVAILABLE", token!!)
+            val response = call.body()
+            mainActivity.runOnUiThread {
+                if(call.isSuccessful) {
+                    view.openCouponsView(response!!)
+                } else {
+                    val error = call.errorBody()
+                    val jsonObject = JSONObject(error!!.string())
+                    val message = jsonObject.getString("status")
+                    if (message == Constants.sessionExpired) {
+                        Alerts.warning(message, mainActivity.getString(R.string.error_message), mainActivity)
+                        return@runOnUiThread
+                    }
+                    Alerts.warning(message, mainActivity.getString(R.string.error_message), mainActivity)
+                }
+                mainActivity.hideLoading()
+            }
+        }
     }
 
     fun postIntent(cardID: String, addressID: String) {

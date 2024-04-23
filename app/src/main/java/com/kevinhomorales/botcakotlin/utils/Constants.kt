@@ -18,6 +18,7 @@ class Constants {
         val verifyMemberResponse = "VERIFY_MEMBER_RESPONSE_KEY"
         val productsResponseKey = "PRODUCTS_RESPONSE_KEY"
         val couponResponseKey = "COUPON_RESPONSE_KEY"
+        val couponsListResponseKey = "COUPONS_LIST_RESPONSE_KEY"
         val cartAvailableResponseKey = "CART_AVAILABLE_KEY"
         val addressResponseKey = "ADDRESSES_RESPONSE_KEY"
         val cardsResponseKey = "CARDS_RESPONSE_KEY"
@@ -35,5 +36,10 @@ class Constants {
         val domain = "https://dev-botca-store.onrender.com" // DEV
 //        val domain = "https://botca-store.onrender.com" // PROD
         val enviroment = "${domain}/api/"
+
+        fun isProd(): Boolean {
+            val api = Constants.domain
+            return api == "https://botca-store.onrender.com"
+        }
     }
 }

@@ -73,6 +73,10 @@ dependencies {
     implementation ("androidx.cardview:cardview:1.0.0")
     // CARD VIEW
 
+    // STRIPE
+    implementation ("com.stripe:stripe-android:20.41.0")
+    // STRIPE
+
     // RETROFIT
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
