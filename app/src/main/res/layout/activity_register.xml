@@ -54,6 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:hint="@string/type_full_name"
+                android:paddingStart="8dp"
                 android:textColor="@color/blackColor"
                 android:layout_marginTop="8dp"
                 android:inputType="textPersonName"
@@ -83,6 +84,7 @@
                 android:layout_height="40dp"
                 android:hint="@string/type_email"
                 android:focusable="false"
+                android:paddingStart="8dp"
                 android:background="@color/lightGrayColor"
                 android:textColor="@color/blackColor"
                 android:layout_marginTop="8dp"
@@ -114,7 +116,7 @@
 
                 <Spinner
                     android:id="@+id/country_code_edit_text_id"
-                    android:layout_width="50dp"
+                    android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginRight="8dp"
                     android:textColor="@color/blackColor"
@@ -128,6 +130,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:hint="@string/type_phone"
+                    android:paddingStart="8dp"
                     android:textColor="@color/blackColor"
                     android:layout_marginTop="8dp"
                     android:inputType="phone"

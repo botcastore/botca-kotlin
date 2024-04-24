@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.kevinhomorales.botcakotlin.NetworkManager.response.Card
 import com.kevinhomorales.botcakotlin.NetworkManager.response.CardsReponse
 import com.kevinhomorales.botcakotlin.R
@@ -18,6 +20,7 @@ import com.kevinhomorales.botcakotlin.databinding.ActivityCardsBinding
 import com.kevinhomorales.botcakotlin.main.MainActivity
 import com.kevinhomorales.botcakotlin.utils.Alerts
 import com.kevinhomorales.botcakotlin.utils.Constants
+import com.kevinhomorales.botcakotlin.utils.SwipeToDeleteCallBackCart
 import com.kevinhomorales.botcakotlin.utils.UserManager
 
 class CardsActivity : MainActivity(), OnCardsClickListener {
@@ -29,6 +32,10 @@ class CardsActivity : MainActivity(), OnCardsClickListener {
         super.onCreate(savedInstanceState)
         binding = ActivityCardsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+    }
+
+    override fun onResume() {
+        super.onResume()
         setUpView()
     }
 
@@ -47,6 +54,15 @@ class CardsActivity : MainActivity(), OnCardsClickListener {
         binding.recyclerCardsId.adapter = cardsAdapter
         cardsAdapter.setListData(viewModel.cardsReponse.cards)
         cardsAdapter.notifyDataSetChanged()
+        val swipeToDeleteCallBackCart = object : SwipeToDeleteCallBackCart() {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                val cardID = viewModel.cardsReponse.cards[position].id
+                viewModel.deleteCard(cardID, this@CardsActivity)
+            }
+        }
+        val itemTouchHelper = ItemTouchHelper(swipeToDeleteCallBackCart)
+        itemTouchHelper.attachToRecyclerView(binding.recyclerCardsId)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

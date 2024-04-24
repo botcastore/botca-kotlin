@@ -131,6 +131,7 @@
 
     <!--    CARD-->
     <string name="cart_title_view">Cart</string>
+    <string name="deleting_card">DELETE CARD</string>
 
     <!--    ABOUT US-->
     <string name="about_us_title_view">About Us</string>

@@ -10,6 +10,7 @@ import com.kevinhomorales.botcakotlin.NetworkManager.request.CategoriesRequest
 import com.kevinhomorales.botcakotlin.NetworkManager.request.CompleteProfileRequest
 import com.kevinhomorales.botcakotlin.NetworkManager.response.LoginResponse
 import com.kevinhomorales.botcakotlin.R
+import com.kevinhomorales.botcakotlin.customer.register.model.CountryCode
 import com.kevinhomorales.botcakotlin.customer.register.model.CountryCodes
 import com.kevinhomorales.botcakotlin.main.MainActivity
 import com.kevinhomorales.botcakotlin.utils.Alerts
@@ -18,20 +19,60 @@ import com.kevinhomorales.botcakotlin.utils.UserManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
+import java.io.IOException
+import java.nio.charset.Charset
 
 class RegisterViewModel: ViewModel() {
     lateinit var verifyMemberResponse: VerifyMemberResponse
     lateinit var view: RegisterActivity
 
 
-    fun getCountryCodes(): CountryCodes {
-        val jsonFile = File("resources/countrycodes.json")
-        val te = javaClass.getResource("countrycodes.json").file
-//        val jsonString = jsonFile.readText()
-        val gson = Gson()
-        return gson.fromJson(te, CountryCodes::class.java)
+    fun getCountryCodes(mainActivity: MainActivity): CountryCodes {
+//        val jsonFile = File("resources/countrycodes.json")
+//        val te = javaClass.getResource("countrycodes.json").file
+////        val jsonString = jsonFile.readText()
+//        val gson = Gson()
+//        return gson.fromJson(te, CountryCodes::class.java)
+
+        // Leer el JSON desde el archivo en assets
+        val json: String? = try {
+            // Lee el archivo assets/data.json
+            val inputStream = mainActivity.assets.open("countrycodes.json")
+            val size = inputStream.available()
+            val buffer = ByteArray(size)
+            inputStream.read(buffer)
+            inputStream.close()
+
+            // Convierte el buffer en una cadena
+            String(buffer, Charset.forName("UTF-8"))
+        } catch (ioException: IOException) {
+            ioException.printStackTrace()
+            null
+        }
+        var countryCodesArray = mutableListOf<CountryCode>()
+        json?.let {
+            try {
+                val jsonArray = JSONArray(json)
+                // Iterar sobre cada objeto en el array
+                for (i in 0 until jsonArray.length()) {
+                    val countryObject: JSONObject = jsonArray.getJSONObject(i)
+                    val name = countryObject.getString("name")
+                    val flag = countryObject.getString("flag")
+                    val code = countryObject.getString("code")
+                    val dialCode = countryObject.getString("dial_code")
+                    val countryCode = CountryCode(name, flag, code, dialCode)
+                    countryCodesArray.add(countryCode)
+                    println("Name: $name, Flag: $flag, Code: $code, Dial Code: $dialCode")
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+        val countryCodes = CountryCodes(countryCodesArray)
+        return  countryCodes
     }
 
     fun completeProfile(mainActivity: MainActivity, phoneNumber: String) {

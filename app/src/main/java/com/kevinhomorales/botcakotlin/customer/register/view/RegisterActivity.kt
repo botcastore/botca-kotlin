@@ -3,6 +3,9 @@ package com.kevinhomorales.botcakotlin.customer.register.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -39,7 +42,6 @@ class RegisterActivity : MainActivity() {
             viewModel.verifyMemberResponse = intent.extras!!.get(Constants.verifyMemberResponse) as VerifyMemberResponse
         }
         viewModel.view = this
-//        viewModel.getCountryCodes()
         Glide.with(this)
             .load(viewModel.verifyMemberResponse.avatarURL)
             .centerCrop()
@@ -49,6 +51,22 @@ class RegisterActivity : MainActivity() {
             .into(binding.imageViewId)
         binding.fullNameEditTextId.setText(viewModel.verifyMemberResponse.displayName)
         binding.emailEditTextId.setText(viewModel.verifyMemberResponse.email)
+
+        val countryCodes = viewModel.getCountryCodes(this)
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, countryCodes.countryCodes.map { it.flag + Constants.space + it.dialCode })
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.countryCodeEditTextId.adapter = adapter
+        binding.countryCodeEditTextId.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                val selected = parent.getItemAtPosition(position) as String
+                val dialCode = countryCodes.countryCodes[position].dialCode
+                binding.phoneEditTextId.setText(dialCode)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Acción cuando no hay elementos seleccionados
+            }
+        }
     }
 
     private fun setUpActions() {
