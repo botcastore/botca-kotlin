@@ -123,6 +123,7 @@
     <string name="size_guide">Sizes</string>
     <string name="loading_cart">LOADING CART</string>
     <string name="no_products_in_cart">Not Products in Cart</string>
+    <string name="loading_product">LOADING PRODUCT</string>
 
     <!--    PRODUCT-->
     <string name="colors">Colors</string>

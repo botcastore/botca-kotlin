@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.kevinhomorales.botcakotlin.NetworkManager.model.CartAvailableModel
 import com.kevinhomorales.botcakotlin.NetworkManager.response.CartAvailableResponse
 import com.kevinhomorales.botcakotlin.NetworkManager.response.Product
+import com.kevinhomorales.botcakotlin.NetworkManager.response.ProductResponse
 import com.kevinhomorales.botcakotlin.NetworkManager.response.ProductsResponse
 import com.kevinhomorales.botcakotlin.R
 import com.kevinhomorales.botcakotlin.customer.cart.view.CartActivity
@@ -57,8 +58,12 @@ class ProductsActivity : MainActivity(), OnProductClickListener {
 
     override fun productClick(product: Product) {
         tapHaptic()
+        viewModel.getProduct(product.productSlug, this)
+    }
+
+    fun openProductView(productResponse: ProductResponse) {
         val intent = Intent(this, ProductActivity::class.java)
-        intent.putExtra(Constants.productKey, product as Serializable)
+        intent.putExtra(Constants.productKey, productResponse.product as Serializable)
         startActivity(intent)
     }
 

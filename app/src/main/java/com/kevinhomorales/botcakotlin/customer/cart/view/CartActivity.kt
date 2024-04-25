@@ -70,6 +70,12 @@ class CartActivity : MainActivity(), OnCartClickListener, OnAddRestClickListener
         }
         val itemTouchHelper = ItemTouchHelper(swipeToDeleteCallBackCart)
         itemTouchHelper.attachToRecyclerView(binding.productsRecyclerId)
+        if (viewModel.getUseCoupon() != null) {
+            val useCoupon = viewModel.getUseCoupon()
+            binding.couponsTextId.text = if (useCoupon!!.slugCoupon == "FIRST_BUY") " ${useCoupon.percentage} %" else "Choose your discount"
+            binding.couponsTextId.isClickable = false
+            binding.discountTextId.text = "SAVE ${useCoupon.discount}"
+        }
     }
 
     override fun onResume() {
