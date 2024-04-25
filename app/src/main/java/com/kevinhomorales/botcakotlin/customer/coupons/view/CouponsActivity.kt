@@ -15,6 +15,7 @@ import com.kevinhomorales.botcakotlin.NetworkManager.response.CouponsResponse
 import com.kevinhomorales.botcakotlin.R
 import com.kevinhomorales.botcakotlin.customer.address.addaddress.viewmodel.AddAddressViewModel
 import com.kevinhomorales.botcakotlin.customer.address.view.adapter.AddressAdapter
+import com.kevinhomorales.botcakotlin.customer.cart.view.adapter.CartAdapter
 import com.kevinhomorales.botcakotlin.customer.coupons.view.adapter.CouponsAdapter
 import com.kevinhomorales.botcakotlin.customer.coupons.view.adapter.OnCouponsClickListener
 import com.kevinhomorales.botcakotlin.customer.coupons.viewmodel.CouponsViewModel
@@ -48,6 +49,14 @@ class CouponsActivity : MainActivity(), OnCouponsClickListener {
         couponsAdapter.notifyDataSetChanged()
     }
 
+    fun reloadData() {
+        couponsAdapter = CouponsAdapter(this, this)
+        binding.recyclerCouponsId.layoutManager = LinearLayoutManager(this)
+        binding.recyclerCouponsId.adapter = couponsAdapter
+        couponsAdapter.setListData(viewModel.couponsListResponse.coupons)
+        couponsAdapter.notifyDataSetChanged()
+    }
+
     override fun couponsClick(model: CouponsResponse) {
 
     }
@@ -61,6 +70,9 @@ class CouponsActivity : MainActivity(), OnCouponsClickListener {
         return when (item.itemId) {
             R.id.add_coupons_id -> {
                 tapHaptic()
+                Alerts.showAlertWithEditText(this) { reference ->
+                    viewModel.couponApply(reference, this)
+                }
                 true
             }
             else -> super.onOptionsItemSelected(item)

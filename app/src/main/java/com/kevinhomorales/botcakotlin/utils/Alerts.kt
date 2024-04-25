@@ -3,6 +3,7 @@ package com.kevinhomorales.botcakotlin.utils
 import android.app.AlertDialog
 import android.content.Context
 import android.view.ContextThemeWrapper
+import android.widget.EditText
 import com.kevinhomorales.botcakotlin.R
 
 class Alerts {
@@ -36,6 +37,25 @@ class Alerts {
             dialog.show()
         }
 
+        fun showAlertWithEditText(context: Context, completion: ((String) -> Unit)? = null) {
+            val editText = EditText(context)
+            val builder = AlertDialog.Builder(ContextThemeWrapper(context, R.style.AlertDialogTheme))
+            builder.setTitle("Add Coupon")
+            builder.setMessage("Please enter the reference code")
+            builder.setView(editText)
+            builder.setPositiveButton("Add") { dialog, _ ->
+                    val message = editText.text.toString()
+                    if (completion != null) {
+                        completion(message)
+                    }
+                    dialog.dismiss()
+                }
+            builder.setNegativeButton(context.getString(R.string.cancel)) { dialog, _ ->
+                    dialog.dismiss()
+                }
+            val dialog: AlertDialog = builder.create()
+            dialog.show()
+        }
 
 //        fun toNotifications(title: String, message: String, context: Context) {
 //            val alert = AlertDialog.Builder(context)
