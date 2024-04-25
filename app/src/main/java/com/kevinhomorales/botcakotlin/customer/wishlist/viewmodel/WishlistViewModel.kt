@@ -1,10 +1,14 @@
 package com.kevinhomorales.botcakotlin.customer.wishlist.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.google.gson.JsonObject
 import com.kevinhomorales.botcakotlin.NetworkManager.model.CartAvailableModel
+import com.kevinhomorales.botcakotlin.NetworkManager.model.DeleteAddressModel
 import com.kevinhomorales.botcakotlin.NetworkManager.model.ProductModel
+import com.kevinhomorales.botcakotlin.NetworkManager.model.PushFavoriteModel
 import com.kevinhomorales.botcakotlin.NetworkManager.request.CartAvailableRequest
 import com.kevinhomorales.botcakotlin.NetworkManager.request.ProductRequest
+import com.kevinhomorales.botcakotlin.NetworkManager.request.PushFavoriteRequest
 import com.kevinhomorales.botcakotlin.NetworkManager.response.FavoritesResponse
 import com.kevinhomorales.botcakotlin.R
 import com.kevinhomorales.botcakotlin.customer.wishlist.view.WishlistActivity
@@ -102,5 +106,40 @@ class WishlistViewModel: ViewModel() {
                 mainActivity.hideLoading()
             }
         }
+    }
+
+    fun pushFavorite(productID: String, mainActivity: MainActivity) {
+        mainActivity.showLoading(mainActivity.getString(R.string.loading_favorites))
+        var token = UserManager.shared.getUser(mainActivity).me.token
+        if (token == null) {
+            token = GUEST_LOGIN
+        }
+        val model = PushFavoriteModel(productID)
+        CoroutineScope(Dispatchers.IO).launch {
+            val call = mainActivity.getRetrofit().create(PushFavoriteRequest::class.java).delete("products/favorite", token!!, jsonPushFavorite(model))
+            val response = call.body()
+            mainActivity.runOnUiThread {
+                if(call.isSuccessful) {
+                    view.onBackPressed()
+                    mainActivity.hideLoading()
+                    return@runOnUiThread
+                } else {
+                    val error = call.errorBody()
+                    val jsonObject = JSONObject(error!!.string())
+                    val message = jsonObject.getString("status")
+                    if (message == Constants.sessionExpired) {
+                        Alerts.warning(message, mainActivity.getString(R.string.error_message), mainActivity)
+                        return@runOnUiThread
+                    }
+                    Alerts.warning(message, mainActivity.getString(R.string.error_message), mainActivity)
+                }
+                mainActivity.hideLoading()
+            }
+        }
+    }
+    private fun jsonPushFavorite(pushFavoriteModel: PushFavoriteModel): JsonObject {
+        val model = JsonObject()
+        model.addProperty("productID", pushFavoriteModel.productID)
+        return model
     }
 }

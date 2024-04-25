@@ -61,8 +61,8 @@ class WishlistActivity : MainActivity(), OnWishlistClickListener {
         val swipeToDeleteCallBackCart = object : SwipeToDeleteCallBackCart() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
-                val cardID = viewModel.favoritesResponse.products[position].productID
-//                viewModel.deleteCard(cardID, this@CardsActivity)
+                val productID = viewModel.favoritesResponse.products[position].productID
+                viewModel.pushFavorite(productID, this@WishlistActivity)
             }
         }
         val itemTouchHelper = ItemTouchHelper(swipeToDeleteCallBackCart)

@@ -96,6 +96,11 @@ class ProfileViewModel: ViewModel() {
             val response = call.body()
             mainActivity.runOnUiThread {
                 if(call.isSuccessful) {
+                    if (response!!.products.isEmpty()) {
+                        Alerts.warning(mainActivity.getString(R.string.alert_title), mainActivity.getString(R.string.not_favorites), mainActivity)
+                        mainActivity.hideLoading()
+                        return@runOnUiThread
+                    }
                     view.openFavoritesView(response!!)
                 } else {
                     val error = call.errorBody()

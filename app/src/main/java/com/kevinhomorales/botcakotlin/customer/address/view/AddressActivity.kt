@@ -58,8 +58,8 @@ class AddressActivity : MainActivity(), OnAddressClickListener {
         val swipeToDeleteCallBackCart = object : SwipeToDeleteCallBackCart() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
-                val cardID = viewModel.addressResponse.address[position].addressID
-//                viewModel.deleteCard(cardID, this@CardsActivity)
+                val addressID = viewModel.addressResponse.address[position].addressID
+                viewModel.deleteAddress(addressID, this@AddressActivity)
             }
         }
         val itemTouchHelper = ItemTouchHelper(swipeToDeleteCallBackCart)
