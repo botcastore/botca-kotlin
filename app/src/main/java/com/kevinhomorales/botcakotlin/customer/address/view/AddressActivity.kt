@@ -7,7 +7,9 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.kevinhomorales.botcakotlin.NetworkManager.response.Address
 import com.kevinhomorales.botcakotlin.NetworkManager.response.AddressResponse
 import com.kevinhomorales.botcakotlin.NetworkManager.response.ProductsResponse
@@ -23,6 +25,7 @@ import com.kevinhomorales.botcakotlin.databinding.ActivityAddressBinding
 import com.kevinhomorales.botcakotlin.main.MainActivity
 import com.kevinhomorales.botcakotlin.utils.Alerts
 import com.kevinhomorales.botcakotlin.utils.Constants
+import com.kevinhomorales.botcakotlin.utils.SwipeToDeleteCallBackCart
 
 class AddressActivity : MainActivity(), OnAddressClickListener {
 
@@ -52,6 +55,15 @@ class AddressActivity : MainActivity(), OnAddressClickListener {
         binding.recyclerAddressId.adapter = addressAdapter
         addressAdapter.setListData(viewModel.addressResponse.address)
         addressAdapter.notifyDataSetChanged()
+        val swipeToDeleteCallBackCart = object : SwipeToDeleteCallBackCart() {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                val cardID = viewModel.addressResponse.address[position].addressID
+//                viewModel.deleteCard(cardID, this@CardsActivity)
+            }
+        }
+        val itemTouchHelper = ItemTouchHelper(swipeToDeleteCallBackCart)
+        itemTouchHelper.attachToRecyclerView(binding.recyclerAddressId)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
