@@ -116,7 +116,7 @@ class WishlistViewModel: ViewModel() {
         }
         val model = PushFavoriteModel(productID)
         CoroutineScope(Dispatchers.IO).launch {
-            val call = mainActivity.getRetrofit().create(PushFavoriteRequest::class.java).delete("products/favorite", token!!, jsonPushFavorite(model))
+            val call = mainActivity.getRetrofit().create(PushFavoriteRequest::class.java).push("products/favorite", token!!, jsonPushFavorite(model))
             val response = call.body()
             mainActivity.runOnUiThread {
                 if(call.isSuccessful) {
