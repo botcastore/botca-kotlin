@@ -16,7 +16,7 @@ import org.json.JSONObject
 
 class PaymentsMethodsViewModel: ViewModel() {
     lateinit var view: PaymentsMethodsActivity
-
+    var fromCart = false
     fun getCards(mainActivity: MainActivity) {
         mainActivity.showLoading(mainActivity.getString(R.string.loading_cards))
         var token = UserManager.shared.getUser(mainActivity).me.token

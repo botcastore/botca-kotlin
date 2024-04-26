@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kevinhomorales.botcakotlin.NetworkManager.response.Card
 import com.kevinhomorales.botcakotlin.NetworkManager.response.CardsReponse
 import com.kevinhomorales.botcakotlin.R
-import com.kevinhomorales.botcakotlin.customer.login.view.LoginActivity
 import com.kevinhomorales.botcakotlin.customer.payments.cards.addcard.view.AddCardActivity
 import com.kevinhomorales.botcakotlin.customer.payments.cards.view.adapter.CardsAdapter
 import com.kevinhomorales.botcakotlin.customer.payments.cards.view.adapter.OnCardsClickListener
@@ -19,9 +18,9 @@ import com.kevinhomorales.botcakotlin.customer.payments.cards.viewmodel.CardsVie
 import com.kevinhomorales.botcakotlin.databinding.ActivityCardsBinding
 import com.kevinhomorales.botcakotlin.main.MainActivity
 import com.kevinhomorales.botcakotlin.utils.Alerts
+import com.kevinhomorales.botcakotlin.utils.CardManager
 import com.kevinhomorales.botcakotlin.utils.Constants
 import com.kevinhomorales.botcakotlin.utils.SwipeToDeleteCallBackCart
-import com.kevinhomorales.botcakotlin.utils.UserManager
 
 class CardsActivity : MainActivity(), OnCardsClickListener {
     lateinit var binding: ActivityCardsBinding
@@ -45,6 +44,7 @@ class CardsActivity : MainActivity(), OnCardsClickListener {
         viewModel.view = this
         if (intent.extras != null) {
             viewModel.cardsReponse = intent.extras!!.get(Constants.cardsResponseKey) as CardsReponse
+            viewModel.fromCart = intent!!.getBooleanExtra(Constants.cardsTransferFromCartKey, false)
         }
         if (viewModel.cardsReponse.cards.isEmpty()) {
             Alerts.warning(getString(R.string.alert_title),getString(R.string.please_add_cards),this)
@@ -82,7 +82,11 @@ class CardsActivity : MainActivity(), OnCardsClickListener {
     }
 
     override fun cardsClick(card: Card) {
-
+        if (viewModel.fromCart) {
+            CardManager.shared.removeCard(this)
+            CardManager.shared.saveCard(card, this)
+            onBackPressed()
+        }
     }
 
     private fun openAddCard() {

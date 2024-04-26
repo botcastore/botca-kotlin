@@ -11,14 +11,13 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.kevinhomorales.botcakotlin.R
-import com.kevinhomorales.botcakotlin.customer.cart.view.CartActivity
 import com.kevinhomorales.botcakotlin.customer.payments.transfer.model.TransferToCheckOut
 import com.kevinhomorales.botcakotlin.customer.payments.transfer.viewmodel.TransferViewModel
 import com.kevinhomorales.botcakotlin.databinding.ActivityTransferBinding
 import com.kevinhomorales.botcakotlin.main.MainActivity
 import com.kevinhomorales.botcakotlin.utils.Alerts
 import com.kevinhomorales.botcakotlin.utils.Constants
-import java.io.Serializable
+import com.kevinhomorales.botcakotlin.utils.TransferManager
 
 class TransferActivity : MainActivity() {
     lateinit var binding: ActivityTransferBinding
@@ -38,6 +37,9 @@ class TransferActivity : MainActivity() {
     private fun setUpView() {
         title = getString(R.string.transfer_title)
         viewModel = ViewModelProvider(this).get(TransferViewModel::class.java)
+        if (intent.extras != null) {
+            viewModel.fromCart = intent!!.getBooleanExtra(Constants.cardsTransferFromCartKey, false)
+        }
         viewModel.view = this
         setUpActions()
         getCameraPermission()
@@ -47,7 +49,9 @@ class TransferActivity : MainActivity() {
         binding.addTransferId.setOnClickListener {
             tapHaptic()
             val transferToCheckOut = TransferToCheckOut("PRUEBA ADDRESS","64","NOTAS")
-            backToCart(transferToCheckOut)
+            TransferManager.shared.removeTransfer(this)
+            TransferManager.shared.saveTransfer(transferToCheckOut, this)
+            onBackPressed()
         }
         binding.invoiceImageId.setOnClickListener {
             tapHaptic()
@@ -88,12 +92,5 @@ class TransferActivity : MainActivity() {
                 return@twoOptions
             }
         }
-    }
-
-    fun backToCart(transferToCheckOut: TransferToCheckOut) {
-        val intent = Intent(this, CartActivity::class.java)
-        intent.putExtra(Constants.transferToCheckOutKey, transferToCheckOut as Serializable)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
-        startActivity(intent)
     }
 }

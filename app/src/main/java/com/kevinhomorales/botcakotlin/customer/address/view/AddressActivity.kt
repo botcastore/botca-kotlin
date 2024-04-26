@@ -23,7 +23,9 @@ import com.kevinhomorales.botcakotlin.customer.payments.cards.addcard.view.AddCa
 import com.kevinhomorales.botcakotlin.customer.profile.viewmodel.ProfileViewModel
 import com.kevinhomorales.botcakotlin.databinding.ActivityAddressBinding
 import com.kevinhomorales.botcakotlin.main.MainActivity
+import com.kevinhomorales.botcakotlin.utils.AddressManager
 import com.kevinhomorales.botcakotlin.utils.Alerts
+import com.kevinhomorales.botcakotlin.utils.CardManager
 import com.kevinhomorales.botcakotlin.utils.Constants
 import com.kevinhomorales.botcakotlin.utils.SwipeToDeleteCallBackCart
 
@@ -46,6 +48,7 @@ class AddressActivity : MainActivity(), OnAddressClickListener {
         viewModel.view = this
         if (intent.extras != null) {
             viewModel.addressResponse = intent.extras!!.get(Constants.addressResponseKey) as AddressResponse
+            viewModel.fromCart = intent!!.getBooleanExtra(Constants.addressFromCartKey, false)
         }
         if (viewModel.addressResponse.address.isEmpty()) {
             Alerts.warning(getString(R.string.alert_title),getString(R.string.please_add_address),this)
@@ -83,7 +86,11 @@ class AddressActivity : MainActivity(), OnAddressClickListener {
     }
 
     override fun addressClick(address: Address) {
-
+        if (viewModel.fromCart) {
+            AddressManager.shared.removeAddress(this)
+            AddressManager.shared.saveAddress(address, this)
+            onBackPressed()
+        }
     }
 
     private fun openAddAddress() {

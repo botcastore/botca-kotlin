@@ -17,8 +17,11 @@ import androidx.core.content.ContextCompat
 import com.kevinhomorales.botcakotlin.NetworkManager.request.VersionRequest
 import com.kevinhomorales.botcakotlin.R
 import com.kevinhomorales.botcakotlin.databinding.LoadingBinding
+import com.kevinhomorales.botcakotlin.utils.AddressManager
 import com.kevinhomorales.botcakotlin.utils.Alerts
+import com.kevinhomorales.botcakotlin.utils.CardManager
 import com.kevinhomorales.botcakotlin.utils.Constants
+import com.kevinhomorales.botcakotlin.utils.TransferManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -106,5 +109,12 @@ open class MainActivity: AppCompatActivity() {
 
     fun openURL(urlString: String) {
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(urlString)))
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        CardManager.shared.removeCard(this)
+        TransferManager.shared.removeTransfer(this)
+        AddressManager.shared.removeAddress(this)
     }
 }

@@ -5,5 +5,5 @@ import com.kevinhomorales.botcakotlin.customer.payments.transfer.view.TransferAc
 
 class TransferViewModel: ViewModel() {
     lateinit var view: TransferActivity
-
+    var fromCart = false
 }

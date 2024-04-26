@@ -21,6 +21,7 @@ import org.json.JSONObject
 class CardsViewModel: ViewModel() {
     lateinit var view: CardsActivity
     lateinit var cardsReponse: CardsReponse
+    var fromCart = false
 
     fun deleteCard(cardID: String, mainActivity: MainActivity) {
         mainActivity.showLoading(mainActivity.getString(R.string.deleting_card))

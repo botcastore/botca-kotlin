@@ -9,11 +9,8 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kevinhomorales.botcakotlin.NetworkManager.response.AddressResponse
-import com.kevinhomorales.botcakotlin.NetworkManager.response.CardsReponse
 import com.kevinhomorales.botcakotlin.NetworkManager.response.CartAvailableResponse
-import com.kevinhomorales.botcakotlin.NetworkManager.response.CouponResponse
 import com.kevinhomorales.botcakotlin.NetworkManager.response.CouponsListResponse
-import com.kevinhomorales.botcakotlin.NetworkManager.response.CouponsResponse
 import com.kevinhomorales.botcakotlin.NetworkManager.response.ProductCart
 import com.kevinhomorales.botcakotlin.R
 import com.kevinhomorales.botcakotlin.customer.address.view.AddressActivity
@@ -21,16 +18,16 @@ import com.kevinhomorales.botcakotlin.customer.cart.view.adapter.CartAdapter
 import com.kevinhomorales.botcakotlin.customer.cart.view.adapter.OnAddRestClickListener
 import com.kevinhomorales.botcakotlin.customer.cart.view.adapter.OnCartClickListener
 import com.kevinhomorales.botcakotlin.customer.cart.viewmodel.CartViewModel
-import com.kevinhomorales.botcakotlin.customer.coupon.view.CouponActivity
 import com.kevinhomorales.botcakotlin.customer.coupons.view.CouponsActivity
-import com.kevinhomorales.botcakotlin.customer.payments.cards.view.CardsActivity
 import com.kevinhomorales.botcakotlin.customer.payments.paymentsmethods.view.PaymentsMethodsActivity
-import com.kevinhomorales.botcakotlin.customer.payments.transfer.model.TransferToCheckOut
 import com.kevinhomorales.botcakotlin.databinding.ActivityCartBinding
 import com.kevinhomorales.botcakotlin.main.MainActivity
+import com.kevinhomorales.botcakotlin.utils.AddressManager
 import com.kevinhomorales.botcakotlin.utils.Alerts
+import com.kevinhomorales.botcakotlin.utils.CardManager
 import com.kevinhomorales.botcakotlin.utils.Constants
 import com.kevinhomorales.botcakotlin.utils.SwipeToDeleteCallBackCart
+import com.kevinhomorales.botcakotlin.utils.TransferManager
 import java.io.Serializable
 
 class CartActivity : MainActivity(), OnCartClickListener, OnAddRestClickListener {
@@ -72,18 +69,25 @@ class CartActivity : MainActivity(), OnCartClickListener, OnAddRestClickListener
         itemTouchHelper.attachToRecyclerView(binding.productsRecyclerId)
         if (viewModel.getUseCoupon() != null) {
             val useCoupon = viewModel.getUseCoupon()
-            binding.couponsTextId.text = if (useCoupon!!.slugCoupon == "FIRST_BUY") " ${useCoupon.percentage} %" else "Choose your discount"
-            binding.couponsTextId.isClickable = false
+            binding.couponsTextId.text = if (useCoupon!!.slugCoupon == "FIRST_BUY") "${useCoupon.description} ${useCoupon.percentage} %" else getString(R.string.choose_discount)
+            binding.couponsLayoutId.isClickable = false
             binding.discountTextId.text = "SAVE ${useCoupon.discount}"
         }
     }
 
     override fun onResume() {
         super.onResume()
-        val transferToCheckOut = intent.extras!!.get(Constants.transferToCheckOutKey) as? TransferToCheckOut
-        if (transferToCheckOut != null) {
-            viewModel.transferToCheckOut = transferToCheckOut
-            binding.paymentMethodTextId.text = "Transfer"
+        val card = CardManager.shared.getCard(this)
+        if (card.id.isNotEmpty()) {
+            binding.paymentMethodTextId.text = "${getString(R.string.card)}\n\n${card.brand} ${card.last4}"
+        }
+        val transferToCheckOut = TransferManager.shared.getTransfer(this)
+        if (transferToCheckOut.addressID.isNotEmpty()) {
+            binding.paymentMethodTextId.text = getString(R.string.transfer)
+        }
+        val address = AddressManager.shared.getAddress(this)
+        if (address.address.isNotEmpty()) {
+            binding.addressTextId.text = address.address
         }
     }
 
@@ -132,6 +136,7 @@ class CartActivity : MainActivity(), OnCartClickListener, OnAddRestClickListener
     fun openAddressView(addressResponse: AddressResponse) {
         val intent = Intent(this, AddressActivity::class.java)
         intent.putExtra(Constants.addressResponseKey, addressResponse as Serializable)
+        intent.putExtra(Constants.addressFromCartKey, true)
         hideLoading()
         startActivity(intent)
     }
@@ -145,6 +150,7 @@ class CartActivity : MainActivity(), OnCartClickListener, OnAddRestClickListener
 
     fun openPaymentsMethodsView() {
         val intent = Intent(this, PaymentsMethodsActivity::class.java)
+        intent.putExtra(Constants.cardsTransferFromCartKey, true)
         startActivity(intent)
     }
 
@@ -157,6 +163,11 @@ class CartActivity : MainActivity(), OnCartClickListener, OnAddRestClickListener
         binding.totalTextId.setText(viewModel.getTotalAmount(this))
         binding.deliveryCostTextId.setText(viewModel.getDeliveryCost(this))
         binding.subtotalTextId.setText(viewModel.getSubTotalAmount(this))
+        if (viewModel.getUseCoupon() != null) {
+            val useCoupon = viewModel.getUseCoupon()
+            binding.couponsLayoutId.isClickable = false
+            binding.discountTextId.text = "SAVE ${useCoupon!!.discount}"
+        }
     }
 
     override fun onBackPressed() {

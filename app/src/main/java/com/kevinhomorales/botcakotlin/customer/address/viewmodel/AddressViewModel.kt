@@ -23,7 +23,7 @@ import org.json.JSONObject
 class AddressViewModel: ViewModel() {
     lateinit var view: AddressActivity
     lateinit var addressResponse: AddressResponse
-
+    var fromCart = false
     fun deleteAddress(addressID: String, mainActivity: MainActivity) {
         mainActivity.showLoading(mainActivity.getString(R.string.deleting_address))
         var token = UserManager.shared.getUser(mainActivity).me.token
