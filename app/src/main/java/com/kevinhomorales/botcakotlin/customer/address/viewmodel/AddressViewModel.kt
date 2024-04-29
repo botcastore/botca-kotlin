@@ -2,9 +2,11 @@ package com.kevinhomorales.botcakotlin.customer.address.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.google.gson.JsonObject
+import com.kevinhomorales.botcakotlin.NetworkManager.model.CountryModel
 import com.kevinhomorales.botcakotlin.NetworkManager.model.DeleteAddressModel
 import com.kevinhomorales.botcakotlin.NetworkManager.model.DeleteCardModel
 import com.kevinhomorales.botcakotlin.NetworkManager.model.UpdateProductCartModel
+import com.kevinhomorales.botcakotlin.NetworkManager.request.CountryRequest
 import com.kevinhomorales.botcakotlin.NetworkManager.request.DeleteAddressRequest
 import com.kevinhomorales.botcakotlin.NetworkManager.request.DeleteCardRequest
 import com.kevinhomorales.botcakotlin.NetworkManager.response.AddressResponse
@@ -58,5 +60,36 @@ class AddressViewModel: ViewModel() {
         val model = JsonObject()
         model.addProperty("addressID", deleteAddressModel.addressID)
         return model
+    }
+
+    fun getCountries(mainActivity: MainActivity) {
+        mainActivity.showLoading(mainActivity.getString(R.string.loading_addresses))
+        var token = UserManager.shared.getUser(mainActivity).me.token
+        if (token == null) {
+            token = GUEST_LOGIN
+        }
+        CoroutineScope(Dispatchers.IO).launch {
+            val call = mainActivity.getRetrofit().create(CountryRequest::class.java).getCountries("countries",
+                token
+            )
+            val response = call.body()
+            mainActivity.runOnUiThread {
+                if(call.isSuccessful) {
+                    view.openAddAddress(response!!)
+                    mainActivity.hideLoading()
+                    return@runOnUiThread
+                } else {
+                    val error = call.errorBody()
+                    val jsonObject = JSONObject(error!!.string())
+                    val message = jsonObject.getString("status")
+                    if (message == Constants.sessionExpired) {
+                        Alerts.warning(message, mainActivity.getString(R.string.error_message), mainActivity)
+                        return@runOnUiThread
+                    }
+                    Alerts.warning(message, mainActivity.getString(R.string.error_message), mainActivity)
+                }
+                mainActivity.hideLoading()
+            }
+        }
     }
 }

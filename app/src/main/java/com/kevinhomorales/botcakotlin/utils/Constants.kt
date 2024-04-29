@@ -31,6 +31,7 @@ class Constants {
         val transferToCheckOutKey = "TRANSFER_TO_CHECKOUT_KEY"
         val cardsTransferFromCartKey = "CARDS_TRANSFER_FROM_CART_KEY"
         val addressFromCartKey = "ADDRESS_FROM_CART_KEY"
+        val countriesResponseKey = "COUNTRIES_RESPONSE_KEY"
 
         // SERVER - ERROR
         val sessionExpired = "jwt expired"

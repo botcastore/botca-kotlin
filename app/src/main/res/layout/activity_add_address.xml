@@ -43,6 +43,7 @@
                     android:layout_height="40dp"
                     android:layout_marginTop="8dp"
                     android:inputType="textPersonName"
+                    android:hint="@string/country"
                     android:textColor="@color/blackColor"
                     android:textSize="14sp"
                     android:textStyle="normal" />
@@ -69,6 +70,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="8dp"
+                    android:hint="@string/state"
                     android:textColor="@color/blackColor"
                     android:textSize="14sp"
                     android:textStyle="normal" />
@@ -95,6 +97,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="8dp"
+                    android:hint="@string/city"
                     android:textColor="@color/blackColor"
                     android:textSize="14sp"
                     android:textStyle="normal" />
@@ -121,6 +124,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="8dp"
+                    android:hint="@string/address"
                     android:inputType="textPostalAddress"
                     android:textColor="@color/blackColor"
                     android:textSize="14sp"
@@ -149,6 +153,7 @@
                     android:layout_height="40dp"
                     android:layout_marginTop="8dp"
                     android:inputType="textPostalAddress"
+                    android:hint="@string/reference"
                     android:textColor="@color/blackColor"
                     android:textSize="14sp"
                     android:textStyle="normal" />
@@ -176,6 +181,7 @@
                     android:layout_height="40dp"
                     android:layout_marginTop="8dp"
                     android:inputType="phone"
+                    android:hint="@string/phone"
                     android:textColor="@color/blackColor"
                     android:textSize="14sp"
                     android:textStyle="normal" />
@@ -203,6 +209,7 @@
                     android:layout_height="40dp"
                     android:layout_marginTop="8dp"
                     android:inputType="textPersonName"
+                    android:hint="@string/delivery_by"
                     android:textColor="@color/blackColor"
                     android:textSize="14sp"
                     android:textStyle="normal" />
@@ -236,6 +243,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginTop="8dp"
+                        android:hint="@string/id"
                         android:textColor="@color/blackColor"
                         android:textSize="14sp"
                         android:textStyle="normal" />
@@ -263,6 +271,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:layout_marginTop="8dp"
+                        android:hint="@string/postal_code"
                         android:inputType="textPostalAddress"
                         android:textColor="@color/blackColor"
                         android:textSize="14sp"

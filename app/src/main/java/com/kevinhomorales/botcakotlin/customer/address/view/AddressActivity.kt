@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kevinhomorales.botcakotlin.NetworkManager.response.Address
 import com.kevinhomorales.botcakotlin.NetworkManager.response.AddressResponse
+import com.kevinhomorales.botcakotlin.NetworkManager.response.CountryResponse
 import com.kevinhomorales.botcakotlin.NetworkManager.response.ProductsResponse
 import com.kevinhomorales.botcakotlin.R
 import com.kevinhomorales.botcakotlin.customer.address.addaddress.view.AddAddressActivity
@@ -28,6 +29,7 @@ import com.kevinhomorales.botcakotlin.utils.Alerts
 import com.kevinhomorales.botcakotlin.utils.CardManager
 import com.kevinhomorales.botcakotlin.utils.Constants
 import com.kevinhomorales.botcakotlin.utils.SwipeToDeleteCallBackCart
+import java.io.Serializable
 
 class AddressActivity : MainActivity(), OnAddressClickListener {
 
@@ -78,7 +80,7 @@ class AddressActivity : MainActivity(), OnAddressClickListener {
         return when (item.itemId) {
             R.id.add_address_id -> {
                 tapHaptic()
-                openAddAddress()
+                viewModel.getCountries(this)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -93,9 +95,10 @@ class AddressActivity : MainActivity(), OnAddressClickListener {
         }
     }
 
-    private fun openAddAddress() {
+    fun openAddAddress(countryResponse: CountryResponse) {
         tapHaptic()
         val intent = Intent(this, AddAddressActivity::class.java)
+        intent.putExtra(Constants.countriesResponseKey, countryResponse as Serializable)
         startActivity(intent)
     }
 }

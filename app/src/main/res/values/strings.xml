@@ -74,6 +74,7 @@
     <string name="loading_addresses">LOADING ADDRESSES</string>
     <string name="please_add_address">Please Add Address</string>
     <string name="deleting_address">DELETE ADDRESS</string>
+    <string name="loading_countries">LOADING COUNTRIES</string>
 
     <!--    ADD ADDRESS VIEW-->
     <string name="add_addresses_title_view">Add Address</string>
@@ -81,10 +82,12 @@
     <string name="state">State</string>
     <string name="city">City</string>
     <string name="address">Address</string>
-    <string name="reference">Reference</string>
-    <string name="delivery_by">Delivery by</string>
+    <string name="reference">Reference (optional)</string>
+    <string name="delivery_by">Delivery by Name</string>
     <string name="id">ID</string>
-    <string name="postal_code">Postal Code</string>
+    <string name="postal_code">Zip Code</string>
+    <string name="add_address">UPLOAD ADDRESS</string>
+    <string name="loading_provinces">LOADING PROVINCES</string>
 
     <!--    INFO VIEW-->
     <string name="info_title_view">Information</string>
