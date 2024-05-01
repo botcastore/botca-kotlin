@@ -18,6 +18,7 @@
     <string name="menu_about_us">About Us</string>
     <string name="menu_cart_remove">Cart Remove</string>
     <string name="menu_coupons">Coupons</string>
+    <string name="menu_email">Email</string>
 
     <!--    CONSTANTS-->
     <string name="error_title">Error!</string>
@@ -68,6 +69,7 @@
     <string name="profile_title">My Profile</string>
     <string name="sign_out_ask">Do you want to Sign Out?</string>
     <string name="not_favorites">Please add product to wishlist</string>
+    <string name="loading_payments">LOADING PAYMENTS</string>
 
     <!--    ADDRESS VIEW-->
     <string name="addresses_title_view">Addresses</string>
@@ -75,6 +77,12 @@
     <string name="please_add_address">Please Add Address</string>
     <string name="deleting_address">DELETE ADDRESS</string>
     <string name="loading_countries">LOADING COUNTRIES</string>
+
+    <!--    FILTER PRODUCTS VIEW-->
+    <string name="filter_by_size">Filter by Size</string>
+    <string name="filter_by_color">Filter by Color</string>
+    <string name="search">Search</string>
+    <string name="filter_product_title_view">Filter Product</string>
 
     <!--    ADD ADDRESS VIEW-->
     <string name="add_addresses_title_view">Add Address</string>
@@ -129,6 +137,7 @@
     <string name="loading_cart">LOADING CART</string>
     <string name="no_products_in_cart">Not Products in Cart</string>
     <string name="loading_product">LOADING PRODUCT</string>
+    <string name="loading_data">LOADING DATA</string>
 
     <!--    PRODUCT-->
     <string name="colors">Colors</string>
@@ -194,4 +203,18 @@
     <!--    COUPONS-->
     <string name="coupons_title_view">Coupons</string>
 
+    <!--    PRODUCT IMAGE VIEW-->
+    <string name="product_image_title_view">Product Image</string>
+
+    <!--    MY ORDERS VIEW-->
+    <string name="my_orders_title_view">My Orders</string>
+    <string name="cards">Cards</string>
+    <string name="transfers">Transfers</string>
+    <string name="progress">PROGRESS</string>
+    <string name="paid">PAID</string>
+    <string name="delivered">DELIVERED</string>
+    <string name="refund">REFUND</string>
+
+    <!--    MY ORDERS DETAIL VIEW-->
+    <string name="my_orders_detail_title_view">Detail</string>
 </resources>

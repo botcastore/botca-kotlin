@@ -9,12 +9,16 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kevinhomorales.botcakotlin.NetworkManager.model.CartAvailableModel
+import com.kevinhomorales.botcakotlin.NetworkManager.model.ProductModel
+import com.kevinhomorales.botcakotlin.NetworkManager.model.ProductsModel
+import com.kevinhomorales.botcakotlin.NetworkManager.response.AvailableColorsResponse
 import com.kevinhomorales.botcakotlin.NetworkManager.response.CartAvailableResponse
 import com.kevinhomorales.botcakotlin.NetworkManager.response.Product
 import com.kevinhomorales.botcakotlin.NetworkManager.response.ProductResponse
 import com.kevinhomorales.botcakotlin.NetworkManager.response.ProductsResponse
 import com.kevinhomorales.botcakotlin.R
 import com.kevinhomorales.botcakotlin.customer.cart.view.CartActivity
+import com.kevinhomorales.botcakotlin.customer.filterproduct.view.FilterProductActivity
 import com.kevinhomorales.botcakotlin.customer.product.view.ProductActivity
 import com.kevinhomorales.botcakotlin.customer.products.view.adapter.OnProductClickListener
 import com.kevinhomorales.botcakotlin.customer.products.view.adapter.ProductsAdapter
@@ -23,6 +27,7 @@ import com.kevinhomorales.botcakotlin.databinding.ActivityProductsBinding
 import com.kevinhomorales.botcakotlin.main.MainActivity
 import com.kevinhomorales.botcakotlin.utils.Alerts
 import com.kevinhomorales.botcakotlin.utils.Constants
+import com.kevinhomorales.botcakotlin.utils.FilterProductManager
 import java.io.Serializable
 
 class ProductsActivity : MainActivity(), OnProductClickListener {
@@ -56,6 +61,15 @@ class ProductsActivity : MainActivity(), OnProductClickListener {
         viewModel.checkCartAvailable(this, model)
     }
 
+    override fun onResume() {
+        super.onResume()
+        val filterProductModel = FilterProductManager.shared.getFilterProduct(this)
+        if (filterProductModel.categoryId.isNotEmpty()) {
+            val productsModel = ProductsModel("?categoryID=${filterProductModel.categoryId}", "&size=${filterProductModel.size}", "&labelColor=${filterProductModel.color}", Constants.clearString, "&page=1&dataByPage=20")
+            viewModel.getProducts(this, productsModel)
+        }
+    }
+
     override fun productClick(product: Product) {
         tapHaptic()
         viewModel.getProduct(product.productSlug, this)
@@ -77,7 +91,7 @@ class ProductsActivity : MainActivity(), OnProductClickListener {
         return when (item.itemId) {
             R.id.filter_id -> {
                 tapHaptic()
-                openFilterView()
+                viewModel.getColors(this)
                 true
             }
             R.id.cart_id -> {
@@ -90,13 +104,27 @@ class ProductsActivity : MainActivity(), OnProductClickListener {
         }
     }
 
-    fun openFilterView() {
-
+    fun reloadData() {
+        productsAdapter = ProductsAdapter(this, this)
+        binding.productsRecyclerId.setHasFixedSize(true)
+        binding.productsRecyclerId.layoutManager = LinearLayoutManager(this)
+        binding.productsRecyclerId.setLayoutManager(GridLayoutManager(this, 2))
+        binding.productsRecyclerId.adapter = productsAdapter
+        productsAdapter.setListData(viewModel.productsResponse.products)
+        productsAdapter.notifyDataSetChanged()
     }
 
     fun openCartView(cartAvailableResponse: CartAvailableResponse) {
         val intent = Intent(this, CartActivity::class.java)
         intent.putExtra(Constants.cartAvailableResponseKey, cartAvailableResponse as Serializable)
+        startActivity(intent)
+    }
+
+    fun openFilterProductView(availableColorsResponse: AvailableColorsResponse) {
+        val intent = Intent(this, FilterProductActivity::class.java)
+        val first = viewModel.productsResponse.products.first()
+        intent.putExtra(Constants.availableColorsResponseKey, availableColorsResponse as Serializable)
+        intent.putExtra(Constants.categoryIdKey, first.categoryID)
         startActivity(intent)
     }
 

@@ -15,11 +15,13 @@ import com.kevinhomorales.botcakotlin.NetworkManager.model.FavoritesModel
 import com.kevinhomorales.botcakotlin.NetworkManager.response.AddressResponse
 import com.kevinhomorales.botcakotlin.NetworkManager.response.CardsReponse
 import com.kevinhomorales.botcakotlin.NetworkManager.response.FavoritesResponse
+import com.kevinhomorales.botcakotlin.NetworkManager.response.MyOrdersResponse
 import com.kevinhomorales.botcakotlin.R
 import com.kevinhomorales.botcakotlin.customer.address.view.AddressActivity
 import com.kevinhomorales.botcakotlin.customer.home.view.HomeActivity
 import com.kevinhomorales.botcakotlin.customer.login.view.LoginActivity
 import com.kevinhomorales.botcakotlin.customer.login.viewmodel.LoginViewModel
+import com.kevinhomorales.botcakotlin.customer.myorders.view.MyOrdersActivity
 import com.kevinhomorales.botcakotlin.customer.payments.cards.view.CardsActivity
 import com.kevinhomorales.botcakotlin.customer.profile.info.view.InfoActivity
 import com.kevinhomorales.botcakotlin.customer.profile.viewmodel.ProfileViewModel
@@ -75,6 +77,7 @@ class ProfileActivity : MainActivity() {
         }
         binding.ordersId.setOnClickListener {
             tapHaptic()
+            viewModel.getMyOrders(this)
         }
         binding.signOutId.setOnClickListener {
             tapHaptic()
@@ -125,6 +128,13 @@ class ProfileActivity : MainActivity() {
     fun openAddressView(addressResponse: AddressResponse) {
         val intent = Intent(this, AddressActivity::class.java)
         intent.putExtra(Constants.addressResponseKey, addressResponse as Serializable)
+        hideLoading()
+        startActivity(intent)
+    }
+
+    fun openMyOrders(myOrdersResponse: MyOrdersResponse) {
+        val intent = Intent(this, MyOrdersActivity::class.java)
+        intent.putExtra(Constants.myOrdersResponseKey, myOrdersResponse as Serializable)
         hideLoading()
         startActivity(intent)
     }

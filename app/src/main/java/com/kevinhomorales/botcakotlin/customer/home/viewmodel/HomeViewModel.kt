@@ -60,6 +60,10 @@ class HomeViewModel: ViewModel() {
             val response = call.body()
             mainActivity.runOnUiThread {
                 if(call.isSuccessful) {
+                    if (response!!.products.isEmpty()) {
+                        Alerts.warning(mainActivity.getString(R.string.alert_title), mainActivity.getString(R.string.no_products_in_cart),mainActivity)
+                        return@runOnUiThread
+                    }
                     view.openProductsView(response!!)
                 } else {
                     val error = call.errorBody()

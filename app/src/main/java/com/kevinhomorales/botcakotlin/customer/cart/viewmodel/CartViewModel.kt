@@ -11,6 +11,8 @@ import com.kevinhomorales.botcakotlin.NetworkManager.request.ClearCartRequest
 import com.kevinhomorales.botcakotlin.NetworkManager.request.CouponsListRequest
 import com.kevinhomorales.botcakotlin.NetworkManager.request.RemoveProductFromCartRequest
 import com.kevinhomorales.botcakotlin.NetworkManager.request.UpdateProductCartRequest
+import com.kevinhomorales.botcakotlin.NetworkManager.response.Address
+import com.kevinhomorales.botcakotlin.NetworkManager.response.Card
 import com.kevinhomorales.botcakotlin.NetworkManager.response.Cart
 import com.kevinhomorales.botcakotlin.NetworkManager.response.CartAvailableResponse
 import com.kevinhomorales.botcakotlin.NetworkManager.response.UseCoupon
@@ -32,6 +34,8 @@ class CartViewModel: ViewModel() {
     lateinit var view: CartActivity
     lateinit var cartAvailableResponse: CartAvailableResponse
     lateinit var transferToCheckOut: TransferToCheckOut
+    lateinit var address: Address
+    lateinit var card: Card
     fun getCart(): Cart {
         return cartAvailableResponse.cart
     }

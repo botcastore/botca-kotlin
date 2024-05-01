@@ -77,23 +77,52 @@ class CartActivity : MainActivity(), OnCartClickListener, OnAddRestClickListener
 
     override fun onResume() {
         super.onResume()
-        val card = CardManager.shared.getCard(this)
-        if (card.id.isNotEmpty()) {
-            binding.paymentMethodTextId.text = "${getString(R.string.card)}\n\n${card.brand} ${card.last4}"
+        viewModel.card = CardManager.shared.getCard(this)
+        if (viewModel.card.id.isNotEmpty()) {
+            binding.paymentMethodTextId.text = "${getString(R.string.card)}\n\n${viewModel.card.brand} ${viewModel.card.last4}"
         }
-        val transferToCheckOut = TransferManager.shared.getTransfer(this)
-        if (transferToCheckOut.addressID.isNotEmpty()) {
+        viewModel.transferToCheckOut = TransferManager.shared.getTransfer(this)
+        if (viewModel.transferToCheckOut.addressID.isNotEmpty()) {
             binding.paymentMethodTextId.text = getString(R.string.transfer)
         }
-        val address = AddressManager.shared.getAddress(this)
-        if (address.address.isNotEmpty()) {
-            binding.addressTextId.text = address.address
+        viewModel.address = AddressManager.shared.getAddress(this)
+        if (viewModel.address.address.isNotEmpty()) {
+            binding.addressTextId.text =  viewModel.address.address
         }
+    }
+
+    private fun checkOut() {
+        if (viewModel.address.address.isEmpty()) {
+            Alerts.warning(getString(R.string.alert_title),"add address",this)
+            return
+        }
+
+        val paymentMethodText = binding.paymentMethodTextId.text
+
+        if (paymentMethodText.contains(getString(R.string.card))) {
+             viewModel.card = CardManager.shared.getCard(this)
+            if (viewModel.card.id.isEmpty()) {
+                Alerts.warning(getString(R.string.alert_title),"add card",this)
+                return
+            }
+            viewModel.postIntent(cardID = viewModel.card.id, addressID = viewModel.address.addressID)
+            return
+        }
+
+        viewModel.transferToCheckOut = TransferManager.shared.getTransfer(this)
+        if (binding.paymentMethodTextId.text == getString(R.string.transfer)) {
+            viewModel.transferToCheckOut.addressID = viewModel.address.addressID
+//            viewModel.uploadTransfer(transferToCheckOut)
+            return
+        }
+
+        Alerts.warning(getString(R.string.alert_title),"alertChoosePaymentsMethods", this)
     }
 
     private fun setUpActions() {
         binding.checkOutId.setOnClickListener {
             tapHaptic()
+            checkOut()
         }
         binding.paymentMethodLayoutId.setOnClickListener {
             tapHaptic()

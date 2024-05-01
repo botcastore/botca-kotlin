@@ -29,14 +29,11 @@ class AddAddressViewModel: ViewModel() {
     lateinit var view: AddAddressActivity
     lateinit var countryResponse: CountryResponse
     lateinit var provinceResponse: ProvinceResponse
-
+    lateinit var countrySelected: String
+    var provinceSelected = Constants.clearString
     fun getProvinces(): MutableList<Province> {
         return provinceResponse.provinces
     }
-
-//    fun getCountryCodes() -> [CountryCodes] {
-//
-//    }
 
     fun getCountries(): MutableList<Country> {
         return countryResponse.countries
@@ -49,7 +46,7 @@ class AddAddressViewModel: ViewModel() {
             token = GUEST_LOGIN
         }
         CoroutineScope(Dispatchers.IO).launch {
-            val call = mainActivity.getRetrofit().create(AddAddressRequest::class.java).upload("address/remove", token!!, jsonAddAddress(addAddressModel))
+            val call = mainActivity.getRetrofit().create(AddAddressRequest::class.java).upload("address/add", token!!, jsonAddAddress(addAddressModel))
             val response = call.body()
             mainActivity.runOnUiThread {
                 if(call.isSuccessful) {
@@ -104,6 +101,7 @@ class AddAddressViewModel: ViewModel() {
             mainActivity.runOnUiThread {
                 if(call.isSuccessful) {
                     provinceResponse = response!!
+                    view.setUpProvinces()
                     mainActivity.hideLoading()
                     return@runOnUiThread
                 } else {

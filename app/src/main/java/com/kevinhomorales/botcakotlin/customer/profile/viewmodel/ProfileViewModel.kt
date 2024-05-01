@@ -5,10 +5,12 @@ import androidx.lifecycle.ViewModel
 import com.kevinhomorales.botcakotlin.NetworkManager.model.AddressModel
 import com.kevinhomorales.botcakotlin.NetworkManager.model.CardsModel
 import com.kevinhomorales.botcakotlin.NetworkManager.model.FavoritesModel
+import com.kevinhomorales.botcakotlin.NetworkManager.model.MyOrdersModel
 import com.kevinhomorales.botcakotlin.NetworkManager.model.ProductsModel
 import com.kevinhomorales.botcakotlin.NetworkManager.request.AddressRequest
 import com.kevinhomorales.botcakotlin.NetworkManager.request.CardsRequest
 import com.kevinhomorales.botcakotlin.NetworkManager.request.FavoritesRequest
+import com.kevinhomorales.botcakotlin.NetworkManager.request.MyOrdersRequest
 import com.kevinhomorales.botcakotlin.NetworkManager.request.ProductsRequest
 import com.kevinhomorales.botcakotlin.R
 import com.kevinhomorales.botcakotlin.customer.home.view.HomeActivity
@@ -102,6 +104,38 @@ class ProfileViewModel: ViewModel() {
                         return@runOnUiThread
                     }
                     view.openFavoritesView(response!!)
+                } else {
+                    val error = call.errorBody()
+                    val jsonObject = JSONObject(error!!.string())
+                    val message = jsonObject.getString("status")
+                    if (message == Constants.sessionExpired) {
+                        Alerts.warning(message, mainActivity.getString(R.string.error_message), mainActivity)
+                        return@runOnUiThread
+                    }
+                    Alerts.warning(message, mainActivity.getString(R.string.error_message), mainActivity)
+                }
+                mainActivity.hideLoading()
+            }
+        }
+    }
+
+    fun getMyOrders(mainActivity: MainActivity) {
+        mainActivity.showLoading(mainActivity.getString(R.string.loading_payments))
+        var token = UserManager.shared.getUser(mainActivity).me.token
+        if (token == null) {
+            token = GUEST_LOGIN
+        }
+        val model = MyOrdersModel("processing", Constants.clearString, Constants.clearString)
+        var endpoint = "orders/status/${model.status}${model.type}?page=${model.nextPage}&type=STRIPE"
+        if (model.status == "redund") {
+            endpoint = "orders/${model.status}${model.type}?page=${model.nextPage}&type=STRIPE"
+        }
+        CoroutineScope(Dispatchers.IO).launch {
+            val call = mainActivity.getRetrofit().create(MyOrdersRequest::class.java).getOrders(endpoint, token!!)
+            val response = call.body()
+            mainActivity.runOnUiThread {
+                if(call.isSuccessful) {
+                    view.openMyOrders(response!!)
                 } else {
                     val error = call.errorBody()
                     val jsonObject = JSONObject(error!!.string())

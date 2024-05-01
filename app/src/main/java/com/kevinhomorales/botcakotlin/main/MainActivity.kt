@@ -21,6 +21,7 @@ import com.kevinhomorales.botcakotlin.utils.AddressManager
 import com.kevinhomorales.botcakotlin.utils.Alerts
 import com.kevinhomorales.botcakotlin.utils.CardManager
 import com.kevinhomorales.botcakotlin.utils.Constants
+import com.kevinhomorales.botcakotlin.utils.FilterProductManager
 import com.kevinhomorales.botcakotlin.utils.TransferManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -116,5 +117,6 @@ open class MainActivity: AppCompatActivity() {
         CardManager.shared.removeCard(this)
         TransferManager.shared.removeTransfer(this)
         AddressManager.shared.removeAddress(this)
+        FilterProductManager.shared.removeFilterProduct(this)
     }
 }

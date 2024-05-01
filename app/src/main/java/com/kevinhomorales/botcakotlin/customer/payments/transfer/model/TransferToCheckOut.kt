@@ -4,7 +4,7 @@ import com.kevinhomorales.botcakotlin.customer.payments.paymentsmethods.model.Pa
 import java.io.Serializable
 
 data class TransferToCheckOut (
-    val addressID: String,
+    var addressID: String,
     val imageBase64: String,
     val notes: String
 ): Serializable

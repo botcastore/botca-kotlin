@@ -31,13 +31,6 @@ class RegisterViewModel: ViewModel() {
 
 
     fun getCountryCodes(mainActivity: MainActivity): CountryCodes {
-//        val jsonFile = File("resources/countrycodes.json")
-//        val te = javaClass.getResource("countrycodes.json").file
-////        val jsonString = jsonFile.readText()
-//        val gson = Gson()
-//        return gson.fromJson(te, CountryCodes::class.java)
-
-        // Leer el JSON desde el archivo en assets
         val json: String? = try {
             // Lee el archivo assets/data.json
             val inputStream = mainActivity.assets.open("countrycodes.json")

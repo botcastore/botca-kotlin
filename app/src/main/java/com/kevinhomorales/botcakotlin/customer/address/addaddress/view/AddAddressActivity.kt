@@ -1,6 +1,8 @@
 package com.kevinhomorales.botcakotlin.customer.address.addaddress.view
 
 import android.os.Bundle
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.lifecycle.ViewModelProvider
 import com.kevinhomorales.botcakotlin.NetworkManager.model.AddAddressModel
 import com.kevinhomorales.botcakotlin.NetworkManager.response.AddressResponse
@@ -34,6 +36,34 @@ class AddAddressActivity : MainActivity() {
         setUpActions()
         binding.phoneEditTextId.setText(UserManager.shared.getUser(this).me.user.phoneNumber)
         binding.deliveryByEditTextId.setText(UserManager.shared.getUser(this).me.user.displayName)
+        val adaptadorCountries = ArrayAdapter(this, android.R.layout.simple_spinner_item, viewModel.getCountries().map { it.country })
+        adaptadorCountries.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.countrySpinnerId.adapter = adaptadorCountries
+        binding.countrySpinnerId.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: android.view.View?, position: Int, id: Long) {
+                viewModel.countrySelected = viewModel.getCountries()[position].country
+                viewModel.getProvince(viewModel.getCountries()[position].countryID, this@AddAddressActivity)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // No hacer nada si no se selecciona ningún elemento
+            }
+        }
+    }
+
+    fun setUpProvinces() {
+        val adaptadorProvinces = ArrayAdapter(this, android.R.layout.simple_spinner_item, viewModel.getProvinces().map { it.province })
+        adaptadorProvinces.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.statePinnerId.adapter = adaptadorProvinces
+        binding.statePinnerId.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: android.view.View?, position: Int, id: Long) {
+                viewModel.provinceSelected = viewModel.getProvinces()[position].province
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // No hacer nada si no se selecciona ningún elemento
+            }
+        }
     }
 
     private fun setUpActions() {
@@ -45,7 +75,7 @@ class AddAddressActivity : MainActivity() {
 
     private fun postAddAddress() {
         val first = viewModel.getProvinces().first()
-        val provinceText = binding.stateEditTextId.text.toString()
+        val provinceText = viewModel.provinceSelected
         val cityText = binding.cityEditTextId.text.toString()
         val addressText = binding.addressEditTextId.text.toString()
         val referenceText = binding.referenceEditTextId.text.toString()
