@@ -33,7 +33,7 @@ class MyOrdersViewModel: ViewModel() {
         }
         val model = MyOrdersModel(status, nextPage, Constants.clearString)
         var endpoint = "orders/status/${model.status}${model.type}?page=${model.nextPage}&type=STRIPE"
-        if (model.status == "redund") {
+        if (model.status == "refund") {
             endpoint = "orders/${model.status}${model.type}?page=${model.nextPage}&type=STRIPE"
         }
         CoroutineScope(Dispatchers.IO).launch {

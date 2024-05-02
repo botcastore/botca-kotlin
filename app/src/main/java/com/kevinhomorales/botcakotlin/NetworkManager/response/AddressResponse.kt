@@ -19,7 +19,8 @@ data class Address (
     val isFav: Boolean,
     val createdAt: String,
     val updatedAt: String,
-    val city: String,
-    val provinceID: String,
-    val province: String
+    val city: String? = null,
+    val provinceID: String? = null,
+    val province: String? = null,
+    val cityName: String? = null
 ): Serializable

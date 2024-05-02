@@ -28,6 +28,7 @@ import com.kevinhomorales.botcakotlin.utils.CardManager
 import com.kevinhomorales.botcakotlin.utils.Constants
 import com.kevinhomorales.botcakotlin.utils.SwipeToDeleteCallBackCart
 import com.kevinhomorales.botcakotlin.utils.TransferManager
+import com.stripe.android.model.PaymentMethodCreateParams
 import java.io.Serializable
 
 class CartActivity : MainActivity(), OnCartClickListener, OnAddRestClickListener {
@@ -105,7 +106,7 @@ class CartActivity : MainActivity(), OnCartClickListener, OnAddRestClickListener
                 Alerts.warning(getString(R.string.alert_title),"add card",this)
                 return
             }
-            viewModel.postIntent(cardID = viewModel.card.id, addressID = viewModel.address.addressID)
+            viewModel.postIntent(cardID = viewModel.card.id, addressID = viewModel.address.addressID, this)
             return
         }
 
@@ -206,4 +207,12 @@ class CartActivity : MainActivity(), OnCartClickListener, OnAddRestClickListener
     override fun getQuatity(cartProductID: String, quantity: Int) {
         viewModel.updateProductInCart(cartProductID, quantity, this)
     }
+
+
+    fun payWithClientSecret(paymentIntentClientSecret: String) {
+        val dataCard = viewModel.card
+//        val paymentIntentParams = PaymentMethodCreateParams.createCard()
+
+    }
+
 }

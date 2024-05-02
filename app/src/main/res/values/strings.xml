@@ -89,6 +89,7 @@
     <string name="country">País</string>
     <string name="state">State</string>
     <string name="city">City</string>
+    <string name="other">Other</string>
     <string name="address">Address</string>
     <string name="reference">Reference (optional)</string>
     <string name="delivery_by">Delivery by Name</string>
@@ -96,6 +97,8 @@
     <string name="postal_code">Zip Code</string>
     <string name="add_address">UPLOAD ADDRESS</string>
     <string name="loading_provinces">LOADING PROVINCES</string>
+    <string name="loading_cities">LOADING CITIES</string>
+    <string name="notCity">Can\'t find your city?</string>
 
     <!--    INFO VIEW-->
     <string name="info_title_view">Information</string>

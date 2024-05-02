@@ -36,7 +36,11 @@ class AddressAdapter(private val context: Context, var itemClickListener: OnAddr
     inner class AddressViewHolder(private val itemBinding: RowAddressBinding): RecyclerView.ViewHolder(itemBinding.root) {
         fun bindView(model: Address) {
             itemBinding.addressId.text = model.address
-            itemBinding.cityId.text = model.city
+            if (model.city == null) {
+                itemBinding.cityId.text = model.cityName
+            } else {
+                itemBinding.cityId.text = model.city
+            }
             itemView.setOnClickListener { itemClickListener.addressClick(model) }
         }
     }

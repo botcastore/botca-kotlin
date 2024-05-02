@@ -1,6 +1,7 @@
 package com.kevinhomorales.botcakotlin.customer.address.addaddress.view
 
 import android.os.Bundle
+import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.lifecycle.ViewModelProvider
@@ -49,6 +50,10 @@ class AddAddressActivity : MainActivity() {
                 // No hacer nada si no se selecciona ningún elemento
             }
         }
+        binding.notCityId.setOnClickListener {
+            tapHaptic()
+            binding.otherLayoutId.visibility = View.VISIBLE
+        }
     }
 
     fun setUpProvinces() {
@@ -58,6 +63,22 @@ class AddAddressActivity : MainActivity() {
         binding.statePinnerId.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: android.view.View?, position: Int, id: Long) {
                 viewModel.provinceSelected = viewModel.getProvinces()[position].province
+                viewModel.getCities(viewModel.getProvinces()[position].provinceID, this@AddAddressActivity)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // No hacer nada si no se selecciona ningún elemento
+            }
+        }
+    }
+
+    fun setUpCities() {
+        val adaptadorCities = ArrayAdapter(this, android.R.layout.simple_spinner_item, viewModel.getCities().map { it.city })
+        adaptadorCities.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.citySpinnerId.adapter = adaptadorCities
+        binding.citySpinnerId.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: android.view.View?, position: Int, id: Long) {
+                viewModel.citySelected = viewModel.getCities()[position].city
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -76,7 +97,8 @@ class AddAddressActivity : MainActivity() {
     private fun postAddAddress() {
         val first = viewModel.getProvinces().first()
         val provinceText = viewModel.provinceSelected
-        val cityText = binding.cityEditTextId.text.toString()
+        val countryText = viewModel.countrySelected
+        val cityText = viewModel.citySelected
         val addressText = binding.addressEditTextId.text.toString()
         val referenceText = binding.referenceEditTextId.text.toString()
         val phoneText = binding.phoneEditTextId.text.toString()
@@ -84,6 +106,8 @@ class AddAddressActivity : MainActivity() {
         val postalCodeText = binding.postalCodeEditTextId.text.toString()
         val dniText = binding.idEditTextId.text.toString()
         val dniInt = dniText.toIntOrNull() ?: 0
+        val cityID = viewModel.getCities().filter { it.city == cityText }.first().cityID
+
         if (provinceText.isEmpty() ||
             cityText.isEmpty() ||
             addressText.isEmpty() ||
@@ -94,16 +118,24 @@ class AddAddressActivity : MainActivity() {
             Alerts.warning(getString(R.string.alert_title), getString(R.string.complete_data), this)
             return
         }
+        var cityIDSend = cityID
+        var cityNameSend = Constants.clearString
+        if (binding.otherLayoutId.visibility == View.VISIBLE) {
+            cityIDSend = Constants.clearString
+            cityNameSend = binding.cityEditTextId.text.toString()
+        }
         val addAddressModel = AddAddressModel(
             names = deliveryByNameText,
             phoneNumber = phoneText,
             address = addressText,
-            city = cityText,
+            city = cityIDSend,
+            cityName = cityNameSend,
             reference = referenceText,
             state = provinceText,
             dni = dniInt,
             isFav = false,
-            postalCode = postalCodeText
+            postalCode = postalCodeText,
+            country = countryText
         )
         viewModel.postAddAddress(addAddressModel, this)
     }

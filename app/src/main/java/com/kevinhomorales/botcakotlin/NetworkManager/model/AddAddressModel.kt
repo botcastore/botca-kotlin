@@ -5,9 +5,11 @@ data class AddAddressModel (
     val phoneNumber: String,
     val address: String,
     val city: String,
+    val cityName: String,
     val reference: String,
     val state: String,
     val dni: Int,
     val isFav: Boolean,
-    val postalCode: String
+    val postalCode: String,
+    val country: String
 )

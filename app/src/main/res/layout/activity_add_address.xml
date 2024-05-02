@@ -85,10 +85,58 @@
 
                 android:orientation="vertical">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="@string/city"
+                        android:layout_weight="0.5"
+                        android:textColor="@color/blackColor"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/not_city_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="@string/notCity"
+                        android:layout_weight="0.5"
+                        android:gravity="right"
+                        android:textColor="@color/redColor"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <Spinner
+                    android:id="@+id/city_spinner_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="8dp"
+                    android:textColor="@color/blackColor"
+                    android:layout_marginTop="8dp"
+                    android:inputType="textEmailAddress"
+                    android:textSize="14sp"
+                    android:textStyle="normal" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/other_layout_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:visibility="gone"
+                android:orientation="vertical">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="@string/city"
+                    android:text="@string/other"
                     android:textColor="@color/blackColor"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -98,7 +146,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="8dp"
-                    android:hint="@string/city"
+                    android:hint="@string/other"
                     android:textColor="@color/blackColor"
                     android:textSize="14sp"
                     android:textStyle="normal" />

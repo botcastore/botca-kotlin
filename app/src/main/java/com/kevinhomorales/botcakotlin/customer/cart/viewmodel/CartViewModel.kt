@@ -1,14 +1,21 @@
 package com.kevinhomorales.botcakotlin.customer.cart.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthResult
 import com.google.gson.JsonObject
 import com.kevinhomorales.botcakotlin.NetworkManager.model.ClearCartModel
+import com.kevinhomorales.botcakotlin.NetworkManager.model.IntentModel
+import com.kevinhomorales.botcakotlin.NetworkManager.model.LoginModel
 import com.kevinhomorales.botcakotlin.NetworkManager.model.RemoveProductFromCartModel
 import com.kevinhomorales.botcakotlin.NetworkManager.model.UpdateProductCartModel
 import com.kevinhomorales.botcakotlin.NetworkManager.model.VerifyMemberModel
 import com.kevinhomorales.botcakotlin.NetworkManager.request.AddressRequest
 import com.kevinhomorales.botcakotlin.NetworkManager.request.ClearCartRequest
 import com.kevinhomorales.botcakotlin.NetworkManager.request.CouponsListRequest
+import com.kevinhomorales.botcakotlin.NetworkManager.request.IntentRequest
+import com.kevinhomorales.botcakotlin.NetworkManager.request.LoginRequest
 import com.kevinhomorales.botcakotlin.NetworkManager.request.RemoveProductFromCartRequest
 import com.kevinhomorales.botcakotlin.NetworkManager.request.UpdateProductCartRequest
 import com.kevinhomorales.botcakotlin.NetworkManager.response.Address
@@ -23,6 +30,7 @@ import com.kevinhomorales.botcakotlin.main.MainActivity
 import com.kevinhomorales.botcakotlin.utils.Alerts
 import com.kevinhomorales.botcakotlin.utils.Constants
 import com.kevinhomorales.botcakotlin.utils.GUEST_LOGIN
+import com.kevinhomorales.botcakotlin.utils.GooglePictureQuality
 import com.kevinhomorales.botcakotlin.utils.SwipeToDeleteCallBackCart
 import com.kevinhomorales.botcakotlin.utils.UserManager
 import kotlinx.coroutines.CoroutineScope
@@ -202,8 +210,35 @@ class CartViewModel: ViewModel() {
         }
     }
 
-    fun postIntent(cardID: String, addressID: String) {
+    fun postIntent(cardID: String, addressID: String, mainActivity: MainActivity) {
+        mainActivity.showLoading(mainActivity.getString(R.string.loading_coupons))
+        CoroutineScope(Dispatchers.IO).launch {
+            val intentModel = IntentModel(cardID, addressID)
+            val call = mainActivity.getRetrofit().create(IntentRequest::class.java).pay("payment/intent", jsonIntent(intentModel))
+            val intentReponse = call.body()
+            mainActivity.runOnUiThread {
+                if(call.isSuccessful) {
+                    view.payWithClientSecret(intentReponse!!.clientSecret)
+                } else {
+                    val error = call.errorBody()
+                    val jsonObject = JSONObject(error!!.string())
+                    val message = jsonObject.getString("status")
+                    if (message == Constants.sessionExpired) {
+                        Alerts.warning(message, mainActivity.getString(R.string.error_message), mainActivity)
+                        return@runOnUiThread
+                    }
+                    Alerts.warning(message, mainActivity.getString(R.string.error_message), mainActivity)
+                }
+                mainActivity.hideLoading()
+            }
+        }
+    }
 
+    private fun jsonIntent(intentModel: IntentModel): JsonObject {
+        val user = JsonObject()
+        user.addProperty("addressID", intentModel.addressID)
+        user.addProperty("cardID", intentModel.cardID)
+        return user
     }
 
     fun getCartAvailable(couponID: String) {
