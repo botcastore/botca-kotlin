@@ -114,9 +114,14 @@ open class MainActivity: AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        CardManager.shared.removeCard(this)
-        TransferManager.shared.removeTransfer(this)
-        AddressManager.shared.removeAddress(this)
+        val card = CardManager.shared.getCard(this)
+        val address = AddressManager.shared.getAddress(this)
+        val transfer = TransferManager.shared.getTransfer(this)
+        if (card.id.isEmpty() && address.addressID.isEmpty() && transfer.addressID.isEmpty()) {
+            CardManager.shared.removeCard(this)
+            TransferManager.shared.removeTransfer(this)
+            AddressManager.shared.removeAddress(this)
+        }
         FilterProductManager.shared.removeFilterProduct(this)
     }
 }

@@ -9,7 +9,7 @@ import com.stripe.android.model.Token
 
 
 class StripeToolsManager {
-    private val stripeSecret = if (Constants.isProd()) {
+    val stripeSecret = if (Constants.isProd()) {
         "pk_live_51O03fkG4xk8zqx8WxX3kHPphxok6DOxXvxsz6Xp2Epx7pFQsMHymEFA0TNyCsZsXWK6EwhFJGqKT9uiaMSixVdcn00N5XzkXKr"
     } else {
         "pk_test_51O03fkG4xk8zqx8WysrFlF2B0b8ojcJ2mpe9E1NhsR1ZGnbUC6I1T4q0D55lBupNijxjXBkts8QfnNf3tAbt7DoN00l66Jsu0V"

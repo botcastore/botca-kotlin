@@ -1,5 +1,6 @@
 package com.kevinhomorales.botcakotlin.customer.cart.view
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -19,6 +20,7 @@ import com.kevinhomorales.botcakotlin.customer.cart.view.adapter.OnAddRestClickL
 import com.kevinhomorales.botcakotlin.customer.cart.view.adapter.OnCartClickListener
 import com.kevinhomorales.botcakotlin.customer.cart.viewmodel.CartViewModel
 import com.kevinhomorales.botcakotlin.customer.coupons.view.CouponsActivity
+import com.kevinhomorales.botcakotlin.customer.payments.cards.stripetools.StripeToolsManager
 import com.kevinhomorales.botcakotlin.customer.payments.paymentsmethods.view.PaymentsMethodsActivity
 import com.kevinhomorales.botcakotlin.databinding.ActivityCartBinding
 import com.kevinhomorales.botcakotlin.main.MainActivity
@@ -28,6 +30,15 @@ import com.kevinhomorales.botcakotlin.utils.CardManager
 import com.kevinhomorales.botcakotlin.utils.Constants
 import com.kevinhomorales.botcakotlin.utils.SwipeToDeleteCallBackCart
 import com.kevinhomorales.botcakotlin.utils.TransferManager
+import com.stripe.android.ApiResultCallback
+import com.stripe.android.PaymentIntentResult
+import com.stripe.android.PaymentSession
+import com.stripe.android.Stripe
+import com.stripe.android.model.Card
+import com.stripe.android.model.CardParams
+import com.stripe.android.model.ConfirmPaymentIntentParams
+import com.stripe.android.model.PaymentIntent
+import com.stripe.android.model.PaymentMethod
 import com.stripe.android.model.PaymentMethodCreateParams
 import java.io.Serializable
 
@@ -94,16 +105,15 @@ class CartActivity : MainActivity(), OnCartClickListener, OnAddRestClickListener
 
     private fun checkOut() {
         if (viewModel.address.address.isEmpty()) {
-            Alerts.warning(getString(R.string.alert_title),"add address",this)
+            Alerts.warning(getString(R.string.alert_title),getString(R.string.please_add_address),this)
             return
         }
 
         val paymentMethodText = binding.paymentMethodTextId.text
-
         if (paymentMethodText.contains(getString(R.string.card))) {
              viewModel.card = CardManager.shared.getCard(this)
             if (viewModel.card.id.isEmpty()) {
-                Alerts.warning(getString(R.string.alert_title),"add card",this)
+                Alerts.warning(getString(R.string.alert_title),getString(R.string.please_add_card),this)
                 return
             }
             viewModel.postIntent(cardID = viewModel.card.id, addressID = viewModel.address.addressID, this)
@@ -113,11 +123,11 @@ class CartActivity : MainActivity(), OnCartClickListener, OnAddRestClickListener
         viewModel.transferToCheckOut = TransferManager.shared.getTransfer(this)
         if (binding.paymentMethodTextId.text == getString(R.string.transfer)) {
             viewModel.transferToCheckOut.addressID = viewModel.address.addressID
-//            viewModel.uploadTransfer(transferToCheckOut)
+            viewModel.uploadTransfer(viewModel.transferToCheckOut, this)
             return
         }
 
-        Alerts.warning(getString(R.string.alert_title),"alertChoosePaymentsMethods", this)
+        Alerts.warning(getString(R.string.alert_title),getString(R.string.choose_payment_method), this)
     }
 
     private fun setUpActions() {
@@ -209,10 +219,22 @@ class CartActivity : MainActivity(), OnCartClickListener, OnAddRestClickListener
     }
 
 
+    @SuppressLint("RestrictedApi")
     fun payWithClientSecret(paymentIntentClientSecret: String) {
-        val dataCard = viewModel.card
-//        val paymentIntentParams = PaymentMethodCreateParams.createCard()
+        val card = CardManager.shared.getCard(this)
+
+        val stripeCard = PaymentMethodCreateParams.Card.create(card.tokenizationMethod as String)
+
+        val paymentMethodParams = PaymentMethodCreateParams.create(stripeCard, null,null)
+
+        // Crear un objeto PaymentIntentConfirmParams con los parámetros del método de pago y el secret del cliente del intento de pago
+        val confirmParams = ConfirmPaymentIntentParams.createWithPaymentMethodCreateParams(paymentMethodParams, paymentIntentClientSecret)
+
+        // Crear una instancia de Stripe
+        val stripe = Stripe(this, StripeToolsManager.shared.stripeSecret)
+
+        // Realizar la confirmación del pago
+        stripe.confirmPayment(this, confirmParams)
 
     }
-
 }

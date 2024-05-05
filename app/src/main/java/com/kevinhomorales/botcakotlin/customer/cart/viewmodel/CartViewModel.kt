@@ -8,14 +8,18 @@ import com.google.gson.JsonObject
 import com.kevinhomorales.botcakotlin.NetworkManager.model.ClearCartModel
 import com.kevinhomorales.botcakotlin.NetworkManager.model.IntentModel
 import com.kevinhomorales.botcakotlin.NetworkManager.model.LoginModel
+import com.kevinhomorales.botcakotlin.NetworkManager.model.PushFavoriteModel
 import com.kevinhomorales.botcakotlin.NetworkManager.model.RemoveProductFromCartModel
 import com.kevinhomorales.botcakotlin.NetworkManager.model.UpdateProductCartModel
+import com.kevinhomorales.botcakotlin.NetworkManager.model.UploadTransferModel
 import com.kevinhomorales.botcakotlin.NetworkManager.model.VerifyMemberModel
 import com.kevinhomorales.botcakotlin.NetworkManager.request.AddressRequest
+import com.kevinhomorales.botcakotlin.NetworkManager.request.CartAvailableRequest
 import com.kevinhomorales.botcakotlin.NetworkManager.request.ClearCartRequest
 import com.kevinhomorales.botcakotlin.NetworkManager.request.CouponsListRequest
 import com.kevinhomorales.botcakotlin.NetworkManager.request.IntentRequest
 import com.kevinhomorales.botcakotlin.NetworkManager.request.LoginRequest
+import com.kevinhomorales.botcakotlin.NetworkManager.request.PushFavoriteRequest
 import com.kevinhomorales.botcakotlin.NetworkManager.request.RemoveProductFromCartRequest
 import com.kevinhomorales.botcakotlin.NetworkManager.request.UpdateProductCartRequest
 import com.kevinhomorales.botcakotlin.NetworkManager.response.Address
@@ -211,7 +215,7 @@ class CartViewModel: ViewModel() {
     }
 
     fun postIntent(cardID: String, addressID: String, mainActivity: MainActivity) {
-        mainActivity.showLoading(mainActivity.getString(R.string.loading_coupons))
+        mainActivity.showLoading(mainActivity.getString(R.string.loading_payment))
         CoroutineScope(Dispatchers.IO).launch {
             val intentModel = IntentModel(cardID, addressID)
             val call = mainActivity.getRetrofit().create(IntentRequest::class.java).pay("payment/intent", jsonIntent(intentModel))
@@ -241,7 +245,71 @@ class CartViewModel: ViewModel() {
         return user
     }
 
-    fun getCartAvailable(couponID: String) {
+    fun getCartAvailable(couponID: String, mainActivity: MainActivity) {
+        mainActivity.showLoading(mainActivity.getString(R.string.loading_cart))
+        var token = UserManager.shared.getUser(mainActivity).me.token
+        if (token == null) {
+            token = GUEST_LOGIN
+        }
+        CoroutineScope(Dispatchers.IO).launch {
+            val call = mainActivity.getRetrofit().create(CartAvailableRequest::class.java).getCartAvailable("\"${couponID}\"", token!!)
+            val response = call.body()
+            mainActivity.runOnUiThread {
+                if(call.isSuccessful) {
+                    cartAvailableResponse = response!!
+                    view.reloadData()
+                } else {
+                    val error = call.errorBody()
+                    val jsonObject = JSONObject(error!!.string())
+                    val message = jsonObject.getString("status")
+                    if (message == Constants.sessionExpired) {
+                        Alerts.warning(message, mainActivity.getString(R.string.error_message), mainActivity)
+                        return@runOnUiThread
+                    }
+                    Alerts.warning(message, mainActivity.getString(R.string.error_message), mainActivity)
+                }
+                mainActivity.hideLoading()
+            }
+        }
+    }
 
+    fun uploadTransfer(model: TransferToCheckOut, mainActivity: MainActivity) {
+        mainActivity.showLoading(mainActivity.getString(R.string.upload_transfer))
+        var token = UserManager.shared.getUser(mainActivity).me.token
+        if (token == null) {
+            token = GUEST_LOGIN
+        }
+        val uploadTransferModel = UploadTransferModel(model.addressID, model.imageBase64, model.notes)
+        CoroutineScope(Dispatchers.IO).launch {
+            val call = mainActivity.getRetrofit().create(PushFavoriteRequest::class.java).push("payment/transfers", token!!, jsonUploadTransfer(uploadTransferModel))
+            val response = call.body()
+            mainActivity.runOnUiThread {
+                if(call.isSuccessful) {
+                    view.onBackPressed()
+                    mainActivity.hideLoading()
+                    return@runOnUiThread
+                } else {
+                    val error = call.errorBody()
+                    val jsonObject = JSONObject(error!!.string())
+                    val message = jsonObject.getString("status")
+                    if (message == Constants.sessionExpired) {
+                        Alerts.warning(message, mainActivity.getString(R.string.error_message), mainActivity)
+                        return@runOnUiThread
+                    }
+                    Alerts.warning(message, mainActivity.getString(R.string.error_message), mainActivity)
+                }
+                mainActivity.hideLoading()
+            }
+        }
+    }
+
+    private fun jsonUploadTransfer(model: UploadTransferModel): JsonObject {
+        val user = JsonObject()
+        user.addProperty("addressID", model.addressID)
+        user.addProperty("imgBase64", model.imgBase64)
+        if (model.notes.isNotEmpty()) {
+            user.addProperty("notes", model.notes)
+        }
+        return user
     }
 }

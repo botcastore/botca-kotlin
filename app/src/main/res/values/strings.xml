@@ -187,6 +187,10 @@
     <string name="choose_discount">Choose your discount</string>
     <string name="card">CARD</string>
     <string name="transfer">Transfer</string>
+    <string name="upload_transfer">UPLOAD TRANSFER</string>
+    <string name="choose_payment_method">Choose a payment method please</string>
+    <string name="please_add_card">Please Add Card</string>
+    <string name="loading_payment">LOADING PAYMENT</string>
 
     <!--    PURSCHASE SUCCESS-->
     <string name="thanks_purchases">Thanks!</string>
