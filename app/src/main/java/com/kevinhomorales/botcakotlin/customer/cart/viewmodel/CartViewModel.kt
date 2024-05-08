@@ -216,9 +216,13 @@ class CartViewModel: ViewModel() {
 
     fun postIntent(cardID: String, addressID: String, mainActivity: MainActivity) {
         mainActivity.showLoading(mainActivity.getString(R.string.loading_payment))
+        var token = UserManager.shared.getUser(mainActivity).me.token
+        if (token == null) {
+            token = GUEST_LOGIN
+        }
         CoroutineScope(Dispatchers.IO).launch {
             val intentModel = IntentModel(cardID, addressID)
-            val call = mainActivity.getRetrofit().create(IntentRequest::class.java).pay("payment/intent", jsonIntent(intentModel))
+            val call = mainActivity.getRetrofit().create(IntentRequest::class.java).pay("payment/intent", token!!, jsonIntent(intentModel))
             val intentReponse = call.body()
             mainActivity.runOnUiThread {
                 if(call.isSuccessful) {
@@ -232,8 +236,8 @@ class CartViewModel: ViewModel() {
                         return@runOnUiThread
                     }
                     Alerts.warning(message, mainActivity.getString(R.string.error_message), mainActivity)
+                    mainActivity.hideLoading()
                 }
-                mainActivity.hideLoading()
             }
         }
     }

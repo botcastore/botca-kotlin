@@ -7,6 +7,7 @@ import com.kevinhomorales.botcakotlin.R
 import com.kevinhomorales.botcakotlin.customer.product.infosize.viewmodel.InfoSizeViewModel
 import com.kevinhomorales.botcakotlin.databinding.ActivityInfoSizeBinding
 import com.kevinhomorales.botcakotlin.main.MainActivity
+import com.kevinhomorales.botcakotlin.utils.Constants
 import java.io.File
 import java.io.InputStream
 
@@ -22,14 +23,13 @@ class InfoSizeActivity : MainActivity() {
     }
 
     private fun setUpView() {
-        title = getString(R.string.add_card_title_view)
+        title = getString(R.string.pdf_info_title_view)
         viewModel = ViewModelProvider(this).get(InfoSizeViewModel::class.java)
+        if (intent.extras != null) {
+            viewModel.pdfName = intent.extras!!.getString(Constants.pdfNameKey, Constants.clearString) as String
+        }
         viewModel.view = this
-        setUpActions()
+        binding.pdfViewId.fromAsset(viewModel.pdfName).load()
     }
 
-    private fun setUpActions() {
-        val inputStream = File("gfg.txt").inputStream()
-        binding.pdfViewId.fromStream(inputStream)
-    }
 }

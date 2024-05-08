@@ -1,6 +1,6 @@
 package com.kevinhomorales.botcakotlin.customer.cart.view
 
-import android.annotation.SuppressLint
+import android.app.Instrumentation.ActivityResult
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -15,6 +15,7 @@ import com.kevinhomorales.botcakotlin.NetworkManager.response.CouponsListRespons
 import com.kevinhomorales.botcakotlin.NetworkManager.response.ProductCart
 import com.kevinhomorales.botcakotlin.R
 import com.kevinhomorales.botcakotlin.customer.address.view.AddressActivity
+import com.kevinhomorales.botcakotlin.customer.cart.purchasesuccess.view.PurchaseSuccessActivity
 import com.kevinhomorales.botcakotlin.customer.cart.view.adapter.CartAdapter
 import com.kevinhomorales.botcakotlin.customer.cart.view.adapter.OnAddRestClickListener
 import com.kevinhomorales.botcakotlin.customer.cart.view.adapter.OnCartClickListener
@@ -31,27 +32,34 @@ import com.kevinhomorales.botcakotlin.utils.Constants
 import com.kevinhomorales.botcakotlin.utils.SwipeToDeleteCallBackCart
 import com.kevinhomorales.botcakotlin.utils.TransferManager
 import com.stripe.android.ApiResultCallback
+import com.stripe.android.PaymentConfiguration
 import com.stripe.android.PaymentIntentResult
-import com.stripe.android.PaymentSession
 import com.stripe.android.Stripe
-import com.stripe.android.model.Card
-import com.stripe.android.model.CardParams
 import com.stripe.android.model.ConfirmPaymentIntentParams
-import com.stripe.android.model.PaymentIntent
-import com.stripe.android.model.PaymentMethod
 import com.stripe.android.model.PaymentMethodCreateParams
+import com.stripe.android.model.StripeIntent
+import com.stripe.android.view.CardInputWidget
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.io.Serializable
+
 
 class CartActivity : MainActivity(), OnCartClickListener, OnAddRestClickListener {
 
     lateinit var binding: ActivityCartBinding
     lateinit var viewModel: CartViewModel
     lateinit var cartAdapter: CartAdapter
+    lateinit var stripe: Stripe
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCartBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setUpView()
+        CardManager.shared.removeCard(this)
+        AddressManager.shared.removeAddress(this)
+        TransferManager.shared.removeTransfer(this)
+//        stripe = Stripe(this, PaymentConfiguration.getInstance(applicationContext).publishableKey)
+        stripe = Stripe(this, StripeToolsManager.shared.stripeSecret)
     }
 
     private fun setUpView() {
@@ -219,22 +227,77 @@ class CartActivity : MainActivity(), OnCartClickListener, OnAddRestClickListener
     }
 
 
-    @SuppressLint("RestrictedApi")
     fun payWithClientSecret(paymentIntentClientSecret: String) {
         val card = CardManager.shared.getCard(this)
-
-        val stripeCard = PaymentMethodCreateParams.Card.create(card.tokenizationMethod as String)
-
-        val paymentMethodParams = PaymentMethodCreateParams.create(stripeCard, null,null)
-
-        // Crear un objeto PaymentIntentConfirmParams con los parámetros del método de pago y el secret del cliente del intento de pago
-        val confirmParams = ConfirmPaymentIntentParams.createWithPaymentMethodCreateParams(paymentMethodParams, paymentIntentClientSecret)
-
-        // Crear una instancia de Stripe
-        val stripe = Stripe(this, StripeToolsManager.shared.stripeSecret)
-
-        // Realizar la confirmación del pago
+        val confirmParams = ConfirmPaymentIntentParams
+            .createWithPaymentMethodId(
+                card.id,
+                paymentIntentClientSecret
+            )
         stripe.confirmPayment(this, confirmParams)
+    }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        stripe.onPaymentResult(requestCode, data, object: ApiResultCallback<PaymentIntentResult>{
+            override fun onSuccess(result: PaymentIntentResult) {
+                val paymentIntent = result.intent
+                hideLoading()
+                when (paymentIntent.status) {
+                    StripeIntent.Status.RequiresConfirmation -> {
+                        // El pago requiere confirmación adicional
+                        Alerts.warning(
+                            getString(R.string.alert_title),
+                            "REQUIERE CONFIRMATION!",
+                            this@CartActivity
+                        )
+                    }
+
+                    StripeIntent.Status.RequiresAction -> {
+                        // El pago requiere acción adicional del usuario (por ejemplo, autenticación 3D Secure)
+                        Alerts.warning(
+                            getString(R.string.alert_title),
+                            "REQUIERE ACTION!",
+                            this@CartActivity
+                        )
+                    }
+
+                    StripeIntent.Status.Succeeded -> {
+                        paymentDone()
+                    }
+
+                    StripeIntent.Status.RequiresPaymentMethod -> {
+                        // El pago requiere un método de pago válido
+                        Alerts.warning(
+                            getString(R.string.alert_title),
+                            "REQUIERE PAYMENT MATHOD!",
+                            this@CartActivity
+                        )
+                    }
+
+                    StripeIntent.Status.Canceled -> {
+                        Alerts.warning(
+                            getString(R.string.alert_title),
+                            "CANCELED!",
+                            this@CartActivity
+                        )
+                    }
+
+                    else -> {
+                        // Otros estados de pago
+                        Alerts.warning(getString(R.string.alert_title), "OTHER!", this@CartActivity)
+                    }
+                }
+            }
+
+            override fun onError(e: Exception) {
+                Alerts.warning(getString(R.string.alert_title), e.localizedMessage!!, this@CartActivity)
+            }
+        })
+    }
+
+    fun paymentDone() {
+        val intent = Intent(this, PurchaseSuccessActivity::class.java)
+        startActivity(intent)
     }
 }

@@ -57,7 +57,6 @@ class CouponsViewModel: ViewModel() {
     }
 
     private fun getCoupons(mainActivity: MainActivity) {
-        mainActivity.showLoading(mainActivity.getString(R.string.loading_coupons))
         var token = UserManager.shared.getUser(mainActivity).me.token
         if (token == null) {
             token = GUEST_LOGIN

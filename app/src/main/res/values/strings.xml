@@ -100,12 +100,18 @@
     <string name="loading_cities">LOADING CITIES</string>
     <string name="notCity">Can\'t find your city?</string>
 
+    <!--    PURCHASE SUCCESS VIEW-->
+    <string name="purchase_success_title_view">Purchase Success</string>
+
     <!--    INFO VIEW-->
     <string name="info_title_view">Information</string>
     <string name="loading_delete">LOADING DELETE</string>
     <string name="delete_account_button">Delete Account</string>
     <string name="body_subtitle">Delete account in BOTCA: We want to make sure that you really want to carry out this action.\n\nDeleting your account will mean the permanent loss of all your data and settings associated with it. If you are sure you want to proceed, please confirm your decision by clicking on the following button:\n\nIf you dont want to delete your account and you think this was an error, ignore this message and your account will remain active.\n\nThank you for being part of our community.</string>
     <string name="delete_ask">Are you sure you want to delete your account?</string>
+
+    <!--    INFO SIZE-->
+    <string name="pdf_info_title_view">PDF Info</string>
 
     <!--    CARDS VIEW-->
     <string name="cards_title_view">Cards</string>
@@ -127,7 +133,7 @@
     <string name="discount_title">DISCOUNT COUPON</string>
     <string name="discount_value">15 %</string>
     <string name="discount_off">OFF</string>
-    <string name="discount_subtitle">Enjoy your 15 OFF on your first purchase! Celebrating that you are now part of our team</string>
+    <string name="discount_subtitle">Enjoy your 15 % OFF on your first purchase! Celebrating that you are now part of our team</string>
 
     <!--    WISHLIST VIEW-->
     <string name="wishlist_title_view">Favorites</string>
@@ -136,7 +142,7 @@
     <!--    PRODUCTS-->
     <string name="sizes">Sizes</string>
     <string name="description">Description</string>
-    <string name="size_guide">Sizes</string>
+    <string name="size_guide">Size Guide</string>
     <string name="loading_cart">LOADING CART</string>
     <string name="no_products_in_cart">Not Products in Cart</string>
     <string name="loading_product">LOADING PRODUCT</string>
@@ -144,9 +150,9 @@
 
     <!--    PRODUCT-->
     <string name="colors">Colors</string>
-    <string name="count">Cuenta</string>
+    <string name="count">Counts</string>
     <string name="add_cart_button">Add to Cart</string>
-
+    <string name="need_help_sizes">Need help with the sizes?</string>
     <!--    CARD-->
     <string name="cart_title_view">Cart</string>
     <string name="deleting_card">DELETE CARD</string>
@@ -191,6 +197,7 @@
     <string name="choose_payment_method">Choose a payment method please</string>
     <string name="please_add_card">Please Add Card</string>
     <string name="loading_payment">LOADING PAYMENT</string>
+    <string name="no_coupons_in_cart">Not coupons in this moment</string>
 
     <!--    PURSCHASE SUCCESS-->
     <string name="thanks_purchases">Thanks!</string>

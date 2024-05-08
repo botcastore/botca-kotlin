@@ -50,6 +50,7 @@ class CouponsActivity : MainActivity(), OnCouponsClickListener {
     }
 
     fun reloadData() {
+        hideLoading()
         couponsAdapter = CouponsAdapter(this, this)
         binding.recyclerCouponsId.layoutManager = LinearLayoutManager(this)
         binding.recyclerCouponsId.adapter = couponsAdapter

@@ -15,7 +15,7 @@ data class Product (
     val price: String,
     val finalPrice: String? = null,
     val productSlug: String,
-    val discount: Any? = null,
+    val discount: Int? = null,
     val categoryID: String,
     val createdBy: Int? = null,
     val isActive: Boolean,
@@ -67,7 +67,7 @@ data class ColorsSize (
 ): Serializable
 
 data class Color (
-    val images: List<String>,
+    val images: MutableList<String>,
 
     @SerializedName("color_product_ID")
     val colorProductID: String,

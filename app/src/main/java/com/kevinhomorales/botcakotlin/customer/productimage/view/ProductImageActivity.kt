@@ -1,6 +1,9 @@
 package com.kevinhomorales.botcakotlin.customer.productimage.view
 
+import android.graphics.Matrix
 import android.os.Bundle
+import android.view.MotionEvent
+import android.view.ScaleGestureDetector
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -15,6 +18,10 @@ import com.kevinhomorales.botcakotlin.utils.Constants
 class ProductImageActivity : MainActivity() {
     lateinit var binding: ActivityProductImageBinding
     lateinit var viewModel: ProductImageViewModel
+    private lateinit var scaleGestureDetector: ScaleGestureDetector
+    private var scaleFactor = 1.0f
+    private var matrix = Matrix()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProductImageBinding.inflate(layoutInflater)
@@ -29,7 +36,6 @@ class ProductImageActivity : MainActivity() {
             viewModel.imageURL = intent.extras!!.getString(Constants.imageURLIdKey, Constants.clearString) as String
         }
         viewModel.view = this
-        setUpActions()
         Glide.with(this)
             .load(viewModel.imageURL)
             .centerCrop()
@@ -37,9 +43,22 @@ class ProductImageActivity : MainActivity() {
             .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
             .placeholder(R.drawable.category_hint)
             .into(binding.imageViewId)
+        scaleGestureDetector = ScaleGestureDetector(this, ScaleListener())
     }
 
-    private fun setUpActions() {
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        scaleGestureDetector.onTouchEvent(event)
+        return true
+    }
 
+    inner class ScaleListener : ScaleGestureDetector.SimpleOnScaleGestureListener() {
+        override fun onScale(detector: ScaleGestureDetector): Boolean {
+            scaleFactor *= detector.scaleFactor
+            scaleFactor = if (scaleFactor < 1.0f) 1.0f else scaleFactor
+            scaleFactor = if (scaleFactor > 5.0f) 5.0f else scaleFactor
+            matrix.setScale(scaleFactor, scaleFactor)
+            binding.imageViewId.imageMatrix = matrix
+            return true
+        }
     }
 }

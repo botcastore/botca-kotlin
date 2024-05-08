@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="GOOGLE_MAPS_API_KEY">AIzaSyDaXYhPWwt1uhPXzkH8AA56eqM6_h-_h2E</string>
+    <string name="app_name">Botca</string>
+    <string name="navigation_drawer_open">Abrir el cajón de navegación</string>
+    <string name="navigation_drawer_close">Cerrar el cajón de navegación</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Encabezado de navegación</string>
+    <string name="action_settings">Ajustes</string>
+
+    <string name="menu_profile">Perfil</string>
+    <string name="menu_wishlist">Lista de deseos</string>
+    <string name="menu_info">Información</string>
+    <string name="menu_filter">Filtro</string>
+    <string name="menu_cart">Carrito</string>
+    <string name="menu_address">Dirección</string>
+    <string name="menu_cards">Tarjetas</string>
+    <string name="menu_about_us">Sobre nosotros</string>
+    <string name="menu_cart_remove">Eliminar del carrito</string>
+    <string name="menu_coupons">Cupones</string>
+    <string name="menu_email">Correo electrónico</string>
+
+    <!--    CONSTANTES-->
+    <string name="error_title">¡Error!</string>
+    <string name="alert_title">¡Alerta!</string>
+    <string name="error_message">Hubo un problema con el servidor</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancelar</string>
+    <string name="accept">Aceptar</string>
+    <string name="email_botca">info@botca.store</string>
+    <string name="subject">Información</string>
+    <string name="body">Hola, mi nombre es...</string>
+
+    <!--    VISTA DE INICIO DE SESIÓN-->
+    <string name="loading_login">CARGANDO INFORMACIÓN</string>
+    <string name="sign_in_with_google">Continuar con Google</string>
+    <string name="guest">Invitado</string>
+    <string name="terms_and_privacy">Términos y privacidad</string>
+    <string name="welcome_to_botca">Bienvenido a Botca</string>
+    <string name="google_sign_in_canceled">Cancelaste tu inicio de sesión con Google</string>
+
+    <!--    VISTA PRINCIPAL-->
+    <string name="update_version">¡Actualizar ahora!</string>
+
+    <!--    VISTA DE REGISTRO-->
+    <string name="register_title">Registrar</string>
+    <string name="register_button">Registrar</string>
+    <string name="full_name">Nombre completo</string>
+    <string name="type_full_name">Escribe tu nombre completo</string>
+    <string name="email">Correo electrónico</string>
+    <string name="type_email">Escribe tu correo electrónico</string>
+    <string name="phone">Teléfono</string>
+    <string name="type_phone">Escribe tu teléfono</string>
+    <string name="complete_data">Por favor completa los datos para continuar</string>
+
+    <!--    VISTA DE INICIO-->
+    <string name="loading_categories">CARGANDO CATEGORÍAS</string>
+    <string name="hi">Hola</string>
+    <string name="hi_guest">¡Invitado!</string>
+    <string name="please_login">Por favor Regístrate para usar las funciones</string>
+    <!--    VISTA DE PRODUCTOS-->
+    <string name="loading_products">CARGANDO PRODUCTOS</string>
+
+    <!--    VISTA DE PERFIL-->
+    <string name="addresses_title">Mis direcciones</string>
+    <string name="cards_title">Mis tarjetas</string>
+    <string name="orders_title">Mis pedidos</string>
+    <string name="sign_out_title">Cerrar sesión</string>
+    <string name="profile_title">Mi perfil</string>
+    <string name="sign_out_ask">¿Quieres cerrar sesión?</string>
+    <string name="not_favorites">Por favor añade producto a la lista de deseos</string>
+    <string name="loading_payments">CARGANDO PAGOS</string>
+
+    <!--    VISTA DE DIRECCIÓN-->
+    <string name="addresses_title_view">Direcciones</string>
+    <string name="loading_addresses">CARGANDO DIRECCIONES</string>
+    <string name="please_add_address">Por favor añade una dirección</string>
+    <string name="deleting_address">ELIMINAR DIRECCIÓN</string>
+    <string name="loading_countries">CARGANDO PAÍSES</string>
+
+    <!--    VISTA DE FILTRAR PRODUCTOS-->
+    <string name="filter_by_size">Filtrar por tamaño</string>
+    <string name="filter_by_color">Filtrar por color</string>
+    <string name="search">Buscar</string>
+    <string name="filter_product_title_view">Filtrar producto</string>
+
+    <!--    VISTA DE AÑADIR DIRECCIÓN-->
+    <string name="add_addresses_title_view">Añadir dirección</string>
+    <string name="country">País</string>
+    <string name="state">Estado</string>
+    <string name="city">Ciudad</string>
+    <string name="other">Otro</string>
+    <string name="address">Dirección</string>
+    <string name="reference">Referencia (opcional)</string>
+    <string name="delivery_by">Entrega por Nombre</string>
+    <string name="id">ID</string>
+    <string name="postal_code">Código postal</string>
+    <string name="add_address">SUBIR DIRECCIÓN</string>
+    <string name="loading_provinces">CARGANDO PROVINCIAS</string>
+    <string name="loading_cities">CARGANDO CIUDADES</string>
+    <string name="notCity">¿No encuentras tu ciudad?</string>
+
+    <!--    VISTA DE ÉXITO DE COMPRA-->
+    <string name="purchase_success_title_view">Éxito en la compra</string>
+
+    <!--    VISTA DE INFORMACIÓN-->
+    <string name="info_title_view">Información</string>
+    <string name="loading_delete">CARGANDO ELIMINAR</string>
+    <string name="delete_account_button">Eliminar cuenta</string>
+    <string name="body_subtitle">Eliminar cuenta en BOTCA: Queremos asegurarnos de que realmente deseas llevar a cabo esta acción.\n\nEliminar tu cuenta significará la pérdida permanente de todos tus datos y configuraciones asociadas a ella. Si estás seguro de que deseas continuar, confirma tu decisión haciendo clic en el siguiente botón:\n\nSi no deseas eliminar tu cuenta y crees que fue un error, ignora este mensaje y tu cuenta permanecerá activa.\n\nGracias por ser parte de nuestra comunidad.</string>
+    <string name="delete_ask">¿Estás seguro de que deseas eliminar tu cuenta?</string>
+
+    <!--    VISTA DE INFORMACIÓN DE TAMAÑO-->
+    <string name="pdf_info_title_view">Información del PDF</string>
+
+    <!--    VISTA DE TARJETAS-->
+    <string name="cards_title_view">Tarjetas</string>
+    <string name="loading_cards">CARGANDO TARJETAS</string>
+    <string name="last_numbers">Últimos números:</string>
+    <string name="exp_date">Fecha de exp.:</string>
+    <string name="please_add_cards">Por favor añade una tarjeta</string>
+
+    <!--    VISTA DE AÑADIR TARJETA-->
+    <string name="add_card_title_view">Añadir tarjeta</string>
+    <string name="cvc">CVC</string>
+    <string name="card_number">Número de tarjeta</string>
+    <string name="card_name">Nombre de la tarjeta</string>
+    <string name="uploading_card">SUBIR TARJETA</string>
+
+    <!--    VISTA DE CUPONES-->
+    <string name="coupon_title_view">Cupones</string>
+    <string name="shop_now_title_button">¡Compra ahora!</string>
+    <string name="discount_title">CUPÓN DE DESCUENTO</string>
+    <string name="discount_value">15 %</string>
+    <string name="discount_off">DE DESCUENTO</string>
+    <string name="discount_subtitle">¡Disfruta de tu 15 % de descuento en tu primera compra! Celebrando que ahora eres parte de nuestro equipo</string>
+
+    <!--    VISTA DE LISTA DE DESEOS-->
+    <string name="wishlist_title_view">Favoritos</string>
+    <string name="loading_favorites">CARGANDO FAVORITOS</string>
+
+    <!--    PRODUCTOS-->
+    <string name="sizes">Tallas</string>
+    <string name="description">Descripción</string>
+    <string name="size_guide">Guía de tallas</string>
+    <string name="loading_cart">CARGANDO CARRITO</string>
+    <string name="no_products_in_cart">No hay productos en el carrito</string>
+    <string name="loading_product">CARGANDO PRODUCTO</string>
+    <string name="loading_data">CARGANDO DATOS</string>
+
+    <!--    PRODUCTO-->
+    <string name="colors">Colores</string>
+    <string name="count">Cantidades</string>
+    <string name="add_cart_button">Añadir al carrito</string>
+    <string name="need_help_sizes">¿Necesitas ayuda con las tallas?</string>
+    <!--    TARJETA-->
+    <string name="cart_title_view">Carrito</string>
+    <string name="deleting_card">ELIMINAR TARJETA</string>
+
+    <!--    SOBRE NOSOTROS-->
+    <string name="about_us_title_view">Sobre nosotros</string>
+    <string name="about_us_title">¡Bienvenido a Botca!</string>
+    <string name="about_us_subtitle">En BOTCA entendemos que la moda es más que solo ropa; Es una expresión de estilo, personalidad y confianza. Fundada en el corazón de Ecuador, somos una plataforma innovadora que ofrece una experiencia de compra única al alcance de tus dedos, fusionando comodidad con elegancia para adolescentes y mujeres de todas las edades.</string>
+    <string name="about_us_op_one_title">Nuestra misión</string>
+    <string name="about_us_op_one_subtitle">Nuestra misión es redefinir la forma en que te relacionas con la moda. Nos destacamos por ofrecer una cuidadosa selección de prendas que encapsulan la esencia del estilo CLASSY CHIC, fusionando la comodidad que necesitas con la sofisticación que mereces.</string>
+    <string name="about_us_op_two_title">¿Qué nos hace diferentes?</string>
+    <string name="about_us_op_two_subtitle">En un mercado saturado de opciones, BOTCA se destaca por traer una propuesta fresca y única. No somos solo una tienda de ropa, somos una experiencia.</string>
+    <string name="about_us_op_three_title">Únete a nuestra comunidad</string>
+    <string name="about_us_op_three_subtitle">Te invitamos a explorar nuestra selección exclusiva y ser parte de nuestra comunidad de amantes de la moda que buscan un estilo que te haga sentir muy seguro para que puedas proyectarte como una superwoman. En BOTCA, la moda no es solo una tendencia, es un estilo de vida.</string>
+    <string name="about_us_footer">¡Gracias por elegirnos como tu destino de moda preferido!</string>
+    <string name="contact_button">Contacto</string>
+
+    <!--    CARRITO-->
+    <string name="cart_title_button">Revisar</string>
+    <string name="total_value">Total: $</string>
+    <string name="delivery_cost_value">Costo de entrega: $</string>
+    <string name="sub_total_cost_value">Subtotal: $</string>
+    <string name="delivery_address_title">Dirección de entrega:</string>
+    <string name="delivery_address_value">Elige tu dirección</string>
+    <string name="payment_method_title">Método de pago:</string>
+    <string name="payment_method_value">Elige tu método de pago</string>
+    <string name="discount_choose_title">Descuento:</string>
+    <string name="discount_choose_value">Descuento aplicado</string>
+    <string name="coupons_title">Cupones:</string>
+    <string name="coupons_value">Elige tu descuento</string>
+    <string name="color">Color</string>
+    <string name="size">Tamaño</string>
+    <string name="deleting_product">ELIMINAR PRODUCTO</string>
+    <string name="delete_cart_question">¿Quieres eliminar tu carrito?</string>
+    <string name="delete_cart">Eliminar</string>
+    <string name="update_cart">ACTUALIZAR CARRITO</string>
+    <string name="loading_coupons">CARGANDO CUPONES</string>
+    <string name="choose_discount">Elige tu descuento</string>
+    <string name="card">TARJETA</string>
+    <string name="transfer">Transferencia</string>
+    <string name="upload_transfer">SUBIR TRANSFERENCIA</string>
+    <string name="choose_payment_method">Por favor elige un método de pago</string>
+    <string name="please_add_card">Por favor añade una tarjeta</string>
+    <string name="loading_payment">CARGANDO PAGO</string>
+    <string name="no_coupons_in_cart">No hay cupones en este momento</string>
+
+    <!--    ÉXITO EN LA COMPRA-->
+    <string name="thanks_purchases">¡Gracias!</string>
+
+    <!--    MÉTODOS DE PAGO-->
+    <string name="payments_methods_title">Métodos de pago</string>
+    <string name="payments_methods_card">Tarjeta</string>
+    <string name="payments_methods_transfer">Transferencia</string>
+
+    <!--    TRANSFERENCIA-->
+    <string name="transfer_title">Transferencia</string>
+    <string name="add_transfer_title_view">Añadir transferencia</string>
+    <string name="notes">Notas</string>
+    <string name="transfer_image_explication">Transfiere el dinero y sube la factura. Presiona la imagen para subir la factura</string>
+    <string name="please_choose_from_gallery">Por favor elige una imagen de la galería</string>
+
+    <!--    CUPONES-->
+    <string name="coupons_title_view">Cupones</string>
+
+    <!--    VISTA DE IMAGEN DEL PRODUCTO-->
+    <string name="product_image_title_view">Imagen del producto</string>
+
+    <!--    VISTA DE MIS PEDIDOS-->
+    <string name="my_orders_title_view">Mis pedidos</string>
+    <string name="cards">Tarjetas</string>
+    <string name="transfers">Transferencias</string>
+    <string name="progress">PROGRESO</string>
+    <string name="paid">PAGADO</string>
+    <string name="delivered">ENTREGADO</string>
+    <string name="refund">REEMBOLSO</string>
+
+    <!--    VISTA DE DETALLE DE MIS PEDIDOS-->
+    <string name="my_orders_detail_title_view">Detalle</string>
+</resources>

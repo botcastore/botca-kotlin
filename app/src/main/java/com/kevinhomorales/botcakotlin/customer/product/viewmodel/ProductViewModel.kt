@@ -3,7 +3,9 @@ package com.kevinhomorales.botcakotlin.customer.product.viewmodel
 import androidx.lifecycle.ViewModel
 import com.kevinhomorales.botcakotlin.NetworkManager.model.CartAvailableModel
 import com.kevinhomorales.botcakotlin.NetworkManager.request.CartAvailableRequest
+import com.kevinhomorales.botcakotlin.NetworkManager.response.Color
 import com.kevinhomorales.botcakotlin.NetworkManager.response.Product
+import com.kevinhomorales.botcakotlin.NetworkManager.response.Size
 import com.kevinhomorales.botcakotlin.R
 import com.kevinhomorales.botcakotlin.customer.product.view.ProductActivity
 import com.kevinhomorales.botcakotlin.main.MainActivity
@@ -19,7 +21,9 @@ import org.json.JSONObject
 class ProductViewModel: ViewModel() {
     lateinit var view: ProductActivity
     lateinit var product: Product
-
+    lateinit var colorSelected: Color
+    var productCount = 1
+    lateinit var sizeSelected: Size
     fun getCartAvailable(mainActivity: MainActivity, model: CartAvailableModel) {
         mainActivity.showLoading(mainActivity.getString(R.string.loading_cart))
         var token = UserManager.shared.getUser(mainActivity).me.token
@@ -77,5 +81,13 @@ class ProductViewModel: ViewModel() {
                 mainActivity.hideLoading()
             }
         }
+    }
+
+    fun getSizes(): MutableList<Size> {
+        return product.sizes
+    }
+
+    fun getColors(): MutableList<Color> {
+        return product.colors
     }
 }

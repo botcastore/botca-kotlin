@@ -5,4 +5,5 @@ import com.kevinhomorales.botcakotlin.customer.product.infosize.view.InfoSizeAct
 
 class InfoSizeViewModel: ViewModel() {
     lateinit var view: InfoSizeActivity
+    lateinit var pdfName: String
 }

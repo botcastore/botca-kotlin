@@ -29,7 +29,7 @@ class PurchaseSuccessActivity : MainActivity() {
     }
 
     private fun setUpView() {
-        title = getString(R.string.add_addresses_title_view)
+        title = getString(R.string.purchase_success_title_view)
         viewModel = ViewModelProvider(this).get(PurchaseSuccessViewModel::class.java)
         viewModel.view = this
         setUpActions()

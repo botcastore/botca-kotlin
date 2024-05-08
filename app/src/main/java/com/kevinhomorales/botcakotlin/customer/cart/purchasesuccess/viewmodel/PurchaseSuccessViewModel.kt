@@ -18,6 +18,7 @@ class PurchaseSuccessViewModel: ViewModel() {
     lateinit var view: PurchaseSuccessActivity
 
     fun getCategories(mainActivity: MainActivity, includeProducts: String = "&includeProducts=true") {
+        mainActivity.showLoading(mainActivity.getString(R.string.loading_categories))
         CoroutineScope(Dispatchers.IO).launch {
             val call = mainActivity.getRetrofit().create(CategoriesRequest::class.java).getCategories("categorys?page=1&dataByPage=20" + includeProducts)
             val categoriesResponse = call.body()

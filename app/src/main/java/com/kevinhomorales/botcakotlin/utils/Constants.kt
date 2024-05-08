@@ -36,6 +36,7 @@ class Constants {
         val categoryIdKey = "CATEGORY_ID_KEY"
         val imageURLIdKey = "IMAGE_URL_ID_KEY"
         val myOrdersResponseKey = "MY_ORDERS_RESPONSE_KEY"
+        val pdfNameKey = "PDF_NAME_KEY"
 
         // SERVER - ERROR
         val sessionExpired = "jwt expired"

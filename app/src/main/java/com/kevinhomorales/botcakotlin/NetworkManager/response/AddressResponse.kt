@@ -13,7 +13,7 @@ data class Address (
     val phoneNumber: String,
     val address: String,
     val cityID: String,
-    val reference: String,
+    val reference: String? = null,
     val dni: Long,
     val postalCode: String? = null,
     val isFav: Boolean,
