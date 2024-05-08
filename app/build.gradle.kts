@@ -13,8 +13,8 @@ android {
         applicationId = "com.kevinhomorales.botcakotlin"
         minSdk = 24
         targetSdk = 34
-        versionCode = 105
-        versionName = "1.0.5"
+        versionCode = 106
+        versionName = "1.0.6"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -50,6 +50,10 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.4")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.4")
+
+    // PULL REFRESH
+    implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+    // PULL REFRESH
 
     // FIREBASE
     implementation ("com.google.firebase:firebase-analytics:21.3.0")

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,6 +29,7 @@ import com.kevinhomorales.botcakotlin.main.MainActivity
 import com.kevinhomorales.botcakotlin.utils.Alerts
 import com.kevinhomorales.botcakotlin.utils.Constants
 import com.kevinhomorales.botcakotlin.utils.GUEST_TOKEN
+import com.kevinhomorales.botcakotlin.utils.LocationManager
 import com.kevinhomorales.botcakotlin.utils.UserManager
 import java.io.Serializable
 
@@ -42,18 +44,19 @@ class HomeActivity : MainActivity(), OnCategoryClickListener {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setUpView()
+        viewModel.getCoupons(this)
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            setUpView()
+        }
     }
     private fun setUpView() {
         viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         viewModel.view = this
         categoryAdapter = CategoryAdapter(this, this)
-        bannerAdapter = BannerAdapter(this)
         binding.categoriesId.setHasFixedSize(true)
         binding.categoriesId.layoutManager = LinearLayoutManager(this)
         binding.categoriesId.setLayoutManager(GridLayoutManager(this, 2))
         binding.categoriesId.adapter = categoryAdapter
-        binding.bannerId.adapter = bannerAdapter
-        viewModel.getCoupons(this)
         viewModel.getBanners(this)
         if (intent != null) {
             val loginResponse = UserManager.shared.getUser(this)
@@ -75,15 +78,24 @@ class HomeActivity : MainActivity(), OnCategoryClickListener {
     }
 
     fun updateTable(categoriesResponse: CategoriesResponse) {
-        val category = categoriesResponse.categorys
-        categoryAdapter.setListData(category)
+        val categorys = categoriesResponse.categorys
+        categoryAdapter.setListData(categorys)
         categoryAdapter.notifyDataSetChanged()
+        binding.swipeRefreshLayout.isRefreshing = false
     }
 
     fun updateTableBanners(bannersResponse: BannersResponse) {
-        val banner = bannersResponse.banners
-        bannerAdapter.setListData(banner)
-        bannerAdapter.notifyDataSetChanged()
+        val banners = bannersResponse.banners
+        if (banners.count() > 0) {
+            bannerAdapter = BannerAdapter(this)
+            binding.bannerId.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+            binding.bannerId.adapter = bannerAdapter
+            binding.bannerId.visibility = View.VISIBLE
+            bannerAdapter.setListData(banners)
+            bannerAdapter.notifyDataSetChanged()
+            return
+        }
+        binding.bannerId.visibility = View.GONE
     }
 
     override fun categoryClick(category: Category) {

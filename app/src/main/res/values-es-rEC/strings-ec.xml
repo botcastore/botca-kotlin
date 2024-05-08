@@ -133,7 +133,7 @@
     <string name="shop_now_title_button">¡Compra ahora!</string>
     <string name="discount_title">CUPÓN DE DESCUENTO</string>
     <string name="discount_value">15 %</string>
-    <string name="discount_off">DE DESCUENTO</string>
+    <string name="discount_off">OFF</string>
     <string name="discount_subtitle">¡Disfruta de tu 15 % de descuento en tu primera compra! Celebrando que ahora eres parte de nuestro equipo</string>
 
     <!--    VISTA DE LISTA DE DESEOS-->

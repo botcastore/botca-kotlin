@@ -15,6 +15,7 @@ import com.kevinhomorales.botcakotlin.customer.home.view.HomeActivity
 import com.kevinhomorales.botcakotlin.databinding.ActivityPurchaseSuccessBinding
 import com.kevinhomorales.botcakotlin.main.MainActivity
 import com.kevinhomorales.botcakotlin.utils.Constants
+import com.kevinhomorales.botcakotlin.utils.LocationManager
 import java.io.Serializable
 
 class PurchaseSuccessActivity : MainActivity() {
@@ -33,6 +34,16 @@ class PurchaseSuccessActivity : MainActivity() {
         viewModel = ViewModelProvider(this).get(PurchaseSuccessViewModel::class.java)
         viewModel.view = this
         setUpActions()
+        setUpImage()
+    }
+
+    private fun setUpImage() {
+        val deviceLanguage = LocationManager.shared.getDeviceLanguage(this)
+        if (deviceLanguage == "es") {
+            binding.purchaseSuccessImageId.setImageResource(R.drawable.purchasesuccessspanish)
+            return
+        }
+        binding.purchaseSuccessImageId.setImageResource(R.drawable.purchasesuccessenglish)
     }
 
     private fun setUpActions() {

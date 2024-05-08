@@ -103,10 +103,10 @@ class HomeViewModel: ViewModel() {
                     val jsonObject = JSONObject(error!!.string())
                     val message = jsonObject.getString("status")
                     if (message == Constants.sessionExpired) {
-                        Alerts.warning(message, mainActivity.getString(R.string.error_message), mainActivity)
+//                        Alerts.warning(message, mainActivity.getString(R.string.error_message), mainActivity)
                         return@runOnUiThread
                     }
-                    Alerts.warning(message, mainActivity.getString(R.string.error_message), mainActivity)
+//                    Alerts.warning(message, mainActivity.getString(R.string.error_message), mainActivity)
                 }
             }
         }

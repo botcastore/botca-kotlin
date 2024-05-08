@@ -43,7 +43,6 @@ class BannerAdapter(private val context: Context): RecyclerView.Adapter<BannerAd
             Glide.with(context)
                 .load(model.url)
                 .centerCrop()
-                .transition(DrawableTransitionOptions.withCrossFade(2))
                 .apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL))
                 .placeholder(R.drawable.category_hint)
                 .into(itemBinding.bannerImageViewId)
