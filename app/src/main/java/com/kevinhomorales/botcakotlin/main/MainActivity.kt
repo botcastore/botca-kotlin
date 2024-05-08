@@ -21,6 +21,7 @@ import com.kevinhomorales.botcakotlin.utils.AddressManager
 import com.kevinhomorales.botcakotlin.utils.Alerts
 import com.kevinhomorales.botcakotlin.utils.CardManager
 import com.kevinhomorales.botcakotlin.utils.Constants
+import com.kevinhomorales.botcakotlin.utils.CouponManager
 import com.kevinhomorales.botcakotlin.utils.FilterProductManager
 import com.kevinhomorales.botcakotlin.utils.TransferManager
 import kotlinx.coroutines.CoroutineScope
@@ -117,10 +118,12 @@ open class MainActivity: AppCompatActivity() {
         val card = CardManager.shared.getCard(this)
         val address = AddressManager.shared.getAddress(this)
         val transfer = TransferManager.shared.getTransfer(this)
-        if (card.id.isEmpty() && address.addressID.isEmpty() && transfer.addressID.isEmpty()) {
+        val coupon = CouponManager.shared.getCoupon(this)
+        if (card.id.isEmpty() && address.addressID.isEmpty() && transfer.addressID.isEmpty() && coupon.coupon.couponID.isEmpty()) {
             CardManager.shared.removeCard(this)
             TransferManager.shared.removeTransfer(this)
             AddressManager.shared.removeAddress(this)
+            CouponManager.shared.removCoupon(this)
         }
         FilterProductManager.shared.removeFilterProduct(this)
     }

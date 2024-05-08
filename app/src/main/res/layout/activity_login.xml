@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:layout_width="210dp"
+        android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:text="@string/welcome_to_botca"
         android:textSize="47sp"

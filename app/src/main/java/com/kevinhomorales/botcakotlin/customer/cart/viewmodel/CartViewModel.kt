@@ -26,6 +26,7 @@ import com.kevinhomorales.botcakotlin.NetworkManager.response.Address
 import com.kevinhomorales.botcakotlin.NetworkManager.response.Card
 import com.kevinhomorales.botcakotlin.NetworkManager.response.Cart
 import com.kevinhomorales.botcakotlin.NetworkManager.response.CartAvailableResponse
+import com.kevinhomorales.botcakotlin.NetworkManager.response.CouponsResponse
 import com.kevinhomorales.botcakotlin.NetworkManager.response.UseCoupon
 import com.kevinhomorales.botcakotlin.R
 import com.kevinhomorales.botcakotlin.customer.cart.view.CartActivity
@@ -48,6 +49,7 @@ class CartViewModel: ViewModel() {
     lateinit var transferToCheckOut: TransferToCheckOut
     lateinit var address: Address
     lateinit var card: Card
+    lateinit var couponSelected: CouponsResponse
     fun getCart(): Cart {
         return cartAvailableResponse.cart
     }
@@ -256,11 +258,12 @@ class CartViewModel: ViewModel() {
             token = GUEST_LOGIN
         }
         CoroutineScope(Dispatchers.IO).launch {
-            val call = mainActivity.getRetrofit().create(CartAvailableRequest::class.java).getCartAvailable("\"${couponID}\"", token!!)
+            val call = mainActivity.getRetrofit().create(CartAvailableRequest::class.java).getCartAvailable("carts/available?couponsId=[\"${couponID}\"]", token!!)
             val response = call.body()
             mainActivity.runOnUiThread {
                 if(call.isSuccessful) {
                     cartAvailableResponse = response!!
+                    mainActivity.hideLoading()
                     view.reloadData()
                 } else {
                     val error = call.errorBody()
@@ -289,7 +292,7 @@ class CartViewModel: ViewModel() {
             val response = call.body()
             mainActivity.runOnUiThread {
                 if(call.isSuccessful) {
-                    view.onBackPressed()
+                    view.paymentDone()
                     mainActivity.hideLoading()
                     return@runOnUiThread
                 } else {

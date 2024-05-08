@@ -29,6 +29,7 @@ import com.kevinhomorales.botcakotlin.utils.AddressManager
 import com.kevinhomorales.botcakotlin.utils.Alerts
 import com.kevinhomorales.botcakotlin.utils.CardManager
 import com.kevinhomorales.botcakotlin.utils.Constants
+import com.kevinhomorales.botcakotlin.utils.CouponManager
 import com.kevinhomorales.botcakotlin.utils.SwipeToDeleteCallBackCart
 import com.kevinhomorales.botcakotlin.utils.TransferManager
 import com.stripe.android.ApiResultCallback
@@ -58,7 +59,7 @@ class CartActivity : MainActivity(), OnCartClickListener, OnAddRestClickListener
         CardManager.shared.removeCard(this)
         AddressManager.shared.removeAddress(this)
         TransferManager.shared.removeTransfer(this)
-//        stripe = Stripe(this, PaymentConfiguration.getInstance(applicationContext).publishableKey)
+        CouponManager.shared.removCoupon(this)
         stripe = Stripe(this, StripeToolsManager.shared.stripeSecret)
     }
 
@@ -97,6 +98,11 @@ class CartActivity : MainActivity(), OnCartClickListener, OnAddRestClickListener
 
     override fun onResume() {
         super.onResume()
+        viewModel.couponSelected = CouponManager.shared.getCoupon(this)
+        if (viewModel.couponSelected.coupon.couponID.isNotEmpty()) {
+            binding.couponsTextId.text = "${viewModel.couponSelected.code}\n${viewModel.couponSelected.coupon.descriptions}"
+            viewModel.getCartAvailable(viewModel.couponSelected.userCouponID, this)
+        }
         viewModel.card = CardManager.shared.getCard(this)
         if (viewModel.card.id.isNotEmpty()) {
             binding.paymentMethodTextId.text = "${getString(R.string.card)}\n\n${viewModel.card.brand} ${viewModel.card.last4}"

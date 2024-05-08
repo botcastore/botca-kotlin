@@ -23,6 +23,7 @@ import com.kevinhomorales.botcakotlin.databinding.ActivityCouponsBinding
 import com.kevinhomorales.botcakotlin.main.MainActivity
 import com.kevinhomorales.botcakotlin.utils.Alerts
 import com.kevinhomorales.botcakotlin.utils.Constants
+import com.kevinhomorales.botcakotlin.utils.CouponManager
 
 class CouponsActivity : MainActivity(), OnCouponsClickListener {
     lateinit var binding: ActivityCouponsBinding
@@ -59,7 +60,10 @@ class CouponsActivity : MainActivity(), OnCouponsClickListener {
     }
 
     override fun couponsClick(model: CouponsResponse) {
-
+        tapHaptic()
+        CouponManager.shared.removCoupon(this)
+        CouponManager.shared.saveCoupon(model, this)
+        onBackPressed()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
