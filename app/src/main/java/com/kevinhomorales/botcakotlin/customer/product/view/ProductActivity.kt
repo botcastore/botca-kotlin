@@ -17,6 +17,7 @@ import androidx.core.view.forEach
 import androidx.core.view.setPadding
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.kevinhomorales.botcakotlin.NetworkManager.model.AddToCartModel
 import com.kevinhomorales.botcakotlin.NetworkManager.model.CartAvailableModel
 import com.kevinhomorales.botcakotlin.NetworkManager.response.CartAvailableResponse
 import com.kevinhomorales.botcakotlin.NetworkManager.response.Color
@@ -26,6 +27,7 @@ import com.kevinhomorales.botcakotlin.R
 import com.kevinhomorales.botcakotlin.customer.cart.view.CartActivity
 import com.kevinhomorales.botcakotlin.customer.cart.view.adapter.CartAdapter
 import com.kevinhomorales.botcakotlin.customer.coupon.view.CouponActivity
+import com.kevinhomorales.botcakotlin.customer.login.view.LoginActivity
 import com.kevinhomorales.botcakotlin.customer.payments.paymentsmethods.view.PaymentsMethodsActivity
 import com.kevinhomorales.botcakotlin.customer.product.infosize.view.InfoSizeActivity
 import com.kevinhomorales.botcakotlin.customer.product.view.adapter.OnProductImageClickListener
@@ -37,6 +39,7 @@ import com.kevinhomorales.botcakotlin.main.MainActivity
 import com.kevinhomorales.botcakotlin.utils.Alerts
 import com.kevinhomorales.botcakotlin.utils.Constants
 import com.kevinhomorales.botcakotlin.utils.TransforColorFromHex
+import com.kevinhomorales.botcakotlin.utils.UserManager
 import java.io.File
 import java.io.Serializable
 
@@ -134,7 +137,7 @@ class ProductActivity : MainActivity(), OnProductImageClickListener {
         colors.clear()
         binding.productCountId.text = "1 Product"
         viewModel.productCount = 1
-//        addRestOutlet.value = 1
+        binding.productCountId.text = viewModel.productCount.toString() + " product"
         deleteAllViewsByColors()
         val tag = button.tag as Int
         viewModel.sizeSelected = viewModel.getSizes()[tag]
@@ -205,7 +208,7 @@ class ProductActivity : MainActivity(), OnProductImageClickListener {
             val colorSelected = viewModel.colorSelected
             binding.productCountId.text = "1 product"
             viewModel.productCount = 1
-//            addRestOutlet.value = 1
+            binding.productCountId.text = viewModel.productCount.toString() + " product"
             Alerts.warning(getString(R.string.alert_title), "Color Selected ${colorSelected.label}", this)
             binding.colorTextId.text = "Color Selected ${colorSelected.label}"
             setUpImages(colorSelected)
@@ -240,10 +243,67 @@ class ProductActivity : MainActivity(), OnProductImageClickListener {
     private fun setUpActions() {
         binding.addCartId.setOnClickListener {
             tapHaptic()
+            addToCart()
         }
         binding.sizeGuideId.setOnClickListener {
             tapHaptic()
             openPDFDocument("sizes.pdf")
+        }
+        binding.increaseId.setOnClickListener {
+            tapHaptic()
+            if ((viewModel.sizeSelected != null) && (viewModel.colorSelected != null)) {
+                val sizeSelected = viewModel.sizeSelected
+                val colorSelected = viewModel.colorSelected
+                val colorProductID = colorSelected.colorProductID
+                val sizeTest = sizeSelected.colorsSizes.filter { it.colorProductID == colorProductID }.first()
+                val maxStock = sizeTest.stock.toDouble()
+                val productCount = viewModel.productCount
+                if (productCount >= maxStock) {
+                    Alerts.warning(getString(R.string.alert_title), "There is only ${maxStock.toInt()}", this)
+                    return@setOnClickListener
+                }
+                viewModel.productCount += 1
+                binding.productCountId.text = viewModel.productCount.toString() + " product"
+            }
+        }
+        binding.decreaseId.setOnClickListener {
+            tapHaptic()
+            if ((viewModel.sizeSelected != null) && (viewModel.colorSelected != null)) {
+                val sizeSelected = viewModel.sizeSelected
+                val colorSelected = viewModel.colorSelected
+                val colorProductID = colorSelected.colorProductID
+                val sizeTest = sizeSelected.colorsSizes.filter { it.colorProductID == colorProductID }.first()
+                val maxStock = sizeTest.stock.toDouble()
+                val productCount = viewModel.productCount
+                if (productCount >= maxStock) {
+                    Alerts.warning(getString(R.string.alert_title), "There is only ${maxStock.toInt()}", this)
+                    return@setOnClickListener
+                }
+                if (viewModel.productCount == 1) { return@setOnClickListener }
+                viewModel.productCount -= 1
+                binding.productCountId.text = viewModel.productCount.toString() + " product"
+            }
+        }
+    }
+
+    private fun addToCart() {
+        if (viewModel.isGuest(this)) {
+            Alerts.twoOptions(getString(R.string.alert_title), getString(R.string.please_login), getString(R.string.accept), getString(R.string.cancel), this) { isOK ->
+                if (isOK) {
+                    openLoginView()
+                }
+            }
+        } else {
+            if (viewModel.colorSelected == null) {
+                Alerts.warning(getString(R.string.alert_title), "Please select a color!", this)
+                return
+            }
+            if (viewModel.colorSelected == null) {
+                Alerts.warning(getString(R.string.alert_title), "Please select a size!", this)
+                return
+            }
+            val addToCartModel = AddToCartModel(viewModel.product.productID, viewModel.productCount, viewModel.colorSelected.code, viewModel.sizeSelected.size)
+            viewModel.postAddToCart(addToCartModel, this)
         }
     }
 
@@ -294,6 +354,13 @@ class ProductActivity : MainActivity(), OnProductImageClickListener {
         val intent = Intent(this, ProductImageActivity::class.java)
         intent.putExtra(Constants.imageURLIdKey, urlString)
         startActivity(intent)
+    }
+
+    fun openLoginView() {
+        UserManager.shared.removeUser(this)
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        hideLoading()
     }
 
 }

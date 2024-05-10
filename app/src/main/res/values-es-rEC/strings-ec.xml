@@ -148,12 +148,15 @@
     <string name="no_products_in_cart">No hay productos en el carrito</string>
     <string name="loading_product">CARGANDO PRODUCTO</string>
     <string name="loading_data">CARGANDO DATOS</string>
+    <string name="upload_to_cart">SUBIENDO AL CARRITO</string>
 
     <!--    PRODUCTO-->
     <string name="colors">Colores</string>
     <string name="count">Cantidades</string>
     <string name="add_cart_button">Añadir al carrito</string>
     <string name="need_help_sizes">¿Necesitas ayuda con las tallas?</string>
+    <string name="product_added">Producto agregado al carrito</string>
+
     <!--    TARJETA-->
     <string name="cart_title_view">Carrito</string>
     <string name="deleting_card">ELIMINAR TARJETA</string>

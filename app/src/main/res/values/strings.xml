@@ -147,12 +147,15 @@
     <string name="no_products_in_cart">Not Products in Cart</string>
     <string name="loading_product">LOADING PRODUCT</string>
     <string name="loading_data">LOADING DATA</string>
+    <string name="upload_to_cart">UPLOAD TO CART</string>
 
     <!--    PRODUCT-->
     <string name="colors">Colors</string>
     <string name="count">Counts</string>
     <string name="add_cart_button">Add to Cart</string>
     <string name="need_help_sizes">Need help with the sizes?</string>
+    <string name="product_added">Product added to Cart</string>
+
     <!--    CARD-->
     <string name="cart_title_view">Cart</string>
     <string name="deleting_card">DELETE CARD</string>
