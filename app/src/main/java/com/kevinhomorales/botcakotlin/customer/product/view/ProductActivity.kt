@@ -2,6 +2,7 @@ package com.kevinhomorales.botcakotlin.customer.product.view
 
 import android.content.Intent
 import android.graphics.Paint
+import android.graphics.drawable.GradientDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -35,6 +36,7 @@ import com.kevinhomorales.botcakotlin.databinding.ActivityProductBinding
 import com.kevinhomorales.botcakotlin.main.MainActivity
 import com.kevinhomorales.botcakotlin.utils.Alerts
 import com.kevinhomorales.botcakotlin.utils.Constants
+import com.kevinhomorales.botcakotlin.utils.TransforColorFromHex
 import java.io.File
 import java.io.Serializable
 
@@ -101,8 +103,13 @@ class ProductActivity : MainActivity(), OnProductImageClickListener {
             layoutParams.weight = 1.0f
             sizeButton.layoutParams = layoutParams
             if (size.available) {
-                sizeButton.setBackgroundColor(getColor(R.color.blackColor))
-                sizeButton.setTextColor(getColor(R.color.whiteColor))
+                val borderDrawable = GradientDrawable()
+                borderDrawable.shape = GradientDrawable.RECTANGLE
+                borderDrawable.setStroke(1, resources.getColor(android.R.color.black))
+                borderDrawable.cornerRadius = 5f
+                sizeButton.setBackgroundColor(getColor(R.color.whiteColor))
+                sizeButton.setTextColor(getColor(R.color.blackColor))
+                sizeButton.background = borderDrawable
                 sizeButton.setOnClickListener { sizeButtonPressed(it) }
                 binding.sizesLayoutId.addView(sizeButton)
             }
@@ -110,6 +117,11 @@ class ProductActivity : MainActivity(), OnProductImageClickListener {
             if (sizeButton.tag == 0) {
                 setUpColors(size)
                 viewModel.sizeSelected = size
+                val borderDrawable = GradientDrawable()
+                borderDrawable.shape = GradientDrawable.RECTANGLE
+                borderDrawable.setStroke(1, resources.getColor(android.R.color.black))
+                borderDrawable.cornerRadius = 5f
+                sizeButton.background = borderDrawable
                 sizeButton.setBackgroundColor(getColor(R.color.blackColor))
                 sizeButton.setTextColor(getColor(R.color.whiteColor))
             }
@@ -132,12 +144,22 @@ class ProductActivity : MainActivity(), OnProductImageClickListener {
             binding.sizesLayoutId.forEach { view ->
                 val sizeButton = view as Button
                 if (sizeButton.text.toString() == sizeSelected.size) {
+                    val borderDrawable = GradientDrawable()
+                    borderDrawable.shape = GradientDrawable.RECTANGLE
+                    borderDrawable.setStroke(1, resources.getColor(android.R.color.black))
+                    borderDrawable.cornerRadius = 5f
+                    sizeButton.background = borderDrawable
                     sizeButton.setBackgroundColor(getColor(R.color.blackColor))
                     sizeButton.setTextColor(getColor(R.color.whiteColor))
                     return@forEach
                 }
+                val borderDrawable = GradientDrawable()
+                borderDrawable.shape = GradientDrawable.RECTANGLE
+                borderDrawable.setStroke(1, resources.getColor(android.R.color.black))
+                borderDrawable.cornerRadius = 5f
                 sizeButton.setBackgroundColor(getColor(R.color.whiteColor))
                 sizeButton.setTextColor(getColor(R.color.blackColor))
+                sizeButton.background = borderDrawable
             }
         }
     }
@@ -149,13 +171,21 @@ class ProductActivity : MainActivity(), OnProductImageClickListener {
         for (i in 0 until colors.size) {
             val color = colors[i]
             val colorButton = Button(this)
+            val layoutParams = LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            layoutParams.weight = 1.0f
+            colorButton.layoutParams = layoutParams
             colorButton.tag = i
             colorButton.clipToOutline = true
-//            colorButton.cornerRadius = 5f
-//            colorButton.setBackgroundColor(Color.parseColor(color.code))
-            colorButton.setBackgroundColor(getColor(R.color.redColor))
-//            colorButton.borderColor = Color.BLACK.toCGColor()
-//            colorButton.borderWidth = 1
+            val hexColor = TransforColorFromHex.shared.getColorFromHex(color.code)
+            val borderDrawable = GradientDrawable()
+            borderDrawable.shape = GradientDrawable.RECTANGLE
+            borderDrawable.setStroke(1, resources.getColor(android.R.color.black))
+            borderDrawable.cornerRadius = 5f
+            colorButton.background = borderDrawable
+            colorButton.setBackgroundColor(hexColor)
             colorButton.setOnClickListener { colorButtonPressed(it) }
             firstSelectColor(0)
             if (colorButton.tag == 0) {
@@ -167,20 +197,29 @@ class ProductActivity : MainActivity(), OnProductImageClickListener {
     }
 
     private fun colorButtonPressed(view: View) {
-
+        tapHaptic()
+        val button = view as Button
+        val tag = button.tag as Int
+        viewModel.colorSelected = colors[tag]
+        if (viewModel.colorSelected != null) {
+            val colorSelected = viewModel.colorSelected
+            binding.productCountId.text = "1 product"
+            viewModel.productCount = 1
+//            addRestOutlet.value = 1
+            Alerts.warning(getString(R.string.alert_title), "Color Selected ${colorSelected.label}", this)
+            binding.colorTextId.text = "Color Selected ${colorSelected.label}"
+            setUpImages(colorSelected)
+        }
     }
 
     private fun firstSelectColor(senderTag: Int) {
         viewModel.colorSelected = colors[senderTag]
-        val colorSelected = viewModel.colorSelected ?: return
+        val colorSelected = viewModel.colorSelected
         binding.colorTextId.text = "Color Selected ${colorSelected.label}"
     }
 
     private fun deleteAllViewsByColors() {
-//        binding.colorsLayoutId.arrangedSubviews.forEach { view ->
-//            binding.colorsLayoutId.removeArrangedSubview(view)
-//            view.removeFromSuperview()
-//        }
+        binding.colorsLayoutId.removeAllViews()
     }
 
     private fun setUpImages(color: Color) {
@@ -251,6 +290,7 @@ class ProductActivity : MainActivity(), OnProductImageClickListener {
     }
 
     override fun productClick(urlString: String) {
+        tapHaptic()
         val intent = Intent(this, ProductImageActivity::class.java)
         intent.putExtra(Constants.imageURLIdKey, urlString)
         startActivity(intent)
