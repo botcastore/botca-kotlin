@@ -229,6 +229,7 @@ class CartActivity : MainActivity(), OnCartClickListener, OnAddRestClickListener
     }
 
     override fun getQuatity(cartProductID: String, quantity: Int) {
+        tapHaptic()
         viewModel.updateProductInCart(cartProductID, quantity, this)
     }
 

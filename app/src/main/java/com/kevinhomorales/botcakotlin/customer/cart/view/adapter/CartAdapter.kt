@@ -11,6 +11,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.kevinhomorales.botcakotlin.NetworkManager.response.ProductCart
 import com.kevinhomorales.botcakotlin.R
 import com.kevinhomorales.botcakotlin.databinding.RowCartBinding
+import com.kevinhomorales.botcakotlin.utils.Alerts
 
 class CartAdapter(private val context: Context, var itemClickListener: OnCartClickListener, var itemAddRestClickListener: OnAddRestClickListener): RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
     private lateinit var binding: RowCartBinding
@@ -55,13 +56,26 @@ class CartAdapter(private val context: Context, var itemClickListener: OnCartCli
             } else {
                 itemBinding.priceId.text = "$ ${model.product.finalPrice}"
             }
-            itemBinding.numberPickerId.minValue = 1
-            itemBinding.numberPickerId.maxValue = 99
-            itemBinding.numberPickerId.value = model.quantity
+            val maxStock = model.stock.toDouble()
+            var productCount = model.quantity
             itemView.setOnClickListener { itemClickListener.cartClick(model) }
-            itemBinding.numberPickerId.setOnValueChangedListener { _, _, newVal ->
-                itemAddRestClickListener.getQuatity(model.cartProductID, newVal)
+            itemBinding.increaseId.setOnClickListener {
+                if (productCount >= maxStock) {
+                    Alerts.warning(context.getString(R.string.alert_title), "There is only ${maxStock.toInt()}", context)
+                    return@setOnClickListener
+                }
+                productCount += 1
+                itemAddRestClickListener.getQuatity(model.cartProductID, productCount)
             }
+            itemBinding.decreaseId.setOnClickListener {
+                if (productCount >= maxStock) {
+                    Alerts.warning(context.getString(R.string.alert_title), "There is only ${maxStock.toInt()}", context)
+                    return@setOnClickListener
+                }
+                productCount -= 1
+                itemAddRestClickListener.getQuatity(model.cartProductID, productCount)
+            }
+            binding.productCountId.text = productCount.toString()
         }
     }
 }
